@@ -111,6 +111,25 @@ class Page
     }
 
     /**
+     * @param string $state
+     * @return Page
+     */
+    public function setState($state)
+    {
+        $this->state = $state;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getState()
+    {
+        return $this->state;
+    }
+
+    /**
      * @param int $level
      * @return Page
      */

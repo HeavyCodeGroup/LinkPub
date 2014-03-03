@@ -1,0 +1,4 @@
+link_pub_link_pub_gui:
+    resource: "@LinkPubGuiBundle/Resources/config/routing.yml"
+    prefix:   /
+

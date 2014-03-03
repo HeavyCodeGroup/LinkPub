@@ -20,7 +20,8 @@
         "sensio/generator-bundle": "2.3.*",
         "incenteev/composer-parameter-handler": "~2.0",
         "braincrafted/bootstrap-bundle": "v2.0.0",
-        "knplabs/knp-menu": "1.1.2"
+        "knplabs/knp-menu": "1.1.2",
+        "leafo/lessphp": "0.4.0"
     },
     "scripts": {
         "post-install-cmd": [

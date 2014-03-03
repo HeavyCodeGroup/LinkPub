@@ -8,6 +8,7 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Doctrine\DBAL\Types\Type;
 use HeavyCodeGroup\LinkPub\StorageBundle\DBAL\PageStatusType;
 use HeavyCodeGroup\LinkPub\StorageBundle\DBAL\LinkStatusType;
+use HeavyCodeGroup\LinkPub\StorageBundle\DBAL\LinkProblemType;
 
 class LinkPubStorageBundle extends Bundle
 {
@@ -26,6 +27,13 @@ class LinkPubStorageBundle extends Bundle
             Type::addType(
                 LinkStatusType::ENUM_LINK_STATUS,
                 'HeavyCodeGroup\LinkPub\StorageBundle\DBAL\LinkStatusType'
+            );
+        }
+
+        if (!Type::hasType(LinkProblemType::ENUM_LINK_PROBLEM)) {
+            Type::addType(
+                LinkProblemType::ENUM_LINK_PROBLEM,
+                'HeavyCodeGroup\LinkPub\StorageBundle\DBAL\LinkProblemType'
             );
         }
     }

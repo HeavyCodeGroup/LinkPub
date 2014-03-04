@@ -17,10 +17,11 @@ class AppKernel extends Kernel
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new Braincrafted\Bundle\BootstrapBundle\BraincraftedBootstrapBundle(),
-            new HeavyCodeGroup\LinkPub\GuiBundle\LinkPubGuiBundle(),
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
-            new HeavyCodeGroup\LinkPub\StorageBundle\LinkPubStorageBundle(),
+            new Knp\Bundle\MenuBundle\KnpMenuBundle(),
             new FOS\UserBundle\FOSUserBundle(),
+            new HeavyCodeGroup\LinkPub\StorageBundle\LinkPubStorageBundle(),
+            new HeavyCodeGroup\LinkPub\GuiBundle\LinkPubGuiBundle(),
             new HeavyCodeGroup\LinkPub\UserBundle\LinkPubUserBundle(),
         );
 

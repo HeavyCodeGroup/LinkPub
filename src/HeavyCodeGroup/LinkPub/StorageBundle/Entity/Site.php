@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Class Site
  * @package HeavyCodeGroup\LinkPub\StorageBundle\Entity
  *
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="HeavyCodeGroup\LinkPub\StorageBundle\Entity\SiteRepository")
  * @ORM\Table(name="site")
  */
 class Site

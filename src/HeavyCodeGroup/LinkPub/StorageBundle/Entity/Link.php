@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Class Link
  * @package HeavyCodeGroup\LinkPub\StorageBundle\Entity
  *
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="HeavyCodeGroup\LinkPub\StorageBundle\Entity\LinkRepository")
  * @ORM\Table(name="link")
  */
 class Link

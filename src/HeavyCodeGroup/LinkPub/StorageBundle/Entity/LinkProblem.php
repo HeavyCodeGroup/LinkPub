@@ -9,7 +9,7 @@ use Gedmo\Mapping\Annotation as DoctrineExtension;
  * Class LinkProblem
  * @package HeavyCodeGroup\LinkPub\StorageBundle\Entity
  *
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="HeavyCodeGroup\LinkPub\StorageBundle\Entity\LinkProblemRepository")
  * @ORM\Table(name="link_problem")
  */
 class LinkProblem

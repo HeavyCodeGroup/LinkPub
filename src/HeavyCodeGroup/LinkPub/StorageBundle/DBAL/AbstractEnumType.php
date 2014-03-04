@@ -19,7 +19,7 @@ abstract class AbstractEnumType extends Type
     {
         return 'ENUM(' . implode(',', array_map(function ($val) {
             return "'" . $val . "'";
-        }, $this->getAvailableValues())) . ')';
+        }, $this->getAvailableValues())) . ') COMMENT \'(DC2Type:' . $this->getName() . ')\'';
     }
 
     /**

@@ -1,3 +1,4 @@
 linkpub_client_sites:
     path: /sites
     defaults: { _controller: LinkPubGuiBundle:Client:sites }
+

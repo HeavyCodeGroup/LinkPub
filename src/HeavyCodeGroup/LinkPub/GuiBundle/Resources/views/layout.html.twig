@@ -1,7 +1,19 @@
 {% extends '::base.html.twig' %}
+{% block stylesheets %}
+    {% stylesheets
+        'css/bootstrap.css'
+        '@LinkPubGuiBundle/Resources/public/css/style.less'
+    %}
+    <link href="{{ asset_url }}" media="all" rel="stylesheet" type="text/css" />
+    {% endstylesheets %}
+{% endblock %}
 
 {% block body %}
+<div class="container">
     {% block  header %}
+        <header>
+            sdf
+        </header>
     {% endblock header %}
 
     {% block content %}
@@ -9,4 +21,5 @@
 
     {% block footer %}
     {% endblock footer %}
+</div>
 {% endblock body %}

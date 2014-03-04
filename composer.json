@@ -36,7 +36,9 @@
         "knplabs/knp-menu": "1.1.2",
         "leafo/lessphp": "0.4.0",
         "twbs/bootstrap": "3.0.*",
-        "jquery/jquery":  "1.10.*"
+        "jquery/jquery":  "1.10.*",
+        "stof/doctrine-extensions-bundle": "v1.1.0",
+        "friendsofsymfony/user-bundle": "~2.0@dev"
     },
     "scripts": {
         "post-install-cmd": [

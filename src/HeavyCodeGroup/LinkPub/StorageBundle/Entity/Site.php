@@ -36,7 +36,9 @@ class Site
     protected $category;
 
     /**
-     * TODO: Owner field
+     * @var \HeavyCodeGroup\LinkPub\UserBundle\Entity\User
+     * @ORM\JoinColumn(name="owner_id", nullable=false)
+     * @ORM\ManyToOne(targetEntity="HeavyCodeGroup\LinkPub\UserBundle\Entity\User")
      */
     protected $owner;
 
@@ -128,8 +130,23 @@ class Site
     }
 
     /**
-     * TODO: Owner setter and getter
+     * @param \HeavyCodeGroup\LinkPub\UserBundle\Entity\User $owner
+     * @return Site
      */
+    public function setOwner($owner)
+    {
+        $this->owner = $owner;
+
+        return $this;
+    }
+
+    /**
+     * @return \HeavyCodeGroup\LinkPub\UserBundle\Entity\User
+     */
+    public function getOwner()
+    {
+        return $this->owner;
+    }
 
     /**
      * @param string $title

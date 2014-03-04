@@ -1,7 +1,0 @@
-parameters:
-#    link_pub_link_pub_gui.example.class: HeavyCodeGroup\LinkPub\GuiBundle\Example
-
-services:
-#    link_pub_link_pub_gui.example:
-#        class: %link_pub_link_pub_gui.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]

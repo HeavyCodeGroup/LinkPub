@@ -2,6 +2,7 @@
 
 namespace HeavyCodeGroup\LinkPub\StorageBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -63,6 +64,17 @@ class Page
      * @ORM\Column(name="price", type="float")
      */
     protected $price;
+
+    /**
+     * @var ArrayCollection
+     * @ORM\OneToMany(targetEntity="Link", mappedBy="page")
+     */
+    protected $linksOn;
+
+    public function __construct()
+    {
+        $this->linksOn = new ArrayCollection();
+    }
 
     /**
      * @return int
@@ -205,5 +217,12 @@ class Page
         return $this->price;
     }
 
+    /**
+     * @return ArrayCollection
+     */
+    public function getLinksOn()
+    {
+        return $this->linksOn;
+    }
+
 }
- 

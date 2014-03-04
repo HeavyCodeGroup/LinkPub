@@ -31,7 +31,7 @@ class Link
     /**
      * @var Page
      * @ORM\JoinColumn(name="page_id", nullable=false)
-     * @ORM\ManyToOne(targetEntity="Page")
+     * @ORM\ManyToOne(targetEntity="Page", inversedBy="linksOn")
      */
     protected $page;
 
@@ -333,4 +333,3 @@ class Link
     }
 
 }
- 

@@ -4,6 +4,7 @@ namespace HeavyCodeGroup\LinkPub\StorageBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Rhumsaa\Uuid\Uuid;
 
 /**
  * Class Site
@@ -11,6 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Entity(repositoryClass="HeavyCodeGroup\LinkPub\StorageBundle\Entity\SiteRepository")
  * @ORM\Table(name="site")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Site
 {
@@ -24,7 +26,7 @@ class Site
 
     /**
      * @var string
-     * @ORM\Column(name="guid", type="guid", length=36)
+     * @ORM\Column(name="guid", type="guid", length=36, unique=true)
      */
     protected $guid;
 
@@ -94,10 +96,11 @@ class Site
     /**
      * @param string $guid
      * @return Site
+     * @ORM\PrePersist
      */
-    public function setGuid($guid)
+    public function setGuid($guid = null)
     {
-        $this->guid = $guid;
+        $this->guid = ($guid === null) ? Uuid::uuid4() : $guid;
 
         return $this;
     }

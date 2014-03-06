@@ -71,9 +71,27 @@ class Page
      */
     protected $linksOn;
 
+    /**
+     * @var ArrayCollection
+     * @ORM\JoinTable(name="page_connection",
+     *      joinColumns={@ORM\JoinColumn(name="child_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="parent_id", referencedColumnName="id")}
+     * )
+     * @ORM\ManyToMany(targetEntity="Page", inversedBy="children")
+     */
+    protected $parents;
+
+    /**
+     * @var ArrayCollection
+     * @ORM\ManyToMany(targetEntity="Page", mappedBy="parents")
+     */
+    protected $children;
+
     public function __construct()
     {
         $this->linksOn = new ArrayCollection();
+        $this->parents = new ArrayCollection();
+        $this->children = new ArrayCollection();
     }
 
     /**
@@ -225,4 +243,67 @@ class Page
         return $this->linksOn;
     }
 
+    /**
+     * @param Page $parent
+     * @return Page
+     */
+    public function addParent($parent)
+    {
+        $this->parents->add($parent);
+        $parent->getChildren()->add($this);
+
+        return $this;
+    }
+
+    /**
+     * @param Page $parent
+     * @return Page
+     */
+    public function removeParent($parent)
+    {
+        $this->parents->removeElement($parent);
+        $this->getChildren()->add($this);
+
+        return $this;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getParents()
+    {
+        return $this->parents;
+    }
+
+    /**
+     * @param Page $child
+     * @return Page
+     */
+    public function addChild($child)
+    {
+        $this->children->add($child);
+        $child->getParents()->add($this);
+
+        return $this;
+    }
+
+    /**
+     * @param Page $child
+     * @return Page
+     */
+    public function removeChild($child)
+    {
+        $this->children->removeElement($child);
+        $child->getParents()->removeElement($this);
+
+        return $this;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getChildren()
+    {
+        return $this->children;
+    }
 }

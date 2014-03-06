@@ -25,7 +25,7 @@ class Page
     /**
      * @var Site
      * @ORM\JoinColumn(name="site_id", nullable=false)
-     * @ORM\ManyToOne(targetEntity="Category", inversedBy="pages")
+     * @ORM\ManyToOne(targetEntity="Site", inversedBy="pages")
      */
     protected $site;
 

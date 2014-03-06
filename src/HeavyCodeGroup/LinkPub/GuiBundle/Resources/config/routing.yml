@@ -1,3 +1,15 @@
-linkpub_client_sites:
+linkpub_gui_client_dashboard:
+    path: /dashboard
+    defaults: { _controller: LinkPubGuiBundle:Client:dashboard }
+
+linkpub_gui_client_sites:
     path: /sites
     defaults: { _controller: LinkPubGuiBundle:Client:sites }
+
+linkpub_gui_incoming_links:
+    path: /incoming-links
+    defaults: { _controller: LinkPubGuiBundle:Client:incomingLinks}
+
+linkpub_gui_outgoing_links:
+    path: /outgoing-links
+    defaults: { _controller: LinkPubGuiBundle:Client:outgoingLinks }

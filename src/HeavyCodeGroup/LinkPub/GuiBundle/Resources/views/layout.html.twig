@@ -15,7 +15,7 @@
                 sdf
             </header>
 
-            {% set mainMenu = knp_menu_get('LinkPubGuiBundle:MenuBuilder:mainMenu', [], {'class': 'nav nav-tabs'}) %}
+            {% set mainMenu = knp_menu_get('LinkPubGuiBundle:MenuBuilder:mainMenu', [], {'class': 'nav nav-tabs client-menu'}) %}
             {{ knp_menu_render(mainMenu, {'currentClass': 'active'}) }}
 
         {% endblock header %}

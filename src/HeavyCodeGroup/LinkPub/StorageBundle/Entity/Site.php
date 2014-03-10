@@ -86,6 +86,12 @@ class Site
      */
     protected $consumerInstances;
 
+    /**
+     * @var boolean
+     * @ORM\Column(name="is_using_deprecated_consumer", type="boolean", nullable=true)
+     */
+    protected $isUsingDeprecatedConsumer;
+
     public function __construct()
     {
         $this->pages = new ArrayCollection();
@@ -288,4 +294,24 @@ class Site
     {
         return $this->consumerInstances;
     }
+
+    /**
+     * @param boolean $isUsingDeprecatedConsumer
+     * @return Site
+     */
+    public function setIsUsingDeprecatedConsumer($isUsingDeprecatedConsumer)
+    {
+        $this->isUsingDeprecatedConsumer = $isUsingDeprecatedConsumer;
+
+        return $this;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getIsUsingDeprecatedConsumer()
+    {
+        return $this->isUsingDeprecatedConsumer;
+    }
+
 }

@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Class Page
  * @package HeavyCodeGroup\LinkPub\StorageBundle\Entity
  *
- * @ORM\Entity(repositoryClass="HeavyCodeGroup\LinkPub\StorageBundle\Entity\PageRepository")
+ * @ORM\Entity(repositoryClass="HeavyCodeGroup\LinkPub\StorageBundle\EntityRepository\PageRepository")
  * @ORM\Table(name="page")
  */
 class Page

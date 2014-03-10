@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Class ConsumerInstance
  * @package HeavyCodeGroup\LinkPub\StorageBundle\Entity
  *
- * @ORM\Entity(repositoryClass="HeavyCodeGroup\LinkPub\StorageBundle\Entity\ConsumerInstanceRepository")
+ * @ORM\Entity(repositoryClass="HeavyCodeGroup\LinkPub\StorageBundle\EntityRepository\ConsumerInstanceRepository")
  * @ORM\Table(name="consumer_instance")
  */
 class ConsumerInstance

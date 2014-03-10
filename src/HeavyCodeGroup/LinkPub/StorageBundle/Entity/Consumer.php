@@ -10,7 +10,7 @@ use Gedmo\Mapping\Annotation as DoctrineExtension;
  * Class Consumer
  * @package HeavyCodeGroup\LinkPub\StorageBundle\Entity
  *
- * @ORM\Entity(repositoryClass="HeavyCodeGroup\LinkPub\StorageBundle\Entity\ConsumerRepository")
+ * @ORM\Entity(repositoryClass="HeavyCodeGroup\LinkPub\StorageBundle\EntityRepository\ConsumerRepository")
  * @ORM\Table(name="consumer")
  */
 class Consumer

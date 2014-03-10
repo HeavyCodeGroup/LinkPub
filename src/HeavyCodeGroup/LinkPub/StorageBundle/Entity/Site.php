@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Class Site
  * @package HeavyCodeGroup\LinkPub\StorageBundle\Entity
  *
- * @ORM\Entity(repositoryClass="HeavyCodeGroup\LinkPub\StorageBundle\Entity\SiteRepository")
+ * @ORM\Entity(repositoryClass="HeavyCodeGroup\LinkPub\StorageBundle\EntityRepository\SiteRepository")
  * @ORM\Table(name="site")
  * @ORM\HasLifecycleCallbacks()
  */

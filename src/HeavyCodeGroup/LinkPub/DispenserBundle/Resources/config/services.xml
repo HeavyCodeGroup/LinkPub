@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <parameters>
+        <parameter key="link_pub_dispenser.pdo.dsn">mysql:host=%database_host%;port=%database_port%;dbname=%database_name%;charset=utf8</parameter>
+        <parameter key="link_pub_dispenser.pdo.user">%database_user%</parameter>
+        <parameter key="link_pub_dispenser.pdo.password">%database_password%</parameter>
+    </parameters>
+    <services>
+        <service id="link_pub_dispenser.pdo" class="PDO">
+            <argument>%link_pub_dispenser.pdo.dsn%</argument>
+            <argument>%link_pub_dispenser.pdo.user%</argument>
+            <argument>%link_pub_dispenser.pdo.password%</argument>
+        </service>
+    </services>
+</container>

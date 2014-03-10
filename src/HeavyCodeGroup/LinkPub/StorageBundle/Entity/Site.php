@@ -80,6 +80,13 @@ class Site
      */
     protected $pages;
 
+    /**
+     * @var Page
+     * @ORM\JoinColumn(name="root_page_id")
+     * @ORM\OneToOne(targetEntity="Page")
+     */
+    protected $rootPage;
+
     public function __construct()
     {
         $this->pages = new ArrayCollection();
@@ -276,5 +283,22 @@ class Site
         return $this->pages;
     }
 
+    /**
+     * @param Page $rootPage
+     * @return Site
+     */
+    public function setRootPage($rootPage)
+    {
+        $this->rootPage = $rootPage;
+
+        return $this;
+    }
+
+    /**
+     * @return Page
+     */
+    public function getRootPage()
+    {
+        return $this->rootPage;
+    }
 }
- 

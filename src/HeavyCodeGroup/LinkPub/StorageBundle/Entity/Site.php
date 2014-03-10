@@ -4,13 +4,12 @@ namespace HeavyCodeGroup\LinkPub\StorageBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Rhumsaa\Uuid\Uuid;
 
 /**
  * Class Site
  * @package HeavyCodeGroup\LinkPub\StorageBundle\Entity
  *
- * @ORM\Entity(repositoryClass="HeavyCodeGroup\LinkPub\StorageBundle\Entity\SiteRepository")
+ * @ORM\Entity(repositoryClass="HeavyCodeGroup\LinkPub\StorageBundle\EntityRepository\SiteRepository")
  * @ORM\Table(name="site")
  * @ORM\HasLifecycleCallbacks()
  */
@@ -23,12 +22,6 @@ class Site
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
-
-    /**
-     * @var string
-     * @ORM\Column(name="guid", type="guid", length=36, unique=true)
-     */
-    protected $guid;
 
     /**
      * @var Category
@@ -87,6 +80,18 @@ class Site
      */
     protected $rootPage;
 
+    /**
+     * @var ArrayCollection
+     * @ORM\OneToMany(targetEntity="ConsumerInstance", mappedBy="site")
+     */
+    protected $consumerInstances;
+
+    /**
+     * @var boolean
+     * @ORM\Column(name="is_using_deprecated_consumer", type="boolean", nullable=true)
+     */
+    protected $isUsingDeprecatedConsumer;
+
     public function __construct()
     {
         $this->pages = new ArrayCollection();
@@ -98,26 +103,6 @@ class Site
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * @param string $guid
-     * @return Site
-     * @ORM\PrePersist
-     */
-    public function setGuid($guid = null)
-    {
-        $this->guid = ($guid === null) ? Uuid::uuid4() : $guid;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getGuid()
-    {
-        return $this->guid;
     }
 
     /**
@@ -301,4 +286,32 @@ class Site
     {
         return $this->rootPage;
     }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getConsumerInstances()
+    {
+        return $this->consumerInstances;
+    }
+
+    /**
+     * @param boolean $isUsingDeprecatedConsumer
+     * @return Site
+     */
+    public function setIsUsingDeprecatedConsumer($isUsingDeprecatedConsumer)
+    {
+        $this->isUsingDeprecatedConsumer = $isUsingDeprecatedConsumer;
+
+        return $this;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getIsUsingDeprecatedConsumer()
+    {
+        return $this->isUsingDeprecatedConsumer;
+    }
+
 }

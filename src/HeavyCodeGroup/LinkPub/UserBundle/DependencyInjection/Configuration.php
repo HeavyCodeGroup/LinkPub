@@ -1,6 +1,6 @@
 <?php
 
-namespace HeavyCodeGroup\LinkPub\GuiBundle\DependencyInjection;
+namespace HeavyCodeGroup\LinkPub\UserBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;

@@ -1,4 +1,5 @@
 <?php
+
 namespace HeavyCodeGroup\LinkPub\UserBundle\Security\Core\User;
 
 use HWI\Bundle\OAuthBundle\OAuth\Response\UserResponseInterface;
@@ -16,12 +17,16 @@ class FOSUBUserProvider extends BaseClass
         $property = $this->getProperty($response);
         $username = $response->getUsername();
 
+
         //on connect - get the access token and the user ID
         $service = $response->getResourceOwner()->getName();
 
         $setter = 'set'.ucfirst($service);
         $setter_id = $setter.'Id';
         $setter_token = $setter.'AccessToken';
+
+//        var_dump($response->getResourceOwner()->getName());
+//        exit;
 
         //we "disconnect" previously connected users
         if (null !== $previousUser = $this->userManager->findUserBy(array($property => $username))) {
@@ -33,6 +38,11 @@ class FOSUBUserProvider extends BaseClass
         //we connect current user
         $user->$setter_id($username);
         $user->$setter_token($response->getAccessToken());
+        $responseArray = $response->getResponse();
+
+        if ($response->getResourceOwner()->getName() == 'facebook') {
+            $user->setEmail($responseArray['email']);
+        }
 
         $this->userManager->updateUser($user);
     }

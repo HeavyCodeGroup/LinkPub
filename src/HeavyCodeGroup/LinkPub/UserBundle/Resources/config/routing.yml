@@ -1,4 +1,4 @@
-linkpub_client_sites:
-    path: /sites
-    defaults: { _controller: LinkPubGuiBundle:Client:sites }
+linkpub_user_homepage:
+    path: /
+    defaults: { _controller: LinkPubUserBundle:User:homepage }
 

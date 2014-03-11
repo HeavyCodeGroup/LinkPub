@@ -16,3 +16,10 @@ parameters:
     node:              /usr/bin/node
     node_modules:      /usr/lib/node_modules
 
+    facebook_app_id:   428625093906622
+    facebook_app_secret:   4ee26d33df281e8bcd7e0b38c8adcabe
+
+    vkontakte_app_id:  4234082
+    vkontakte_app_secret:  LUXi1Z3Cy4E2NnuTVlma
+
+

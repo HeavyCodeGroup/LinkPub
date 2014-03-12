@@ -5,7 +5,7 @@ use Symfony\Component\HttpFoundation\Request;
 $loader = require_once __DIR__.'/../app/bootstrap.php.cache';
 
 require_once __DIR__.'/../app/AppKernelDispenser.php';
-$kernel = new AppKernelDispenser('dispenser', true);
+$kernel = new AppKernelDispenser('dispenser', false);
 $kernel->loadClassCache();
 $request = Request::createFromGlobals();
 $response = $kernel->handle($request);

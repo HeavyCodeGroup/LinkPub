@@ -22,5 +22,10 @@
                 <argument type="service" id="service_container"/>
             </call>
         </service>
+        <service id="link_pub_dispenser.exception_listener" class="HeavyCodeGroup\LinkPub\DispenserBundle\EventListener\ExceptionListener">
+            <tag name="kernel.event_listener" event="kernel.exception" method="onKernelException"/>
+            <argument type="service" id="logger" on-invalid="null" />
+            <argument>%kernel.debug%</argument>
+        </service>
     </services>
 </container>

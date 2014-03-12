@@ -6,6 +6,7 @@ use Symfony\Component\Console\Application;
 use Symfony\Component\DependencyInjection\Compiler\PassConfig;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Scope;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Bundle\FrameworkBundle\Command as SymfonyFrameworkCommand;
 use Symfony\Bundle\FrameworkBundle\DependencyInjection\Compiler as SymfonyFrameworkCompiler;
@@ -22,6 +23,23 @@ class FrameworkMiniBundle extends Bundle
         $application->add(new SymfonyFrameworkCommand\CacheClearCommand());
         $application->add(new SymfonyFrameworkCommand\CacheWarmupCommand());
         $application->add(new SymfonyFrameworkCommand\ContainerDebugCommand());
+    }
+
+    public function boot()
+    {
+        parent::boot();
+
+        if ($trustedProxies = $this->container->getParameter('kernel.trusted_proxies')) {
+            Request::setTrustedProxies($trustedProxies);
+        }
+
+        if ($this->container->getParameter('kernel.http_method_override')) {
+            Request::enableHttpMethodParameterOverride();
+        }
+
+        if ($trustedHosts = $this->container->getParameter('kernel.trusted_hosts')) {
+            Request::setTrustedHosts($trustedHosts);
+        }
     }
 
     public function build(ContainerBuilder $container)

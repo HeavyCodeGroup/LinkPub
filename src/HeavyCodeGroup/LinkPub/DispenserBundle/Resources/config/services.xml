@@ -14,5 +14,13 @@
             <argument>%link_pub_dispenser.pdo.user%</argument>
             <argument>%link_pub_dispenser.pdo.password%</argument>
         </service>
+        <service id="link_pub_dispenser.router_listener.fake" class="HeavyCodeGroup\LinkPub\DispenserBundle\EventListener\FakeRouterListener">
+            <tag name="kernel.event_listener" event="kernel.request" method="onKernelRequest"/>
+        </service>
+        <service id="link_pub_dispenser.controller.default" class="HeavyCodeGroup\LinkPub\DispenserBundle\Controller\DefaultController">
+            <call method="setContainer">
+                <argument type="service" id="service_container"/>
+            </call>
+        </service>
     </services>
 </container>

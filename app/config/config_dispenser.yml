@@ -1,0 +1,19 @@
+imports:
+    - { resource: parameters.yml }
+
+#framework:
+#    translator:      ~
+#    secret:          "%secret%"
+#    router:
+#        resource:    "%kernel.root_dir%/config/routing_dispenser.yml"
+#        strict_requirements: true
+#    form:            ~
+#    csrf_protection: ~
+#    validation:      { enable_annotations: true }
+#    templating:
+#        engines:     [ 'php' ]
+#    default_locale:  "%locale%"
+#    trusted_proxies: ~
+#    session:         ~
+#    fragments:       ~
+#    http_method_override: true

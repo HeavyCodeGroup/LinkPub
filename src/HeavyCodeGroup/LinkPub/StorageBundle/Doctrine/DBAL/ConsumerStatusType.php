@@ -32,4 +32,3 @@ class ConsumerStatusType extends AbstractEnumType
         );
     }
 }
- 

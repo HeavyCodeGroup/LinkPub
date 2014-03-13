@@ -57,4 +57,3 @@ abstract class AbstractEnumType extends Type
      */
     abstract protected function getAvailableValues();
 }
- 

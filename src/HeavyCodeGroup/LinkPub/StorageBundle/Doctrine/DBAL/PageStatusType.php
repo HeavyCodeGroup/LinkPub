@@ -30,4 +30,3 @@ class PageStatusType extends AbstractEnumType
         );
     }
 }
- 

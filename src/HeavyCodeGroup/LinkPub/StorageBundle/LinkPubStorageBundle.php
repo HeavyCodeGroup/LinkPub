@@ -2,11 +2,11 @@
 
 namespace HeavyCodeGroup\LinkPub\StorageBundle;
 
-use HeavyCodeGroup\LinkPub\StorageBundle\Doctrine\DBAL\ConsumerStatusType;
 use HeavyCodeGroup\LinkPub\StorageBundle\DependencyInjection\Compiler\AddEnumDoctrineTypePass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Doctrine\DBAL\Types\Type;
+use HeavyCodeGroup\LinkPub\StorageBundle\Doctrine\DBAL\ConsumerStatusType;
 use HeavyCodeGroup\LinkPub\StorageBundle\Doctrine\DBAL\PageStatusType;
 use HeavyCodeGroup\LinkPub\StorageBundle\Doctrine\DBAL\LinkStatusType;
 use HeavyCodeGroup\LinkPub\StorageBundle\Doctrine\DBAL\LinkProblemType;

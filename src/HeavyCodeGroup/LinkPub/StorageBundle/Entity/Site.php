@@ -102,6 +102,7 @@ class Site
     public function __construct()
     {
         $this->pages = new ArrayCollection();
+        $this->consumerInstances = new ArrayCollection();
     }
 
     /**
@@ -288,7 +289,7 @@ class Site
     }
 
     /**
-     * @return ArrayCollection
+     * @return ArrayCollection|Page[]
      */
     public function getPages()
     {
@@ -315,7 +316,7 @@ class Site
     }
 
     /**
-     * @return ArrayCollection
+     * @return ArrayCollection|ConsumerInstance[]
      */
     public function getConsumerInstances()
     {

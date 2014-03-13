@@ -119,7 +119,7 @@ class Category
     }
 
     /**
-     * @return ArrayCollection
+     * @return ArrayCollection|Category[]
      */
     public function getChildren()
     {
@@ -149,7 +149,7 @@ class Category
     }
 
     /**
-     * @return ArrayCollection
+     * @return ArrayCollection|Site[]
      */
     public function getSites()
     {

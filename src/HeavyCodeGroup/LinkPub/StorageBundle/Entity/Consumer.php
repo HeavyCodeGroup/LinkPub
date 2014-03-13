@@ -75,7 +75,7 @@ class Consumer
     }
 
     /**
-     * @return ArrayCollection
+     * @return ArrayCollection|ConsumerInstance[]
      */
     public function getInstances()
     {

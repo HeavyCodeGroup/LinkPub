@@ -3,6 +3,7 @@
 namespace HeavyCodeGroup\LinkPub\IndexerBundle\Command;
 
 use HeavyCodeGroup\LinkPub\BaseBundle\Command\BaseCommand;
+use HeavyCodeGroup\LinkPub\StorageBundle\Entity\Site;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -34,13 +35,22 @@ class SiteIndexCommand extends BaseCommand
         $url = $input->getArgument('url');
 
         $output->writeln("<info>Started indexing site $url</info>");
-        $this->scanSite($url, $output);
+        //TODO: Write code
         $output->writeln("<info>Indexing of $url successfully complete</info>");
     }
 
-    private function scanSite($url, OutputInterface $output)
+    private function scanSite(Site $site)
     {
+        $urlRootPage = $site->getRootUrl();
+        $crawlerRootPage = $this->loadUrl($urlRootPage);
 
+        if (false !== $crawlerRootPage) {
+            $existingSitePages = $site->getPages();
+
+
+        } else {
+            $this->output->writeln("<error>Error site path URL</error>");
+        }
     }
 
     /**
@@ -59,7 +69,6 @@ class SiteIndexCommand extends BaseCommand
             return false;
         }
     }
-
 
     private function getAllLinks($url)
     {

@@ -236,7 +236,7 @@ class Page
     }
 
     /**
-     * @return ArrayCollection
+     * @return ArrayCollection|Link[]
      */
     public function getLinksOn()
     {
@@ -268,7 +268,7 @@ class Page
     }
 
     /**
-     * @return ArrayCollection
+     * @return ArrayCollection|Page[]
      */
     public function getParents()
     {
@@ -300,7 +300,7 @@ class Page
     }
 
     /**
-     * @return ArrayCollection
+     * @return ArrayCollection|Page[]
      */
     public function getChildren()
     {

@@ -4,7 +4,7 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
-        <service id="link_pub_storage.page_subscriber" class="HeavyCodeGroup\LinkPub\StorageBundle\Doctrine\PageSubscriber" public="false">
+        <service id="link_pub_storage.page_listener" class="HeavyCodeGroup\LinkPub\StorageBundle\Doctrine\PageListener" public="false">
             <tag name="doctrine.event_subscriber" connection="default"/>
         </service>
     </services>

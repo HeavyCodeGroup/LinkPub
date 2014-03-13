@@ -8,7 +8,7 @@ use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Doctrine\ORM\Events;
 use HeavyCodeGroup\LinkPub\StorageBundle\Entity\Page;
 
-class PageSubscriber implements EventSubscriber
+class PageListener implements EventSubscriber
 {
     public function prePersist(LifecycleEventArgs $event)
     {

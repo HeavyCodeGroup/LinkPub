@@ -4,6 +4,7 @@ namespace HeavyCodeGroup\LinkPub\StorageBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Rhumsaa\Uuid\Uuid;
 
 /**
  * Class Site
@@ -22,6 +23,12 @@ class Site
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
+
+    /**
+     * @var string
+     * @ORM\Column(name="guid", type="guid", length=36, unique=true)
+     */
+    protected $guid;
 
     /**
      * @var Category
@@ -95,6 +102,7 @@ class Site
     public function __construct()
     {
         $this->pages = new ArrayCollection();
+        $this->consumerInstances = new ArrayCollection();
     }
 
     /**
@@ -103,6 +111,26 @@ class Site
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @param string $guid
+     * @return Site
+     * @ORM\PrePersist
+     */
+    public function setGuid($guid = null)
+    {
+        $this->guid = ($guid === null) ? Uuid::uuid4() : $guid;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getGuid()
+    {
+        return $this->guid;
     }
 
     /**
@@ -261,7 +289,7 @@ class Site
     }
 
     /**
-     * @return ArrayCollection
+     * @return ArrayCollection|Page[]
      */
     public function getPages()
     {
@@ -288,7 +316,7 @@ class Site
     }
 
     /**
-     * @return ArrayCollection
+     * @return ArrayCollection|ConsumerInstance[]
      */
     public function getConsumerInstances()
     {

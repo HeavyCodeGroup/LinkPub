@@ -32,7 +32,7 @@
     #   following RewriteCond (best solution)
     RewriteCond %{ENV:REDIRECT_STATUS} ^$
     RewriteCond %{HTTP_HOST} ^dispenser\..+$
-    RewriteRule ^dispenser\.php(/(.*)|$) %{ENV:BASE}/$2 [R=301,L]
+    RewriteRule ^dispenser_debug\.php(/(.*)|$) %{ENV:BASE}/$2 [R=301,L]
 
     RewriteCond %{ENV:REDIRECT_STATUS} ^$
     RewriteCond %{HTTP_HOST} !^dispenser\..+$
@@ -45,7 +45,7 @@
 
     # Rewrite all other queries to the front controller.
     RewriteCond %{HTTP_HOST} ^dispenser\..+$
-    RewriteRule .? %{ENV:BASE}/dispenser.php [L]
+    RewriteRule .? %{ENV:BASE}/dispenser_debug.php [L]
 
     RewriteCond %{HTTP_HOST} !^dispenser\..+$
     RewriteRule .? %{ENV:BASE}/app_dev.php [L]

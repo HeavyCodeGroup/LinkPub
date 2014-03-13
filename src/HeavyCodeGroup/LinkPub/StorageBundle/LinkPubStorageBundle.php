@@ -2,6 +2,7 @@
 
 namespace HeavyCodeGroup\LinkPub\StorageBundle;
 
+use HeavyCodeGroup\LinkPub\StorageBundle\DBAL\ConsumerStatusType;
 use HeavyCodeGroup\LinkPub\StorageBundle\DependencyInjection\Compiler\AddEnumDoctrineTypePass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
@@ -34,6 +35,13 @@ class LinkPubStorageBundle extends Bundle
             Type::addType(
                 LinkProblemType::ENUM_LINK_PROBLEM,
                 'HeavyCodeGroup\LinkPub\StorageBundle\DBAL\LinkProblemType'
+            );
+        }
+
+        if (!Type::hasType(ConsumerStatusType::ENUM_CONSUMER_STATUS)) {
+            Type::addType(
+                ConsumerStatusType::ENUM_CONSUMER_STATUS,
+                'HeavyCodeGroup\LinkPub\StorageBundle\DBAL\ConsumerStatusType'
             );
         }
     }

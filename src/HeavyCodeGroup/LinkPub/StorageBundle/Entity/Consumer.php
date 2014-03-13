@@ -31,16 +31,16 @@ class Consumer
     protected $dateReleased;
 
     /**
-     * @var boolean
-     * @ORM\Column(name="is_deprecated", type="boolean")
-     */
-    protected $isDeprecated;
-
-    /**
      * @var ArrayCollection
      * @ORM\OneToMany(targetEntity="ConsumerInstance", mappedBy="consumer")
      */
     protected $instances;
+
+    /**
+     * @var string
+     * @ORM\Column(name="status", type="linkpub_enum_consumer_status")
+     */
+    protected $status;
 
     public function __construct()
     {
@@ -75,29 +75,29 @@ class Consumer
     }
 
     /**
-     * @param boolean $isDeprecated
-     * @return Consumer
-     */
-    public function setIsDeprecated($isDeprecated)
-    {
-        $this->isDeprecated = $isDeprecated;
-
-        return $this;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function getIsDeprecated()
-    {
-        return $this->isDeprecated;
-    }
-
-    /**
      * @return ArrayCollection
      */
     public function getInstances()
     {
         return $this->instances;
+    }
+
+    /**
+     * @param string $status
+     * @return Consumer
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getStatus()
+    {
+        return $this->status;
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace HeavyCodeGroup\LinkPub\StorageBundle\DBAL;
+namespace HeavyCodeGroup\LinkPub\StorageBundle\Doctrine\DBAL;
 
 class ConsumerStatusType extends AbstractEnumType
 {

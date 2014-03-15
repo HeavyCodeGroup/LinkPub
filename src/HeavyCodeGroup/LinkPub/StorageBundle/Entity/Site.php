@@ -75,6 +75,12 @@ class Site
     protected $dateLastObtain;
 
     /**
+     * @var \DateTime
+     * @ORM\Column(name="date_last_updated", type="datetime", nullable=true)
+     */
+    protected $dateLastUpdated;
+
+    /**
      * @var ArrayCollection
      * @ORM\OneToMany(targetEntity="Page", mappedBy="site")
      */
@@ -264,6 +270,25 @@ class Site
     public function getDateLastObtain()
     {
         return $this->dateLastObtain;
+    }
+
+    /**
+     * @param \DateTime $dateLastUpdated
+     * @return Site
+     */
+    public function setDateLastUpdated($dateLastUpdated)
+    {
+        $this->dateLastUpdated = $dateLastUpdated;
+
+        return $this;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getDateLastUpdated()
+    {
+        return $this->dateLastUpdated;
     }
 
     /**

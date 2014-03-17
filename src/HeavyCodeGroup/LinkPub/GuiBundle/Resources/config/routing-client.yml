@@ -3,8 +3,8 @@ linkpub_gui_client_dashboard:
     defaults: { _controller: LinkPubGuiBundle:Client:dashboard }
 
 linkpub_gui_client_sites:
-    path: /sites
-    defaults: { _controller: LinkPubGuiBundle:Client:sites }
+    path: /sites/{page}
+    defaults: { _controller: LinkPubGuiBundle:Client:sites, page: 1 }
 
 linkpub_gui_incoming_links:
     path: /incoming-links

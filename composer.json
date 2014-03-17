@@ -42,7 +42,8 @@
         "friendsofsymfony/user-bundle": "~2.0@dev",
         "doctrine/doctrine-fixtures-bundle": "v2.2.0",
         "rhumsaa/uuid": "2.7.1",
-        "fabpot/goutte": "v1.0.5"
+        "fabpot/goutte": "v1.0.5",
+        "white-october/pagerfanta-bundle": "dev-master"
     },
     "scripts": {
         "post-install-cmd": [

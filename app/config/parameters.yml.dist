@@ -15,4 +15,5 @@ parameters:
     secret:            ThisTokenIsNotSoSecretChangeIt
     node:              /usr/bin/node
     node_modules:      /usr/lib/node_modules
+    sites_per_page:    20
 

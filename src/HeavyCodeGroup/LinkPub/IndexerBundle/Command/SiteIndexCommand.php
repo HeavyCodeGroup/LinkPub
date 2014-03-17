@@ -47,7 +47,6 @@ class SiteIndexCommand extends BaseCommand
         if (false !== $crawlerRootPage) {
             $existingSitePages = $site->getPages();
 
-
         } else {
             $this->output->writeln("<error>Error site path URL</error>");
         }

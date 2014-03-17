@@ -21,6 +21,15 @@
             <call method="setContainer">
                 <argument type="service" id="service_container"/>
             </call>
+            <call method="setDispenseInterval">
+                <argument>%link_pub_dispenser.dispense_interval%</argument>
+            </call>
+            <call method="setRepository">
+                <argument type="service" id="link_pub_dispenser.repository"/>
+            </call>
+        </service>
+        <service id="link_pub_dispenser.repository" class="HeavyCodeGroup\LinkPub\DispenserBundle\Repository">
+            <argument type="service" id="link_pub_dispenser.pdo"/>
         </service>
         <service id="link_pub_dispenser.exception_listener" class="HeavyCodeGroup\LinkPub\DispenserBundle\EventListener\ExceptionListener">
             <tag name="kernel.event_listener" event="kernel.exception" method="onKernelException"/>

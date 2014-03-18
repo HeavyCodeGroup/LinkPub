@@ -47,7 +47,26 @@ class Repository
      */
     public function getSiteByConsumerInstanceGuid($guid)
     {
-        // TODO
+        $sth = $this->pdo->prepare(
+            'SELECT
+              site.id,
+              site.date_last_obtain,
+              site.date_last_updated
+             FROM site
+              INNER JOIN consumer_instance ON site.id = consumer_instance.site_id
+             WHERE consumer_instance.guid = :consumer_instance_guid'
+        );
+        $sth->bindValue(':consumer_instance_guid', $guid);
+        $sth->execute();
+
+        if ($row = $sth->fetch(\PDO::FETCH_NUM)) {
+            $site = new Site($this);
+            $site->setId($row[0])->setDateLastObtain($row[1])->setDateLastUpdated($row[2]);
+
+            return $site;
+        }
+
+        return null;
     }
 
     /**

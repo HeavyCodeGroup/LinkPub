@@ -2,3 +2,8 @@ linkpub.gui.dashboard: Dashboard
 linkpub.gui.sites: Sites
 linkpub.gui.incoming_links: Incoming Links
 linkpub.gui.outgoing_links: Outgoing Links
+my_sites: My sites
+site_name: Name
+site_pages: Pages
+site_links_in: Links Buy
+site_links_outgoing: Links Sell

@@ -20,9 +20,11 @@ class AppKernel extends Kernel
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
             new Knp\Bundle\MenuBundle\KnpMenuBundle(),
             new FOS\UserBundle\FOSUserBundle(),
+            new WhiteOctober\PagerfantaBundle\WhiteOctoberPagerfantaBundle(),
             new HeavyCodeGroup\LinkPub\StorageBundle\LinkPubStorageBundle(),
             new HeavyCodeGroup\LinkPub\GuiBundle\LinkPubGuiBundle(),
             new HeavyCodeGroup\LinkPub\UserBundle\LinkPubUserBundle(),
+            new HeavyCodeGroup\LinkPub\IndexerBundle\LinkPubIndexerBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

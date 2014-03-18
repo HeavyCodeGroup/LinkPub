@@ -2,6 +2,8 @@
 
 namespace HeavyCodeGroup\LinkPub\GuiBundle\Controller;
 
+use Pagerfanta\Adapter\DoctrineORMAdapter;
+use Pagerfanta\Pagerfanta;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class ClientController extends Controller
@@ -11,9 +13,20 @@ class ClientController extends Controller
         return $this->render('LinkPubGuiBundle:Client:dashboard.html.twig');
     }
 
-    public function sitesAction()
+    public function sitesAction($page)
     {
-        return $this->render('LinkPubGuiBundle:Client:sites.html.twig');
+        $sitesRepository = $this->getDoctrine()->getRepository('LinkPubStorageBundle:Site');
+        $sitesUser = $sitesRepository->findAllByUserQuery($this->getUser());
+
+        $adapter = new DoctrineORMAdapter($sitesUser);
+        $pagerfanta = new Pagerfanta($adapter);
+        $pagerfanta->setMaxPerPage($this->container->getParameter('sites_per_page'));
+        $pagerfanta->setCurrentPage($page);
+
+        return $this->render('LinkPubGuiBundle:Client:sites.html.twig', array(
+           'sites' => $pagerfanta->getCurrentPageResults(),
+           'pagerfanta' => $pagerfanta
+        ));
     }
 
     public function incomingLinksAction()

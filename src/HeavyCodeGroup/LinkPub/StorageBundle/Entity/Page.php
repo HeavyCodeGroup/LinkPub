@@ -73,6 +73,12 @@ class Page
 
     /**
      * @var ArrayCollection
+     * @ORM\OneToMany(targetEntity="Link", mappedBy="trackPage")
+     */
+    protected $linksTracked;
+
+    /**
+     * @var ArrayCollection
      * @ORM\JoinTable(name="page_connection",
      *      joinColumns={@ORM\JoinColumn(name="child_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="parent_id", referencedColumnName="id")}
@@ -241,6 +247,14 @@ class Page
     public function getLinksOn()
     {
         return $this->linksOn;
+    }
+
+    /**
+     * @return ArrayCollection|Link[]
+     */
+    public function getLinksTracked()
+    {
+        return $this->linksTracked;
     }
 
     /**

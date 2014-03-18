@@ -24,6 +24,12 @@ class Consumer
     protected $id;
 
     /**
+     * @var string
+     * @ORM\Column(name="guid", type="guid", length=36, unique=true)
+     */
+    protected $guid;
+
+    /**
      * @var \DateTime
      * @ORM\Column(name="date_released", type="datetime", nullable=false)
      * @DoctrineExtension\Timestampable(on="create")
@@ -53,6 +59,25 @@ class Consumer
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @param string $guid
+     * @return Consumer
+     */
+    public function setGuid($guid)
+    {
+        $this->guid = $guid;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getGuid()
+    {
+        return $this->guid;
     }
 
     /**

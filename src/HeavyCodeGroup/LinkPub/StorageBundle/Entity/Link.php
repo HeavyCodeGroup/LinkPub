@@ -74,7 +74,7 @@ class Link
     /**
      * @var Page
      * @ORM\JoinColumn(name="track_page_id", nullable=true)
-     * @ORM\ManyToOne(targetEntity="Page")
+     * @ORM\ManyToOne(targetEntity="Page", inversedBy="linksTracked")
      */
     protected $trackPage;
 

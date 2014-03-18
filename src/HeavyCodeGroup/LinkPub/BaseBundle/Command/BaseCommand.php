@@ -28,4 +28,3 @@ class BaseCommand extends ContainerAwareCommand
         $this->output = $output;
     }
 }
- 

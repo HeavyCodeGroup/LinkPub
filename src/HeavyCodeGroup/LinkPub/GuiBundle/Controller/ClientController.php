@@ -24,8 +24,8 @@ class ClientController extends Controller
         $pagerfanta->setCurrentPage($page);
 
         return $this->render('LinkPubGuiBundle:Client:sites.html.twig', array(
-            'sites' => $pagerfanta->getCurrentPageResults(),
-            'pagerfanta' => $pagerfanta
+           'sites' => $pagerfanta->getCurrentPageResults(),
+           'pagerfanta' => $pagerfanta
         ));
     }
 

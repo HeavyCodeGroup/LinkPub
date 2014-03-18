@@ -6,4 +6,3 @@ class SiteNotFoundException extends \Exception
 {
 
 }
- 

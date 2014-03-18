@@ -2,6 +2,7 @@
 
 namespace HeavyCodeGroup\LinkPub\DispenserBundle\Controller;
 
+use HeavyCodeGroup\LinkPub\DispenserBundle\Consumer;
 use HeavyCodeGroup\LinkPub\DispenserBundle\Repository;
 use HeavyCodeGroup\LinkPub\DispenserBundle\Site;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -43,6 +44,18 @@ class DefaultController extends AbstractController
         $guid = $request->get('guid');
         $siteGuid = $request->get('site_guid');
         $consumerVersionGuid = $request->get('consumer_guid');
+
+        if ($guid) {
+            $consumer = $this->repository->getConsumerByInstanceGuid($guid);
+        } elseif ($siteGuid && $consumerVersionGuid) {
+            $consumer = $this->repository->getConsumerByGuid($consumerVersionGuid);
+        } else {
+            throw new BadRequestHttpException();
+        }
+
+        if (!($consumer instanceof Consumer) || $consumer->isDisabled()) {
+            throw new NotFoundHttpException();
+        }
 
         if ($guid) {
             $site = $this->repository->getSiteByConsumerInstanceGuid($guid);

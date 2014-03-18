@@ -1,6 +1,7 @@
 <?php
 
 namespace HeavyCodeGroup\LinkPub\DispenserBundle;
+
 /**
  * Class Repository
  * @package HeavyCodeGroup\LinkPub\DispenserBundle
@@ -103,5 +104,54 @@ class Repository
         }
 
         return $links;
+    }
+
+    /**
+     * @param string $guid
+     * @return Consumer
+     */
+    public function getConsumerByGuid($guid)
+    {
+        $sth = $this->pdo->prepare(
+            'SELECT id, status FROM consumer WHERE guid = :consumer_guid'
+        );
+        $sth->bindValue(':consumer_guid', $guid);
+        $sth->execute();
+
+        if ($row = $sth->fetch(\PDO::FETCH_NUM)) {
+            $consumer = new Consumer($this);
+            $consumer->setId($row[0])->setStatus($row[1]);
+
+            return $consumer;
+        }
+
+        return null;
+    }
+
+    /**
+     * @param string $guid
+     * @return Consumer
+     */
+    public function getConsumerByInstanceGuid($guid)
+    {
+        $sth = $this->pdo->prepare(
+            'SELECT
+              consumer.id,
+              consumer.status
+             FROM consumer
+              INNER JOIN consumer_instance ON consumer.id = consumer_instance.consumer_id
+             WHERE consumer_instance.guid = :instance_guid'
+        );
+        $sth->bindValue(':instance_guid', $guid);
+        $sth->execute();
+
+        if ($row = $sth->fetch(\PDO::FETCH_NUM)) {
+            $consumer = new Consumer($this);
+            $consumer->setId($row[0])->setStatus($row[1]);
+
+            return $consumer;
+        }
+
+        return null;
     }
 }

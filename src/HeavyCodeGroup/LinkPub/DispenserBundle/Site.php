@@ -1,6 +1,7 @@
 <?php
 
 namespace HeavyCodeGroup\LinkPub\DispenserBundle;
+
 /**
  * Class Site
  * @package HeavyCodeGroup\LinkPub\DispenserBundle

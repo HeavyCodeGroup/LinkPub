@@ -16,7 +16,7 @@ class ClientController extends Controller
     public function sitesAction($page)
     {
         $sitesRepository = $this->getDoctrine()->getRepository('LinkPubStorageBundle:Site');
-        $sitesUser = $sitesRepository->findBy(array('owner' => $this->getUser()));
+        $sitesUser = $sitesRepository->findAllByUserQuery($this->getUser());
 
         $adapter = new DoctrineORMAdapter($sitesUser);
         $pagerfanta = new Pagerfanta($adapter);

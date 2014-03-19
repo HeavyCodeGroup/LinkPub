@@ -14,9 +14,6 @@
             <argument>%link_pub_dispenser.pdo.user%</argument>
             <argument>%link_pub_dispenser.pdo.password%</argument>
         </service>
-        <service id="link_pub_dispenser.router_listener.fake" class="HeavyCodeGroup\LinkPub\DispenserBundle\EventListener\FakeRouterListener">
-            <tag name="kernel.event_listener" event="kernel.request" method="onKernelRequest"/>
-        </service>
         <service id="link_pub_dispenser.controller.default" class="HeavyCodeGroup\LinkPub\DispenserBundle\Controller\DefaultController">
             <call method="setContainer">
                 <argument type="service" id="service_container"/>
@@ -30,11 +27,6 @@
         </service>
         <service id="link_pub_dispenser.repository" class="HeavyCodeGroup\LinkPub\DispenserBundle\Repository">
             <argument type="service" id="link_pub_dispenser.pdo"/>
-        </service>
-        <service id="link_pub_dispenser.exception_listener" class="HeavyCodeGroup\LinkPub\DispenserBundle\EventListener\ExceptionListener">
-            <tag name="kernel.event_listener" event="kernel.exception" method="onKernelException"/>
-            <argument type="service" id="logger" on-invalid="null" />
-            <argument>%kernel.debug%</argument>
         </service>
     </services>
 </container>

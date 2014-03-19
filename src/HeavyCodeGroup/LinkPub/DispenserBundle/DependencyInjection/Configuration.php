@@ -14,8 +14,17 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
+                ->booleanNode('router_listener')
+                    ->defaultFalse()
+                ->end()
+                ->booleanNode('exception_listener')
+                    ->defaultFalse()
+                ->end()
+                ->booleanNode('tools')
+                    ->defaultFalse()
+                ->end()
                 ->integerNode('dispense_interval')
-                ->defaultValue('1800')
+                    ->defaultValue('1800')
                 ->end()
             ->end()
         ;

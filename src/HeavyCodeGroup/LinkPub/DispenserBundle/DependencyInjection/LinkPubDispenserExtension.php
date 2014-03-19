@@ -18,5 +18,14 @@ class LinkPubDispenserExtension extends Extension
         $config = $this->processConfiguration($configuration, $configs);
 
         $container->setParameter('link_pub_dispenser.dispense_interval', $config['dispense_interval']);
+        if ($config['router_listener']) {
+            $loader->load('router_listener.xml');
+        }
+        if ($config['exception_listener']) {
+            $loader->load('exception_listener.xml');
+        }
+        if ($config['tools']) {
+            $loader->load('tools.xml');
+        }
     }
 }

@@ -12,6 +12,7 @@ class SiteRepository extends EntityRepository
         return $this
             ->createQueryBuilder('site')
             ->select('site as siteFields',
+                'category.title as siteCategoryTitle',
                 'count(DISTINCT pages.id) as pagesCount',
                 'count(linksOn.id) as linksCountOn',
                 'count(linksTracked.id) as linksCountTracked'
@@ -19,6 +20,7 @@ class SiteRepository extends EntityRepository
             ->leftJoin('site.pages', 'pages')
             ->leftJoin('pages.linksOn', 'linksOn')
             ->leftJoin('pages.linksTracked', 'linksTracked')
+            ->leftJoin('site.category', 'category')
             ->where('site.owner = :owner')
             ->groupBy('site')
             ->setParameter(':owner', $user)

@@ -2,7 +2,9 @@
 
 namespace HeavyCodeGroup\LinkPub\IndexerBundle\Command;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use HeavyCodeGroup\LinkPub\BaseBundle\Command\BaseCommand;
+use HeavyCodeGroup\LinkPub\StorageBundle\Entity\Page;
 use HeavyCodeGroup\LinkPub\StorageBundle\Entity\Site;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -39,16 +41,24 @@ class SiteIndexCommand extends BaseCommand
         $output->writeln("<info>Indexing of $url successfully complete</info>");
     }
 
+    /**
+     * @param Site $site
+     */
     private function scanSite(Site $site)
     {
         $urlRootPage = $site->getRootUrl();
-        $crawlerRootPage = $this->loadUrl($urlRootPage);
+        $linksRootPage = $this->getAllLinks($urlRootPage);
+        $goDeeper = true;
 
-        if (false !== $crawlerRootPage) {
+        if (false !== $linksRootPage) {
+            $pagesIndex = array();
             $existingSitePages = $site->getPages();
 
+            while ($goDeeper) {
+            //TODO: Write code
+            }
         } else {
-            $this->output->writeln("<error>Error site path URL</error>");
+            $this->output->writeln("<error>Site is not available. Posibble, connections problems</error>");
         }
     }
 
@@ -69,6 +79,10 @@ class SiteIndexCommand extends BaseCommand
         }
     }
 
+    /**
+     * @param $url
+     * @return bool|Crawler
+     */
     private function getAllLinks($url)
     {
         $crawlerPage = $this->loadUrl($url);
@@ -78,5 +92,21 @@ class SiteIndexCommand extends BaseCommand
         } else {
             return false;
         }
+    }
+
+    /**
+     * @param string $url
+     * @param Page[]|ArrayCollection $pages
+     * @return bool
+     */
+    private function isNewInDBIndex($url, ArrayCollection $pages)
+    {
+        foreach ($pages as $page) {
+            if ($page->getFullUrl() == $url) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

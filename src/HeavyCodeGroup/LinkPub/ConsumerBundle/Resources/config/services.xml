@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <parameters>
+        <parameter key="link_pub_consumer.installer.path">%kernel.root_dir%/consumers/prototypes</parameter>
+        <parameter key="link_pub_consumer.installer.tmp">%kernel.root_dir%/tmp</parameter>
+        <parameter key="link_pub_consumer.builder.path">%kernel.root_dir%/consumers/instances</parameter>
+        <parameter key="link_pub_consumer.builder.tmp">%kernel.root_dir%/tmp</parameter>
+    </parameters>
+    <services>
+        <service id="link_pub_consumer.installer" class="HeavyCodeGroup\LinkPub\ConsumerBundle\Tool\Installer" scope="prototype"/>
+        <service id="link_pub_consumer.builder" class="HeavyCodeGroup\LinkPub\ConsumerBundle\Tool\Builder" scope="prototype"/>
+    </services>
+</container>

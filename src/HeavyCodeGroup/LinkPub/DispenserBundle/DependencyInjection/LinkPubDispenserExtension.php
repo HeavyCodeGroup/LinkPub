@@ -24,8 +24,5 @@ class LinkPubDispenserExtension extends Extension
         if ($config['exception_listener']) {
             $loader->load('exception_listener.xml');
         }
-        if ($config['tools']) {
-            $loader->load('tools.xml');
-        }
     }
 }

@@ -1,25 +1,29 @@
 {% extends '::base.html.twig' %}
 {% block stylesheets %}
     {% stylesheets
-        'css/bootstrap.css'
-        '@LinkPubGuiBundle/Resources/public/css/style.less'
+    'css/bootstrap.css'
+    '@LinkPubGuiBundle/Resources/public/css/style.less'
     %}
     <link href="{{ asset_url }}" media="all" rel="stylesheet" type="text/css" />
     {% endstylesheets %}
 {% endblock %}
 
 {% block body %}
-<div class="container">
-    {% block  header %}
-        <header>
-            sdf
-        </header>
-    {% endblock header %}
+    <div class="container">
+        {% block  header %}
+            <header>
+                sdf
+            </header>
 
-    {% block content %}
-    {% endblock content %}
+            {% set mainMenu = knp_menu_get('LinkPubGuiBundle:MenuBuilder:mainMenu', [], {'class': 'nav nav-tabs client-menu'}) %}
+            {{ knp_menu_render(mainMenu, {'currentClass': 'active'}) }}
 
-    {% block footer %}
-    {% endblock footer %}
-</div>
+        {% endblock header %}
+
+        {% block content %}
+        {% endblock content %}
+
+        {% block footer %}
+        {% endblock footer %}
+    </div>
 {% endblock body %}

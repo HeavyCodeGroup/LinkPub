@@ -10,7 +10,7 @@ use Rhumsaa\Uuid\Uuid;
  * Class Site
  * @package HeavyCodeGroup\LinkPub\StorageBundle\Entity
  *
- * @ORM\Entity(repositoryClass="HeavyCodeGroup\LinkPub\StorageBundle\Entity\SiteRepository")
+ * @ORM\Entity(repositoryClass="HeavyCodeGroup\LinkPub\StorageBundle\EntityRepository\SiteRepository")
  * @ORM\Table(name="site")
  * @ORM\HasLifecycleCallbacks()
  */
@@ -75,6 +75,12 @@ class Site
     protected $dateLastObtain;
 
     /**
+     * @var \DateTime
+     * @ORM\Column(name="date_last_updated", type="datetime", nullable=true)
+     */
+    protected $dateLastUpdated;
+
+    /**
      * @var ArrayCollection
      * @ORM\OneToMany(targetEntity="Page", mappedBy="site")
      */
@@ -87,9 +93,22 @@ class Site
      */
     protected $rootPage;
 
+    /**
+     * @var ArrayCollection
+     * @ORM\OneToMany(targetEntity="ConsumerInstance", mappedBy="site")
+     */
+    protected $consumerInstances;
+
+    /**
+     * @var boolean
+     * @ORM\Column(name="is_using_deprecated_consumer", type="boolean", nullable=true)
+     */
+    protected $isUsingDeprecatedConsumer;
+
     public function __construct()
     {
         $this->pages = new ArrayCollection();
+        $this->consumerInstances = new ArrayCollection();
     }
 
     /**
@@ -254,6 +273,25 @@ class Site
     }
 
     /**
+     * @param \DateTime $dateLastUpdated
+     * @return Site
+     */
+    public function setDateLastUpdated($dateLastUpdated)
+    {
+        $this->dateLastUpdated = $dateLastUpdated;
+
+        return $this;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getDateLastUpdated()
+    {
+        return $this->dateLastUpdated;
+    }
+
+    /**
      * @param Page $page
      * @return $this
      */
@@ -276,7 +314,7 @@ class Site
     }
 
     /**
-     * @return ArrayCollection
+     * @return ArrayCollection|Page[]
      */
     public function getPages()
     {
@@ -301,4 +339,32 @@ class Site
     {
         return $this->rootPage;
     }
+
+    /**
+     * @return ArrayCollection|ConsumerInstance[]
+     */
+    public function getConsumerInstances()
+    {
+        return $this->consumerInstances;
+    }
+
+    /**
+     * @param boolean $isUsingDeprecatedConsumer
+     * @return Site
+     */
+    public function setIsUsingDeprecatedConsumer($isUsingDeprecatedConsumer)
+    {
+        $this->isUsingDeprecatedConsumer = $isUsingDeprecatedConsumer;
+
+        return $this;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getIsUsingDeprecatedConsumer()
+    {
+        return $this->isUsingDeprecatedConsumer;
+    }
+
 }

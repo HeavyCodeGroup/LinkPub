@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Class Link
  * @package HeavyCodeGroup\LinkPub\StorageBundle\Entity
  *
- * @ORM\Entity(repositoryClass="HeavyCodeGroup\LinkPub\StorageBundle\Entity\LinkRepository")
+ * @ORM\Entity(repositoryClass="HeavyCodeGroup\LinkPub\StorageBundle\EntityRepository\LinkRepository")
  * @ORM\Table(name="link")
  */
 class Link
@@ -74,7 +74,7 @@ class Link
     /**
      * @var Page
      * @ORM\JoinColumn(name="track_page_id", nullable=true)
-     * @ORM\ManyToOne(targetEntity="Page")
+     * @ORM\ManyToOne(targetEntity="Page", inversedBy="linksTracked")
      */
     protected $trackPage;
 

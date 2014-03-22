@@ -1,6 +1,29 @@
-@panel-color1: #c6d28d;
+@panel-color1: #e0e6ff;
+@active-tab-color: #adbcfd;
+@tab-border-color: #667ebb;
+
+@hover-tab-color: #f9f7df;
 
 header {
   height: 30px;
   background: @panel-color1;
+}
+
+.client-menu {
+  margin-top: 20px;
+  li a {
+    background: @panel-color1;
+    border: 1px solid @tab-border-color;
+  }
+  li.active a{
+    background: @active-tab-color;
+    border: 1px solid #667ebb;
+    &:hover {
+      background: @active-tab-color;
+    }
+  }
+  li a:hover {
+    background: @hover-tab-color;
+    border: 1px solid #667ebb;
+  }
 }

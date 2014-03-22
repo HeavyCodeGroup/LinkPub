@@ -1,6 +1,6 @@
 <?php
 
-namespace HeavyCodeGroup\LinkPub\StorageBundle\DBAL;
+namespace HeavyCodeGroup\LinkPub\StorageBundle\Doctrine\DBAL;
 
 class PageStatusType extends AbstractEnumType
 {
@@ -30,4 +30,3 @@ class PageStatusType extends AbstractEnumType
         );
     }
 }
- 

@@ -4,8 +4,7 @@ imports:
 
 framework:
     #esi:             ~
-#    translator:      { fallback: "%locale%" }
-    translator: ~
+    translator:      { fallback: "%locale%" }
     secret:          "%secret%"
     router:
         resource: "%kernel.root_dir%/config/routing.yml"
@@ -82,3 +81,7 @@ fos_user:
     db_driver: orm
     firewall_name: main
     user_class: HeavyCodeGroup\LinkPub\UserBundle\Entity\User
+
+knp_menu:
+    twig:
+        template: LinkPubGuiBundle::knp_menu.html.twig

@@ -1,0 +1,15 @@
+linkpub_gui_client_dashboard:
+    path: /dashboard
+    defaults: { _controller: LinkPubGuiBundle:Client:dashboard }
+
+linkpub_gui_client_sites:
+    path: /sites/{page}
+    defaults: { _controller: LinkPubGuiBundle:Client:sites, page: 1 }
+
+linkpub_gui_incoming_links:
+    path: /incoming-links
+    defaults: { _controller: LinkPubGuiBundle:Client:incomingLinks}
+
+linkpub_gui_outgoing_links:
+    path: /outgoing-links
+    defaults: { _controller: LinkPubGuiBundle:Client:outgoingLinks }

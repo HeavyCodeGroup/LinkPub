@@ -37,6 +37,13 @@ class Consumer
     protected $dateReleased;
 
     /**
+     * @var ConsumerImplementation
+     * @ORM\JoinColumn(name="implementation", nullable=false)
+     * @ORM\ManyToOne(targetEntity="ConsumerImplementation")
+     */
+    protected $implementation;
+
+    /**
      * @var ArrayCollection
      * @ORM\OneToMany(targetEntity="ConsumerInstance", mappedBy="consumer")
      */
@@ -97,6 +104,25 @@ class Consumer
     public function getDateReleased()
     {
         return $this->dateReleased;
+    }
+
+    /**
+     * @param ConsumerImplementation $implementation
+     * @return Consumer
+     */
+    public function setImplementation($implementation)
+    {
+        $this->implementation = $implementation;
+
+        return $this;
+    }
+
+    /**
+     * @return ConsumerImplementation
+     */
+    public function getImplementation()
+    {
+        return $this->implementation;
     }
 
     /**

@@ -4,6 +4,7 @@ namespace HeavyCodeGroup\LinkPub\IndexerBundle\Command;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use HeavyCodeGroup\LinkPub\BaseBundle\Command\BaseCommand;
+use HeavyCodeGroup\LinkPub\IndexerBundle\Exception\SiteNotFoundException;
 use HeavyCodeGroup\LinkPub\StorageBundle\Entity\Page;
 use HeavyCodeGroup\LinkPub\StorageBundle\Entity\Site;
 use Symfony\Component\Console\Input\InputArgument;
@@ -28,6 +29,7 @@ class SiteIndexCommand extends BaseCommand
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
+     * @throws SiteNotFoundException
      * @return int|null|void
      */
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -35,9 +37,20 @@ class SiteIndexCommand extends BaseCommand
         $this->initIO($input, $output);
 
         $url = $input->getArgument('url');
+        $siteToScan = $this
+            ->getContainer()
+            ->get('doctrine.orm.entity_manager')
+            ->getRepository('LinkPubStorageBundle:Site')
+            ->findOneBy(['rootUrl' => $url])
+        ;
+        if (!$siteToScan) {
+            $output->writeln("<error>Site $url not registered in DB</error>");
+            throw(new SiteNotFoundException);
+        }
 
         $output->writeln("<info>Started indexing site $url</info>");
-        //TODO: Write code
+        $this->scanSite($siteToScan);
+        //TODO: Write more code
         $output->writeln("<info>Indexing of $url successfully complete</info>");
     }
 
@@ -47,19 +60,34 @@ class SiteIndexCommand extends BaseCommand
     private function scanSite(Site $site)
     {
         $urlRootPage = $site->getRootUrl();
-        $linksRootPage = $this->getAllLinks($urlRootPage);
+        $linksRootPage = array_unique($this->getAllLinks($urlRootPage));
+        $indexedPages = $this->filterHost($linksRootPage, $urlRootPage);
         $goDeeper = true;
 
         if (false !== $linksRootPage) {
-            $pagesIndex = array();
             $existingSitePages = $site->getPages();
 
             while ($goDeeper) {
-            //TODO: Write code
+                //if ()
             }
         } else {
             $this->output->writeln("<error>Site is not available. Posibble, connections problems</error>");
         }
+    }
+
+    private function filterHost(array $links, $host)
+    {
+        $result = [];
+
+        foreach ($links as $link) {
+            $parsedUrl = parse_url($link);
+
+            if ( $parsedUrl['scheme'] . '://' .$parsedUrl['host'] == $host) {
+                $result[] = $link;
+            }
+        }
+
+        return $result;
     }
 
     /**
@@ -81,14 +109,16 @@ class SiteIndexCommand extends BaseCommand
 
     /**
      * @param $url
-     * @return bool|Crawler
+     * @return bool|array
      */
     private function getAllLinks($url)
     {
         $crawlerPage = $this->loadUrl($url);
 
         if (false !== $crawlerPage) {
-            return $crawlerPage->filter('a');
+            return $crawlerPage->filter('a')->each(function(Crawler $node) {
+                return $node->link()->getUri();
+            });
         } else {
             return false;
         }

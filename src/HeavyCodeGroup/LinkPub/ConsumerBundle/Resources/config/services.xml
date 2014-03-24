@@ -25,6 +25,11 @@
                 <argument>%link_pub_consumer.installer.path%</argument>
             </call>
         </service>
-        <service id="link_pub_consumer.builder" class="HeavyCodeGroup\LinkPub\ConsumerBundle\Tool\Builder" scope="prototype"/>
+        <service id="link_pub_consumer.builder" class="HeavyCodeGroup\LinkPub\ConsumerBundle\Tool\BuilderTool">
+            <argument type="service" id="service_container"/>
+            <call method="setEntityManager">
+                <argument type="service" id="doctrine.orm.entity_manager"/>
+            </call>
+        </service>
     </services>
 </container>

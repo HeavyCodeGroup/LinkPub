@@ -1,0 +1,6 @@
+linkpub_consumer_download:
+    path: "/consumer/{site}/download"
+    defaults:
+        _controller: "LinkPubConsumerBundle:Default:download"
+    requirements:
+        site: "^\d+|[A-Fa-f0-9]{8}\-[A-Fa-f0-9]{4}\-[A-Fa-f0-9]{4}\-[A-Fa-f0-9]{4}\-[A-Fa-f0-9]{12}$"

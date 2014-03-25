@@ -4,8 +4,8 @@ namespace HeavyCodeGroup\LinkPub\ConsumerBundle\Controller;
 
 use Doctrine\ORM\NoResultException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -16,7 +16,12 @@ class DefaultController extends Controller
         $format = $request->get('format');
         $implementationName = $request->get('impl');
 
-        if (!in_array($format, array('zip', 'tar.gz', 'tar.bz2')) || !$implementationName) {
+        /**
+         * @var \HeavyCodeGroup\LinkPub\ConsumerBundle\Tool\BuilderTool $builder
+         */
+        $builder = $this->get('link_pub_consumer.builder');
+
+        if (!in_array($format, $builder->getAvailableFormats()) || !$implementationName) {
             throw new BadRequestHttpException();
         }
 
@@ -42,12 +47,11 @@ class DefaultController extends Controller
             throw new NotFoundHttpException('Requested implementation was not found');
         }
 
-        /**
-         * @var \HeavyCodeGroup\LinkPub\ConsumerBundle\Tool\BuilderTool $builder
-         */
-        $builder = $this->get('link_pub_consumer.builder');
+
         $instance = $builder->getInstance($site, $consumer);
 
-        return new Response($instance->getGuid());
+        return new RedirectResponse(
+            $this->get('templating.helper.assets')->getUrl('consumers/' . $instance->getGuid() . '.' . $format)
+        );
     }
 }

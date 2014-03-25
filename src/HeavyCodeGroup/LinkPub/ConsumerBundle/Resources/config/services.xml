@@ -31,5 +31,26 @@
                 <argument type="service" id="doctrine.orm.entity_manager"/>
             </call>
         </service>
+        <service id="link_pub_consumer.builder.php" class="HeavyCodeGroup\LinkPub\ConsumerBundle\Tool\Builder\PhpBuilder">
+            <tag name="link_pub_consumer.builder" implementation="php"/>
+            <call method="setFilesystem">
+                <argument type="service" id="filesystem"/>
+            </call>
+            <call method="setSourcesDirectory">
+                <argument>%link_pub_consumer.installer.path%</argument>
+            </call>
+            <call method="setOutputDirectory">
+                <argument>%link_pub_consumer.builder.tmp%</argument>
+            </call>
+        </service>
+        <service id="link_pub_consumer.packager.zip" class="HeavyCodeGroup\LinkPub\ConsumerBundle\Tool\Packager\ZipPackager">
+            <tag name="link_pub_consumer.packager" format="zip"/>
+            <call method="setFilesystem">
+                <argument type="service" id="filesystem"/>
+            </call>
+            <call method="setOutputDirectory">
+                <argument>%link_pub_consumer.builder.path%</argument>
+            </call>
+        </service>
     </services>
 </container>

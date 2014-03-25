@@ -17,7 +17,12 @@ class BuilderTool extends AbstractBaseTool
     /**
      * @var array
      */
-    protected $builders;
+    protected $builders = array();
+
+    /**
+     * @var array
+     */
+    protected $packagers = array();
 
     /**
      * @param Site $site
@@ -40,7 +45,10 @@ class BuilderTool extends AbstractBaseTool
             $instance->setConsumer($consumer);
 
             $this->getEntityManager()->persist($instance);
-            // TODO: Build personal consumer
+            $dir = $this->getBuilder($consumer->getImplementation()->getId())->build($instance);
+            foreach ($this->packagers as $packagerFormat => $packagerService) {
+                $this->getPackager($packagerFormat)->pack($dir, $instance->getGuid());
+            }
             $this->getEntityManager()->flush();
         }
 
@@ -65,6 +73,20 @@ class BuilderTool extends AbstractBaseTool
     }
 
     /**
+     * @param string $format
+     * @param string $serviceId
+     */
+    public function addPackager($format, $serviceId)
+    {
+        $this->packagers[$format] = $serviceId;
+    }
+
+    public function getAvailableFormats()
+    {
+        return array_keys($this->packagers);
+    }
+
+    /**
      * @return EntityManager
      */
     protected function getEntityManager()
@@ -72,8 +94,21 @@ class BuilderTool extends AbstractBaseTool
         return $this->entityManager;
     }
 
+    /**
+     * @param string $implementation
+     * @return \HeavyCodeGroup\LinkPub\ConsumerBundle\Tool\Builder\BuilderInterface
+     */
     protected function getBuilder($implementation)
     {
         return $this->getContainer()->get($this->builders[$implementation]);
+    }
+
+    /**
+     * @param string $format
+     * @return \HeavyCodeGroup\LinkPub\ConsumerBundle\Tool\Packager\PackagerInterface
+     */
+    protected function getPackager($format)
+    {
+        return $this->getContainer()->get($this->packagers[$format]);
     }
 }

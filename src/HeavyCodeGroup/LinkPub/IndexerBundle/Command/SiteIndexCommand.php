@@ -43,6 +43,7 @@ class SiteIndexCommand extends BaseCommand
             ->getRepository('LinkPubStorageBundle:Site')
             ->findOneBy(['rootUrl' => $url])
         ;
+
         if (!$siteToScan) {
             $output->writeln("<error>Site $url not registered in DB</error>");
             throw(new SiteNotFoundException);
@@ -59,32 +60,43 @@ class SiteIndexCommand extends BaseCommand
      */
     private function scanSite(Site $site)
     {
-        $urlRootPage = $site->getRootUrl();
-        $linksRootPage = array_unique($this->getAllLinks($urlRootPage));
+        $indexedPagesCurrentSession = [ ['link' => $site->getRootUrl(), 'parent' => false] ];
+        $queueLength = 1;
 
-        if (false !== $linksRootPage) {
-            $indexedPagesCurrentSession = $this->setParent(
-                $this->filterHost($linksRootPage, $urlRootPage),
-                $urlRootPage
+        for ($i = 0; $i < $queueLength; $i++) {
+            $pageInIndex = $this->isInIndex($indexedPagesCurrentSession[$i]['link'], $site);
+
+            if (!$pageInIndex) {
+                $page = new Page();
+                $page
+                    ->setSite($site)
+                    ->setUrl($indexedPagesCurrentSession[$i])
+                    ->addParent($indexedPagesCurrentSession[$i]['parent'])
+                ;
+                $this->output->writeln("Added page {$indexedPagesCurrentSession[$i]['link']} to index");
+                $this->getEntityManager()->persist($page);
+            } else {
+                if ($indexedPagesCurrentSession[$i]['parent']) {
+                    $pageInIndex->addParent($indexedPagesCurrentSession[$i]['parent']);
+                }
+            }
+
+            $linksOnPage = array_unique(
+                $this->filterHost(
+                    $this->getAllLinks($indexedPagesCurrentSession[$i]['link']),
+                    $site->getRootUrl()
+                )
             );
 
-            $goDeeper = true;
-            $queueLength = count($indexedPagesCurrentSession);
-
-            for ($i = 0; $i < $queueLength; $i++) {
-                if (!$this->isInIndex($indexedPagesCurrentSession[$i]['link'], $site)) {
-                    $page = new Page();
-                    $page
-                        ->setSite($site)
-                        ->setUrl($indexedPagesCurrentSession[$i])
-                    ;
+            foreach ($linksOnPage as $linkOnPage) {
+                if (!$this->isInQueue($linkOnPage, $indexedPagesCurrentSession)) {
+                    $indexedPagesCurrentSession[] = ['link' => $linkOnPage, 'parent' => $indexedPagesCurrentSession[$i]['link']];
+                    $queueLength++;
                 }
-
-
             }
-        } else {
-            $this->output->writeln("<error>Site is not available. Posibble, connections problems</error>");
         }
+
+        $this->getEntityManager()->flush();
     }
 
     private function setParent(array $links, $parentUrl)
@@ -101,16 +113,20 @@ class SiteIndexCommand extends BaseCommand
     /**
      * @param $url
      * @param Site $site
-     * @return bool
+     * @return bool|Page
      */
     private function isInIndex($url, Site $site)
     {
-        $path = parse_url($url)["path"];
+        $parcedUrl = parse_url($url);
 
-        foreach ($site->getPages() as $page) {
-            if ($page->getUrl() == $path) {
-                return true;
+        if (isset($parcedUrl['path'])) {
+            foreach ($site->getPages() as $page) {
+                if ($page->getUrl() == $parcedUrl['path']) {
+                    return $page;
+                }
             }
+        } else {
+            return false;
         }
 
         return false;
@@ -138,8 +154,12 @@ class SiteIndexCommand extends BaseCommand
 
         foreach ($links as $link) {
             $parsedUrl = parse_url($link);
-
-            if ( $parsedUrl['scheme'] . '://' .$parsedUrl['host'] == $host) {
+            if ( isset($parsedUrl['scheme'])
+                    &&
+                 isset($parsedUrl['host'])
+                    &&
+                 $parsedUrl['scheme'] . '://' . $parsedUrl['host'] == $host
+            ) {
                 $result[] = $link;
             }
         }

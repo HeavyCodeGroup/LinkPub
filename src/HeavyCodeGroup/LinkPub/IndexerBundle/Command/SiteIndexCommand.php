@@ -99,6 +99,11 @@ class SiteIndexCommand extends BaseCommand
         $this->getEntityManager()->flush();
     }
 
+    /**
+     * @param array $links
+     * @param $parentUrl
+     * @return array
+     */
     private function setParent(array $links, $parentUrl)
     {
         $linksWithParent = [];
@@ -132,6 +137,11 @@ class SiteIndexCommand extends BaseCommand
         return false;
     }
 
+    /**
+     * @param $link
+     * @param array $queue
+     * @return bool
+     */
     private function isInQueue($link, array $queue)
     {
         foreach ($queue as $queueLink) {

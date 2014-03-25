@@ -6,7 +6,7 @@
     <parameters>
         <parameter key="link_pub_consumer.installer.path">%kernel.root_dir%/Resources/consumers</parameter>
         <parameter key="link_pub_consumer.installer.tmp">%kernel.root_dir%/tmp</parameter>
-        <parameter key="link_pub_consumer.builder.path">%kernel.root_dir%/consumers/instances</parameter>
+        <parameter key="link_pub_consumer.builder.path">%kernel.root_dir%/../web/consumers</parameter>
         <parameter key="link_pub_consumer.builder.tmp">%kernel.root_dir%/tmp</parameter>
     </parameters>
     <services>

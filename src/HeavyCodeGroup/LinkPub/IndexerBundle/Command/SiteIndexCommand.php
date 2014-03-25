@@ -61,20 +61,77 @@ class SiteIndexCommand extends BaseCommand
     {
         $urlRootPage = $site->getRootUrl();
         $linksRootPage = array_unique($this->getAllLinks($urlRootPage));
-        $indexedPages = $this->filterHost($linksRootPage, $urlRootPage);
-        $goDeeper = true;
 
         if (false !== $linksRootPage) {
-            $existingSitePages = $site->getPages();
+            $indexedPagesCurrentSession = $this->setParent(
+                $this->filterHost($linksRootPage, $urlRootPage),
+                $urlRootPage
+            );
 
-            while ($goDeeper) {
-                //if ()
+            $goDeeper = true;
+            $queueLength = count($indexedPagesCurrentSession);
+
+            for ($i = 0; $i < $queueLength; $i++) {
+                if (!$this->isInIndex($indexedPagesCurrentSession[$i]['link'], $site)) {
+                    $page = new Page();
+                    $page
+                        ->setSite($site)
+                        ->setUrl($indexedPagesCurrentSession[$i])
+                    ;
+                }
+
+
             }
         } else {
             $this->output->writeln("<error>Site is not available. Posibble, connections problems</error>");
         }
     }
 
+    private function setParent(array $links, $parentUrl)
+    {
+        $linksWithParent = [];
+
+        foreach ($links as $link) {
+            $linksWithParent[] = ['link' => $link, 'parent' => $parentUrl];
+        }
+
+        return $linksWithParent;
+    }
+
+    /**
+     * @param $url
+     * @param Site $site
+     * @return bool
+     */
+    private function isInIndex($url, Site $site)
+    {
+        $path = parse_url($url)["path"];
+
+        foreach ($site->getPages() as $page) {
+            if ($page->getUrl() == $path) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private function isInQueue($link, array $queue)
+    {
+        foreach ($queue as $queueLink) {
+            if ($link == $queueLink['link']) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @param array $links
+     * @param $host
+     * @return array
+     */
     private function filterHost(array $links, $host)
     {
         $result = [];

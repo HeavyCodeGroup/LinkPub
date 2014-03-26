@@ -47,6 +47,8 @@ class FOSUBUserProvider extends BaseClass
         //we connect current user
         $user->$setter_id($username);
         $user->$setter_token($response->getAccessToken());
+        $userDataServiceName = lcfirst($service).'Provider';
+        $user = $this->$userDataServiceName->setAddUserData($user, $response);
 
         $this->userManager->updateUser($user);
     }

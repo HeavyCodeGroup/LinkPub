@@ -23,5 +23,6 @@ class VkontakteProvider
         $responseArray = $response->getResponse();
         $user->setFirstNameVkontakte($responseArray['response'][0]['first_name']);
         $user->setLastNameVkontakte($responseArray['response'][0]['last_name']);
+        return $user;
     }
 }

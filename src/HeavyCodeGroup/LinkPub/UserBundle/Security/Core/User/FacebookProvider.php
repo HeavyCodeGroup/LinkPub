@@ -14,6 +14,17 @@ class FacebookProvider
         $user->setFirstNameFacebook($responseArray['first_name']);
         $user->setLastNameFacebook($responseArray['last_name']);
         $user->setEmail($responseArray['email']);
+        $user->setEmailFacebook($responseArray['email']);
+
+        return $user;
+    }
+
+    public function setAddUserData(User $user, UserResponseInterface $response)
+    {
+        $responseArray = $response->getResponse();
+        $user->setFirstNameFacebook($responseArray['first_name']);
+        $user->setLastNameFacebook($responseArray['last_name']);
+        $user->setEmailFacebook($responseArray['email']);
 
         return $user;
     }

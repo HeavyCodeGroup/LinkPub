@@ -44,6 +44,9 @@ class User extends BaseUser
     /** @ORM\Column(name="last_name_facebook", type="string", length=255, nullable=true) */
     protected $lastNameFacebook;
 
+    /** @ORM\Column(name="email_facebook", type="string", length=255, nullable=true) */
+    protected $emailFacebook;
+
     public function __construct()
     {
         parent::__construct();
@@ -177,6 +180,23 @@ class User extends BaseUser
     {
         $this->lastNameVkontakte = $lastNameVkontakte;
     }
+
+    /**
+     * @param mixed $emailFacebook
+     */
+    public function setEmailFacebook($emailFacebook)
+    {
+        $this->emailFacebook = $emailFacebook;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEmailFacebook()
+    {
+        return $this->emailFacebook;
+    }
+
 
 
 }

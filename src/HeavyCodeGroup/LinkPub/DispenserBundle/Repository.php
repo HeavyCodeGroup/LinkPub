@@ -154,4 +154,18 @@ class Repository
 
         return null;
     }
+
+    public function concludeUserRequest(Site $site, Consumer $consumer)
+    {
+        $sth = $this->pdo->prepare('UPDATE site SET
+         date_last_obtain = :date_last_obtain,
+         is_using_deprecated_consumer = :is_using_deprecated_consumer
+        WHERE id = :id');
+
+        $now = new \DateTime();
+        $sth->bindValue(':date_last_obtain', $now->format('Y-m-d H:i:s'));
+        $sth->bindValue(':is_using_deprecated_consumer', $consumer->isDeprecated());
+        $sth->bindValue(':id', $site->getId());
+        $sth->execute();
+    }
 }

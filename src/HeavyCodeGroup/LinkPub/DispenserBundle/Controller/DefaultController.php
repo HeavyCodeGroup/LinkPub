@@ -83,6 +83,8 @@ class DefaultController extends AbstractController
 
         $response->setData($site->getLinkData());
 
+        $this->repository->concludeUserRequest($site, $consumer);
+
         return $response;
     }
 }

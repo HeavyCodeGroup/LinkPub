@@ -1,4 +1,4 @@
 linkpub_user_homepage:
-    path: /
+    path: /login/social
     defaults: { _controller: LinkPubUserBundle:User:homepage }
 

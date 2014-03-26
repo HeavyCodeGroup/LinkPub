@@ -21,16 +21,28 @@ class User extends BaseUser
     protected $id;
 
     /** @ORM\Column(name="facebook_id", type="string", length=255, nullable=true) */
-    protected $facebook_id;
+    protected $facebookId;
 
     /** @ORM\Column(name="facebook_access_token", type="string", length=255, nullable=true) */
-    protected $facebook_access_token;
+    protected $facebookAccessToken;
 
     /** @ORM\Column(name="vkontakte_id", type="string", length=255, nullable=true) */
-    protected $vkontakte_id;
+    protected $vkontakteId;
 
     /** @ORM\Column(name="vkontakte_access_token", type="string", length=255, nullable=true) */
-    protected $vkontakte_access_token;
+    protected $vkontakteAccessToken;
+
+    /** @ORM\Column(name="first_name_vkontakte", type="string", length=255, nullable=true) */
+    protected $firstNameVkontakte;
+
+    /** @ORM\Column(name="last_name_vkontakte", type="string", length=255, nullable=true) */
+    protected $lastNameVkontakte;
+
+    /** @ORM\Column(name="first_name_facebook", type="string", length=255, nullable=true) */
+    protected $firstNameFacebook;
+
+    /** @ORM\Column(name="last_name_facebook", type="string", length=255, nullable=true) */
+    protected $lastNameFacebook;
 
     public function __construct()
     {
@@ -43,7 +55,7 @@ class User extends BaseUser
      */
     public function getVkontakteAccessToken()
     {
-        return $this->vkontakte_access_token;
+        return $this->vkontakteAccessToken;
     }
 
     /**
@@ -51,7 +63,7 @@ class User extends BaseUser
      */
     public function getVkontakteId()
     {
-        return $this->vkontakte_id;
+        return $this->vkontakteId;
     }
 
     /**
@@ -59,7 +71,7 @@ class User extends BaseUser
      */
     public function getFacebookId()
     {
-        return $this->facebook_id;
+        return $this->facebookId;
     }
 
     /**
@@ -67,39 +79,103 @@ class User extends BaseUser
      */
     public function getFacebookAccessToken()
     {
-        return $this->facebook_access_token;
+        return $this->facebookAccessToken;
     }
 
     /**
      * @param mixed $facebook_access_token
      */
-    public function setFacebookAccessToken($facebook_access_token)
+    public function setFacebookAccessToken($facebookAccessToken)
     {
-        $this->facebook_access_token = $facebook_access_token;
+        $this->facebookAccessToken = $facebookAccessToken;
     }
 
     /**
      * @param mixed $facebook_id
      */
-    public function setFacebookId($facebook_id)
+    public function setFacebookId($facebookId)
     {
-        $this->facebook_id = $facebook_id;
+        $this->facebookId = $facebookId;
     }
 
     /**
      * @param mixed $vkontakte_access_token
      */
-    public function setVkontakteAccessToken($vkontakte_access_token)
+    public function setVkontakteAccessToken($vkontakteAccessToken)
     {
-        $this->vkontakte_access_token = $vkontakte_access_token;
+        $this->vkontakteAccessToken = $vkontakteAccessToken;
     }
 
     /**
      * @param mixed $vkontakte_id
      */
-    public function setVkontakteId($vkontakte_id)
+    public function setVkontakteId($vkontakteId)
     {
-        $this->vkontakte_id = $vkontakte_id;
+        $this->vkontakteId = $vkontakteId;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLastNameFacebook()
+    {
+        return $this->lastNameFacebook;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLastNameVkontakte()
+    {
+        return $this->lastNameVkontakte;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFirstNameVkontakte()
+    {
+        return $this->firstNameVkontakte;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFirstNameFacebook()
+    {
+        return $this->firstNameFacebook;
+    }
+
+    /**
+     * @param mixed $firstNameFacebook
+     */
+    public function setFirstNameFacebook($firstNameFacebook)
+    {
+        $this->firstNameFacebook = $firstNameFacebook;
+    }
+
+    /**
+     * @param mixed $firstNameVkontakte
+     */
+    public function setFirstNameVkontakte($firstNameVkontakte)
+    {
+        $this->firstNameVkontakte = $firstNameVkontakte;
+    }
+
+    /**
+     * @param mixed $lastNameFacebook
+     */
+    public function setLastNameFacebook($lastNameFacebook)
+    {
+        $this->lastNameFacebook = $lastNameFacebook;
+    }
+
+    /**
+     * @param mixed $lastNameVkontakte
+     */
+    public function setLastNameVkontakte($lastNameVkontakte)
+    {
+        $this->lastNameVkontakte = $lastNameVkontakte;
     }
 
 

@@ -51,7 +51,6 @@ class SiteIndexCommand extends BaseCommand
 
         $output->writeln("<info>Started indexing site $url</info>");
         $this->scanSite($siteToScan);
-        //TODO: Write more code
         $output->writeln("<info>Indexing of $url successfully complete</info>");
     }
 
@@ -64,34 +63,48 @@ class SiteIndexCommand extends BaseCommand
         $queueLength = 1;
 
         for ($i = 0; $i < $queueLength; $i++) {
-            $pageInIndex = $this->isInIndex($indexedPagesCurrentSession[$i]['link'], $site);
+            $linksOnPage = $this->getAllLinks($indexedPagesCurrentSession[$i]['link']);
 
-            if (!$pageInIndex) {
-                $page = new Page();
-                $page
-                    ->setSite($site)
-                    ->setUrl($indexedPagesCurrentSession[$i])
-                    ->addParent($indexedPagesCurrentSession[$i]['parent'])
-                ;
-                $this->output->writeln("Added page {$indexedPagesCurrentSession[$i]['link']} to index");
-                $this->getEntityManager()->persist($page);
-            } else {
-                if ($indexedPagesCurrentSession[$i]['parent']) {
-                    $pageInIndex->addParent($indexedPagesCurrentSession[$i]['parent']);
+            if (false !== $linksOnPage) {
+                $linksOnPage = array_unique(
+                    $this->filterHost(
+                        $linksOnPage,
+                        $site->getRootUrl()
+                    )
+                );
+
+                foreach ($linksOnPage as $linkOnPage) {
+                    if (!$this->isInQueue($linkOnPage, $indexedPagesCurrentSession)) {
+                        $indexedPagesCurrentSession[] = ['link' => $linkOnPage, 'parent' => $indexedPagesCurrentSession[$i]['link']];
+                        $queueLength++;
+                    }
                 }
-            }
 
-            $linksOnPage = array_unique(
-                $this->filterHost(
-                    $this->getAllLinks($indexedPagesCurrentSession[$i]['link']),
-                    $site->getRootUrl()
-                )
-            );
+                $pageInIndex = $this->isInIndex($indexedPagesCurrentSession[$i]['link'], $site);
 
-            foreach ($linksOnPage as $linkOnPage) {
-                if (!$this->isInQueue($linkOnPage, $indexedPagesCurrentSession)) {
-                    $indexedPagesCurrentSession[] = ['link' => $linkOnPage, 'parent' => $indexedPagesCurrentSession[$i]['link']];
-                    $queueLength++;
+                if (!$pageInIndex) {
+                    $path = $this->getPath($indexedPagesCurrentSession[$i]['link']);
+                    if ($path) {
+                        $parent = $this->findPageByUrl($indexedPagesCurrentSession[$i]['parent'], $site);
+                        $page = new Page();
+                        $page
+                            ->setSite($site)
+                            ->setUrl($path)
+                            ->addParent($parent)
+                        ;
+
+                        $this->output->writeln("Added page {$indexedPagesCurrentSession[$i]['link']} to index");
+                        $this->getEntityManager()->persist($page);
+                    }
+                } else {
+                    if ($indexedPagesCurrentSession[$i]['parent']) {
+                        $pageInIndex->addParent(
+                            $this->findPageByUrl(
+                                $this->getPath($indexedPagesCurrentSession[$i]['parent']),
+                                $site
+                            )
+                        );
+                    }
                 }
             }
         }
@@ -99,20 +112,46 @@ class SiteIndexCommand extends BaseCommand
         $this->getEntityManager()->flush();
     }
 
-    /**
-     * @param array $links
-     * @param $parentUrl
-     * @return array
-     */
-    private function setParent(array $links, $parentUrl)
+    private function getPath($url)
     {
-        $linksWithParent = [];
+        $parcedUrl = parse_url($url);
 
-        foreach ($links as $link) {
-            $linksWithParent[] = ['link' => $link, 'parent' => $parentUrl];
+        if (isset($parcedUrl['path'])) {
+
+            return ($parcedUrl['path'] . ((isset($parcedUrl['query'])) ? $parcedUrl['query'] : ''));
+        } else {
+
+            return false;
+        }
+    }
+
+    private function getHostName($url)
+    {
+        $parcedUrl = parse_url($url);
+
+        if (isset($parcedUrl['scheme']) && isset($parcedUrl['host'])) {
+
+            return ($parcedUrl['scheme'] . '://' . $parcedUrl['host']);
+        } else {
+
+            return false;
+        }
+    }
+
+    /**
+     * @param $url
+     * @param Site $site
+     * @return bool|Page
+     */
+    private function findPageByUrl($url, Site $site)
+    {
+        foreach ($site->getPages() as $page) {
+            if ($page->getUrl() == $this->getPath($url)) {
+                return $page;
+            }
         }
 
-        return $linksWithParent;
+        return false;
     }
 
     /**
@@ -122,16 +161,14 @@ class SiteIndexCommand extends BaseCommand
      */
     private function isInIndex($url, Site $site)
     {
-        $parcedUrl = parse_url($url);
-
         if (isset($parcedUrl['path'])) {
             foreach ($site->getPages() as $page) {
-                if ($page->getUrl() == $parcedUrl['path']) {
+                if ($page->getUrl() == $this->getPath($url)) {
                     return $page;
                 }
             }
         } else {
-            return false;
+            return $site->getRootPage();
         }
 
         return false;
@@ -163,13 +200,7 @@ class SiteIndexCommand extends BaseCommand
         $result = [];
 
         foreach ($links as $link) {
-            $parsedUrl = parse_url($link);
-            if ( isset($parsedUrl['scheme'])
-                    &&
-                 isset($parsedUrl['host'])
-                    &&
-                 $parsedUrl['scheme'] . '://' . $parsedUrl['host'] == $host
-            ) {
+            if ($this->getHostName($link) == $host) {
                 $result[] = $link;
             }
         }
@@ -204,7 +235,7 @@ class SiteIndexCommand extends BaseCommand
 
         if (false !== $crawlerPage) {
             return $crawlerPage->filter('a')->each(function(Crawler $node) {
-                return $node->link()->getUri();
+                return rtrim($node->link()->getUri(), '/');
             });
         } else {
             return false;

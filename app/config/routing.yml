@@ -1,5 +1,9 @@
-link_pub_link_pub_gui:
-    resource: "@LinkPubGuiBundle/Resources/config/routing.yml"
+link_pub_link_pub_gui_client:
+    resource: "@LinkPubGuiBundle/Resources/config/routing-client.yml"
+    prefix:   /user/
+
+link_pub_link_pub_gui_guest:
+    resource: "@LinkPubGuiBundle/Resources/config/routing-guest.yml"
     prefix:   /
 
 link_pub_link_pub_user:

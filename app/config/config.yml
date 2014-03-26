@@ -2,11 +2,9 @@ imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
 
-
 framework:
     #esi:             ~
-#    translator:      { fallback: "%locale%" }
-    translator: ~
+    translator:      { fallback: "%locale%" }
     secret:          "%secret%"
     router:
         resource: "%kernel.root_dir%/config/routing.yml"
@@ -109,4 +107,8 @@ hwi_oauth:
             client_id:           "%vkontakte_app_id%"
             client_secret:       "%vkontakte_app_secret%"
             scope:               ""
-       # here you will add one (or more) configurations for resource owners
+       # here you will add one (or more) configurations for resource owners    user_class: HeavyCodeGroup\LinkPub\UserBundle\Entity\User
+
+knp_menu:
+    twig:
+        template: LinkPubGuiBundle::knp_menu.html.twig

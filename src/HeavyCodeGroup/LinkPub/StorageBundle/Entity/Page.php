@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Class Page
  * @package HeavyCodeGroup\LinkPub\StorageBundle\Entity
  *
- * @ORM\Entity(repositoryClass="HeavyCodeGroup\LinkPub\StorageBundle\Entity\PageRepository")
+ * @ORM\Entity(repositoryClass="HeavyCodeGroup\LinkPub\StorageBundle\EntityRepository\PageRepository")
  * @ORM\Table(name="page")
  */
 class Page
@@ -70,6 +70,12 @@ class Page
      * @ORM\OneToMany(targetEntity="Link", mappedBy="page")
      */
     protected $linksOn;
+
+    /**
+     * @var ArrayCollection
+     * @ORM\OneToMany(targetEntity="Link", mappedBy="trackPage")
+     */
+    protected $linksTracked;
 
     /**
      * @var ArrayCollection
@@ -236,11 +242,19 @@ class Page
     }
 
     /**
-     * @return ArrayCollection
+     * @return ArrayCollection|Link[]
      */
     public function getLinksOn()
     {
         return $this->linksOn;
+    }
+
+    /**
+     * @return ArrayCollection|Link[]
+     */
+    public function getLinksTracked()
+    {
+        return $this->linksTracked;
     }
 
     /**
@@ -268,7 +282,7 @@ class Page
     }
 
     /**
-     * @return ArrayCollection
+     * @return ArrayCollection|Page[]
      */
     public function getParents()
     {
@@ -300,7 +314,7 @@ class Page
     }
 
     /**
-     * @return ArrayCollection
+     * @return ArrayCollection|Page[]
      */
     public function getChildren()
     {

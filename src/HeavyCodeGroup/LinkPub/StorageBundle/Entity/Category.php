@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Class Category
  * @package HeavyCodeGroup\LinkPub\LinkPubStorageBundle\Entity
  *
- * @ORM\Entity(repositoryClass="HeavyCodeGroup\LinkPub\StorageBundle\Entity\CategoryRepository")
+ * @ORM\Entity(repositoryClass="HeavyCodeGroup\LinkPub\StorageBundle\EntityRepository\CategoryRepository")
  * @ORM\Table(name="category")
  */
 class Category
@@ -119,7 +119,7 @@ class Category
     }
 
     /**
-     * @return ArrayCollection
+     * @return ArrayCollection|Category[]
      */
     public function getChildren()
     {
@@ -149,7 +149,7 @@ class Category
     }
 
     /**
-     * @return ArrayCollection
+     * @return ArrayCollection|Site[]
      */
     public function getSites()
     {

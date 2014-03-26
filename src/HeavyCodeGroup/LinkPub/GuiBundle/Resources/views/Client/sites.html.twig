@@ -1,1 +1,14 @@
-{% extends '@LinkPubGui/layout.html.twig' %}
+{% extends 'LinkPubGuiBundle::layout.html.twig' %}
+{% block content %}
+<table class="table table-striped">
+    {% for site in sites %}
+    <tr>
+        <td>{{ site.siteFields.title }}</td>
+        <td>{{ site.pagesCount }}</td>
+        <td>{{ site.linksCountTracked }}</td>
+        <td>{{ site.linksCountOn }}</td>
+    </tr>
+    {% endfor %}
+</table>
+    <h4> {{ pagerfanta(pagerfanta) }}</h4>
+{% endblock content %}

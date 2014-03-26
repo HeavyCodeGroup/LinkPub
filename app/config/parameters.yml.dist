@@ -15,6 +15,7 @@ parameters:
     secret:            ThisTokenIsNotSoSecretChangeIt
     node:              /usr/bin/node
     node_modules:      /usr/lib/node_modules
+    sites_per_page:    20
 
     facebook_app_id:   428625093906622
     facebook_app_secret:   4ee26d33df281e8bcd7e0b38c8adcabe

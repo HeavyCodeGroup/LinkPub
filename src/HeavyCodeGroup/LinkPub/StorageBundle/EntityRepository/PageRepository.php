@@ -1,6 +1,6 @@
 <?php
 
-namespace HeavyCodeGroup\LinkPub\StorageBundle\Entity;
+namespace HeavyCodeGroup\LinkPub\StorageBundle\EntityRepository;
 
 use Doctrine\ORM\EntityRepository;
 

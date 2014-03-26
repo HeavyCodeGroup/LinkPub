@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <parameters>
+        <parameter key="link_pub_dispenser.pdo.dsn">mysql:host=%database_host%;port=%database_port%;dbname=%database_name%;charset=utf8</parameter>
+        <parameter key="link_pub_dispenser.pdo.user">%database_user%</parameter>
+        <parameter key="link_pub_dispenser.pdo.password">%database_password%</parameter>
+    </parameters>
+    <services>
+        <service id="link_pub_dispenser.pdo" class="PDO">
+            <argument>%link_pub_dispenser.pdo.dsn%</argument>
+            <argument>%link_pub_dispenser.pdo.user%</argument>
+            <argument>%link_pub_dispenser.pdo.password%</argument>
+        </service>
+        <service id="link_pub_dispenser.controller.default" class="HeavyCodeGroup\LinkPub\DispenserBundle\Controller\DefaultController">
+            <call method="setContainer">
+                <argument type="service" id="service_container"/>
+            </call>
+            <call method="setDispenseInterval">
+                <argument>%link_pub_dispenser.dispense_interval%</argument>
+            </call>
+            <call method="setRepository">
+                <argument type="service" id="link_pub_dispenser.repository"/>
+            </call>
+        </service>
+        <service id="link_pub_dispenser.repository" class="HeavyCodeGroup\LinkPub\DispenserBundle\Repository">
+            <argument type="service" id="link_pub_dispenser.pdo"/>
+        </service>
+    </services>
+</container>

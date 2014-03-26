@@ -86,6 +86,11 @@ class BuilderTool extends AbstractBaseTool
         $this->builders[$implementation] = $serviceId;
     }
 
+    public function getAvailableImplementationNames()
+    {
+        return array_keys($this->builders);
+    }
+
     /**
      * @param string $format
      * @param string $serviceId

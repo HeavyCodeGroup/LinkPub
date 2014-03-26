@@ -21,7 +21,9 @@ class DefaultController extends Controller
          */
         $builder = $this->get('link_pub_consumer.builder');
 
-        if (!in_array($format, $builder->getAvailableFormats()) || !$implementationName) {
+        if (!in_array($format, $builder->getAvailableFormats())
+            || !in_array($implementationName, $builder->getAvailableImplementationNames())
+        ) {
             throw new BadRequestHttpException();
         }
 

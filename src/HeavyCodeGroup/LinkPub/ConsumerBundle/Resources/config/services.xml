@@ -45,9 +45,18 @@
             <argument>%link_pub_consumer.builder.path%</argument>
         </service>
         <service id="link_pub_consumer.packager.tar" class="HeavyCodeGroup\LinkPub\ConsumerBundle\Tool\Packager\TarPackager">
-            <tag name="link_pub_consumer.packager" format="tar"/>
             <argument type="service" id="filesystem"/>
             <argument>%link_pub_consumer.builder.path%</argument>
+        </service>
+        <service id="link_pub_consumer.packager.tar.gz" class="HeavyCodeGroup\LinkPub\ConsumerBundle\Tool\Packager\TarGzPackager">
+            <tag name="link_pub_consumer.packager" format="tar.gz"/>
+            <argument type="service" id="filesystem"/>
+            <argument type="service" id="link_pub_consumer.packager.tar"/>
+        </service>
+        <service id="link_pub_consumer.packager.tar.bz2" class="HeavyCodeGroup\LinkPub\ConsumerBundle\Tool\Packager\TarBz2Packager">
+            <tag name="link_pub_consumer.packager" format="tar.bz2"/>
+            <argument type="service" id="filesystem"/>
+            <argument type="service" id="link_pub_consumer.packager.tar"/>
         </service>
     </services>
 </container>

@@ -35,33 +35,19 @@
         </service>
         <service id="link_pub_consumer.builder.php" class="HeavyCodeGroup\LinkPub\ConsumerBundle\Tool\Builder\PhpBuilder">
             <tag name="link_pub_consumer.builder" implementation="php"/>
-            <call method="setFilesystem">
-                <argument type="service" id="filesystem"/>
-            </call>
-            <call method="setSourcesDirectory">
-                <argument>%link_pub_consumer.installer.path%</argument>
-            </call>
-            <call method="setOutputDirectory">
-                <argument>%link_pub_consumer.builder.tmp%</argument>
-            </call>
+            <argument type="service" id="filesystem"/>
+            <argument>%link_pub_consumer.installer.path%</argument>
+            <argument>%link_pub_consumer.builder.tmp%</argument>
         </service>
         <service id="link_pub_consumer.packager.zip" class="HeavyCodeGroup\LinkPub\ConsumerBundle\Tool\Packager\ZipPackager">
             <tag name="link_pub_consumer.packager" format="zip"/>
-            <call method="setFilesystem">
-                <argument type="service" id="filesystem"/>
-            </call>
-            <call method="setOutputDirectory">
-                <argument>%link_pub_consumer.builder.path%</argument>
-            </call>
+            <argument type="service" id="filesystem"/>
+            <argument>%link_pub_consumer.builder.path%</argument>
         </service>
         <service id="link_pub_consumer.packager.tar" class="HeavyCodeGroup\LinkPub\ConsumerBundle\Tool\Packager\TarPackager">
             <tag name="link_pub_consumer.packager" format="tar"/>
-            <call method="setFilesystem">
-                <argument type="service" id="filesystem"/>
-            </call>
-            <call method="setOutputDirectory">
-                <argument>%link_pub_consumer.builder.path%</argument>
-            </call>
+            <argument type="service" id="filesystem"/>
+            <argument>%link_pub_consumer.builder.path%</argument>
         </service>
     </services>
 </container>

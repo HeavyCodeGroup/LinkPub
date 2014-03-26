@@ -43,28 +43,11 @@ class AbstractBaseBuilder implements BuilderInterface
      */
     private $filesystem;
 
-    /**
-     * @param string $sourcesDirectory
-     */
-    public function setSourcesDirectory($sourcesDirectory)
-    {
-        $this->sourcesDirectory = $sourcesDirectory;
-    }
-
-    /**
-     * @param string $outputDirectory
-     */
-    public function setOutputDirectory($outputDirectory)
-    {
-        $this->outputDirectory = $outputDirectory;
-    }
-
-    /**
-     * @param Filesystem $filesystem
-     */
-    public function setFilesystem(Filesystem $filesystem)
+    public function __construct(Filesystem $filesystem, $sourcesDirectory, $outputDirectory)
     {
         $this->filesystem = $filesystem;
+        $this->sourcesDirectory = $sourcesDirectory;
+        $this->outputDirectory = $outputDirectory;
     }
 
     public function setDispenserHosts(array $dispenserHosts)

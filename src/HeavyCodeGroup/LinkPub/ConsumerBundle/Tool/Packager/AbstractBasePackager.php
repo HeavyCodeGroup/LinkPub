@@ -16,20 +16,10 @@ abstract class AbstractBasePackager implements PackagerInterface
      */
     private $filesystem;
 
-    /**
-     * @param string $outputDirectory
-     */
-    public function setOutputDirectory($outputDirectory)
-    {
-        $this->outputDirectory = $outputDirectory;
-    }
-
-    /**
-     * @param Filesystem $filesystem
-     */
-    public function setFilesystem(Filesystem $filesystem)
+    public function __construct(Filesystem $filesystem, $outputDirectory)
     {
         $this->filesystem = $filesystem;
+        $this->outputDirectory = $outputDirectory;
     }
 
     /**

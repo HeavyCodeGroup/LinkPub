@@ -39,20 +39,34 @@ class BuilderTool extends AbstractBaseTool
             'site' => $site,
             'consumer' => $consumer,
         ));
-        if (!($instance instanceof ConsumerInstance)) {
+        if ($instance instanceof ConsumerInstance) {
+            $this->ensureArchivesExists($instance);
+        } else {
             $instance = new ConsumerInstance();
             $instance->setSite($site);
             $instance->setConsumer($consumer);
 
             $this->getEntityManager()->persist($instance);
-            $dir = $this->getBuilder($consumer->getImplementation()->getId())->build($instance);
-            foreach ($this->packagers as $packagerFormat => $packagerService) {
-                $this->getPackager($packagerFormat)->pack($dir, $instance->getGuid());
-            }
+            $this->getFilesystem()->remove($this->getArchivesFilenames($instance));
+            $this->ensureArchivesExists($instance);
             $this->getEntityManager()->flush();
         }
 
         return $instance;
+    }
+
+    /**
+     * @param ConsumerInstance $instance
+     * @return array
+     */
+    public function getArchivesFilenames(ConsumerInstance $instance)
+    {
+        $files = array();
+        foreach ($this->packagers as $packageFormat => $packagerService) {
+            $files[$packageFormat] = $this->getPackager($packageFormat)->getOutputFilename($instance->getGuid());
+        }
+
+        return $files;
     }
 
     /**
@@ -110,5 +124,19 @@ class BuilderTool extends AbstractBaseTool
     protected function getPackager($format)
     {
         return $this->getContainer()->get($this->packagers[$format]);
+    }
+
+    protected function ensureArchivesExists(ConsumerInstance $instance)
+    {
+        if (!$this->getFilesystem()->exists($this->getArchivesFilenames($instance))) {
+            $buildDirectory = $this
+                ->getBuilder($instance->getConsumer()->getImplementation()->getId())
+                ->build($instance);
+            foreach ($this->packagers as $packageFormat => $packagerService) {
+                $packager = $this->getPackager($packageFormat);
+                $packager->pack($buildDirectory, $packager->getOutputFilename($instance->getGuid()));
+            }
+            $this->getFilesystem()->remove($buildDirectory);
+        }
     }
 }

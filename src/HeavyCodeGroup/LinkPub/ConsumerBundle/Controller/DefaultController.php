@@ -49,9 +49,11 @@ class DefaultController extends Controller
 
 
         $instance = $builder->getInstance($site, $consumer);
+        $files = $builder->getArchivesFilenames($instance);
+        $file = basename($files[$format]);
 
         return new RedirectResponse(
-            $this->get('templating.helper.assets')->getUrl('consumers/' . $instance->getGuid() . '.' . $format)
+            $this->get('templating.helper.assets')->getUrl('consumers/' . $file)
         );
     }
 }

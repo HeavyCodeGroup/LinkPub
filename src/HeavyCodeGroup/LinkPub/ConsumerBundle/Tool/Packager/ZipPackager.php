@@ -6,9 +6,13 @@ use Symfony\Component\Filesystem\Exception\IOException;
 
 class ZipPackager extends AbstractBasePackager
 {
+    public function getOutputFilename($name)
+    {
+        return $this->getOutputDirectory() . '/' . $name . '.zip';
+    }
+
     public function pack($directory, $filename)
     {
-        $filename = $this->getOutputDirectory() . '/' . $filename . '.zip';
         $directory = rtrim($directory, '/');
         $exclusiveLength = strlen($directory) + 1; // Also strip slash
 

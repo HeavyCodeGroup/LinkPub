@@ -12,6 +12,7 @@
     <services>
         <service id="link_pub_consumer.installer" class="HeavyCodeGroup\LinkPub\ConsumerBundle\Tool\InstallerTool">
             <argument type="service" id="service_container"/>
+            <argument type="service" id="filesystem"/>
         </service>
         <service id="link_pub_consumer.installer.php" class="HeavyCodeGroup\LinkPub\ConsumerBundle\Tool\Installer\PhpInstaller">
             <tag name="link_pub_consumer.installer" implementation="php"/>
@@ -27,6 +28,7 @@
         </service>
         <service id="link_pub_consumer.builder" class="HeavyCodeGroup\LinkPub\ConsumerBundle\Tool\BuilderTool">
             <argument type="service" id="service_container"/>
+            <argument type="service" id="filesystem"/>
             <call method="setEntityManager">
                 <argument type="service" id="doctrine.orm.entity_manager"/>
             </call>
@@ -45,6 +47,15 @@
         </service>
         <service id="link_pub_consumer.packager.zip" class="HeavyCodeGroup\LinkPub\ConsumerBundle\Tool\Packager\ZipPackager">
             <tag name="link_pub_consumer.packager" format="zip"/>
+            <call method="setFilesystem">
+                <argument type="service" id="filesystem"/>
+            </call>
+            <call method="setOutputDirectory">
+                <argument>%link_pub_consumer.builder.path%</argument>
+            </call>
+        </service>
+        <service id="link_pub_consumer.packager.tar" class="HeavyCodeGroup\LinkPub\ConsumerBundle\Tool\Packager\TarPackager">
+            <tag name="link_pub_consumer.packager" format="tar"/>
             <call method="setFilesystem">
                 <argument type="service" id="filesystem"/>
             </call>

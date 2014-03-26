@@ -33,7 +33,7 @@ abstract class AbstractBasePackager implements PackagerInterface
     /**
      * @return Filesystem
      */
-    public function getFilesystem()
+    protected function getFilesystem()
     {
         return $this->filesystem;
     }

@@ -5,6 +5,7 @@ namespace HeavyCodeGroup\LinkPub\StorageBundle\DataFixtures\ORM;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
+use HeavyCodeGroup\LinkPub\StorageBundle\Entity\Page;
 use HeavyCodeGroup\LinkPub\StorageBundle\Entity\Site;
 use Symfony\Component\Yaml\Yaml;
 

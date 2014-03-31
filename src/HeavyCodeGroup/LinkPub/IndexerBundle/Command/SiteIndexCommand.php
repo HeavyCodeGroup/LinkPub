@@ -5,16 +5,25 @@ namespace HeavyCodeGroup\LinkPub\IndexerBundle\Command;
 use Doctrine\Common\Collections\ArrayCollection;
 use HeavyCodeGroup\LinkPub\BaseBundle\Command\BaseCommand;
 use HeavyCodeGroup\LinkPub\IndexerBundle\Exception\SiteNotFoundException;
+use HeavyCodeGroup\LinkPub\StorageBundle\Doctrine\DBAL\PageStatusType;
 use HeavyCodeGroup\LinkPub\StorageBundle\Entity\Page;
 use HeavyCodeGroup\LinkPub\StorageBundle\Entity\Site;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DomCrawler\Crawler;
-use Goutte\Client;
+use Guzzle\Http\Client;
 
 class SiteIndexCommand extends BaseCommand
 {
+    /** @var Client */
+    protected $client;
+
+    public function __construct()
+    {
+        $this->client = new Client();
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -59,6 +68,8 @@ class SiteIndexCommand extends BaseCommand
      */
     private function scanSite(Site $site)
     {
+        $this->setRootPage($site);
+
         $indexedPagesCurrentSession = [ ['link' => $site->getRootUrl(), 'parent' => false] ];
         $queueLength = 1;
 
@@ -90,11 +101,20 @@ class SiteIndexCommand extends BaseCommand
                         $page
                             ->setSite($site)
                             ->setUrl($path)
-                            ->addParent($parent)
+                            ->setState(PageStatusType::STATUS_DISABLED)
+                        //TODO: set real parameters, calculate in dependency of system work
+                            ->setCapacity(3)
+                            ->setPrice(5)
                         ;
 
-                        $this->output->writeln("Added page {$indexedPagesCurrentSession[$i]['link']} to index");
+                        if ($parent) {
+                            $page->addParent($parent);
+                        }
+
                         $this->getEntityManager()->persist($page);
+                        $this->getEntityManager()->flush();
+                        $this->output->writeln("Added page {$indexedPagesCurrentSession[$i]['link']} to index");
+
                     }
                 } else {
                     if ($indexedPagesCurrentSession[$i]['parent']) {
@@ -108,20 +128,40 @@ class SiteIndexCommand extends BaseCommand
                 }
             }
         }
+    }
 
-        $this->getEntityManager()->flush();
+    private function setRootPage(Site $site)
+    {
+      //  if (!$site->getRootPage()) {
+
+            $loadedPage = $this->loadUrl($site->getRootUrl());
+
+            $page = new Page();
+            $page
+                ->setSite($site)
+                ->setUrl($this->getPath($loadedPage->getUrl()))
+                ->setState(PageStatusType::STATUS_DISABLED)
+                //TODO: set real parameters, calculate in dependency of system work
+                ->setCapacity(3)
+                ->setPrice(5)
+            ;
+            $site->setRootPage($page);
+            $this->getEntityManager()->persist($page);
+            $this->getEntityManager()->flush();
+
+     //   }
     }
 
     private function getPath($url)
     {
-        $parcedUrl = parse_url($url);
+        $parsedUrl = parse_url($url);
 
-        if (isset($parcedUrl['path'])) {
+        if (isset($parsedUrl['path'])) {
 
-            return ($parcedUrl['path'] . ((isset($parcedUrl['query'])) ? $parcedUrl['query'] : ''));
+            return ($parsedUrl['path'] . ((isset($parsedUrl['query'])) ? $parsedUrl['query'] : ''));
         } else {
 
-            return false;
+            return '/';
         }
     }
 
@@ -210,14 +250,14 @@ class SiteIndexCommand extends BaseCommand
 
     /**
      * @param $url
-     * @return Crawler|false
+     * @return Client|false
      */
     private function loadUrl($url)
     {
         try {
-            $client = new Client();
+            $this->client->load('GET', $url);
 
-            return $client->request('GET', $url);
+            return $this->client;
         } catch (\Exception $e) {
             $this->output->writeln("<error>Error while loading $url</error>");
 
@@ -231,7 +271,7 @@ class SiteIndexCommand extends BaseCommand
      */
     private function getAllLinks($url)
     {
-        $crawlerPage = $this->loadUrl($url);
+        $crawlerPage = $this->loadUrl($url)->get($url);
 
         if (false !== $crawlerPage) {
             return $crawlerPage->filter('a')->each(function(Crawler $node) {
@@ -240,21 +280,5 @@ class SiteIndexCommand extends BaseCommand
         } else {
             return false;
         }
-    }
-
-    /**
-     * @param string $url
-     * @param Page[]|ArrayCollection $pages
-     * @return bool
-     */
-    private function isNewInDBIndex($url, ArrayCollection $pages)
-    {
-        foreach ($pages as $page) {
-            if ($page->getFullUrl() == $url) {
-                return true;
-            }
-        }
-
-        return false;
     }
 }

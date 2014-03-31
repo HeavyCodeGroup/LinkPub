@@ -25,28 +25,17 @@ class FOSUBUserProvider extends BaseClass
     {
         $property = $this->getProperty($response);
         $username = $response->getUsername();
-
-
-        //on connect - get the access token and the user ID
         $service = $response->getResourceOwner()->getName();
-
-        $setter = 'set'.ucfirst($service);
-        $setter_id = $setter.'Id';
-        $setter_token = $setter.'AccessToken';
-
-//        var_dump($response->getResourceOwner()->getName());
-//        exit;
 
         //we "disconnect" previously connected users
         if (null !== $previousUser = $this->userManager->findUserBy(array($property => $username))) {
-            $previousUser->$setter_id(null);
-            $previousUser->$setter_token(null);
+            $setter = 'set'.ucfirst($service);
+            $setterId = $setter.'Id';
+            $setterToken = $setter.'AccessToken';
+            $previousUser->$setterId(null);
+            $previousUser->$setterToken(null);
             $this->userManager->updateUser($previousUser);
         }
-
-        //we connect current user
-        $user->$setter_id($username);
-        $user->$setter_token($response->getAccessToken());
         $userDataServiceName = lcfirst($service).'Provider';
         $user = $this->$userDataServiceName->setAddUserData($user, $response);
 
@@ -59,27 +48,20 @@ class FOSUBUserProvider extends BaseClass
     public function loadUserByOAuthUserResponse(UserResponseInterface $response)
     {
 
-        $username = $response->getUsername() ;
+        $username = $response->getUsername();
         $user = $this->userManager->findUserBy(array($this->getProperty($response) => $username));
         //when the user is registrating
 
         if (null === $user) {
             $service = $response->getResourceOwner()->getName();
-            $setter = 'set'.ucfirst($service);
-            $setter_id = $setter.'Id';
-            $setter_token = $setter.'AccessToken';
             $userDataServiceName = lcfirst($service).'Provider';
             // create new user here
             $user = $this->userManager->createUser();
-            $user->$setter_id($response->getUsername());
-            $user->$setter_token($response->getAccessToken());
 
             //I have set all requested data with the user's username
             //modify here with relevant data
             $user = $this->$userDataServiceName->setUserData($user, $response);
-            $user->setUsername($username . ucfirst($service));
-            $user->setPassword($username);
-            $user->setEnabled(true);
+
             $this->userManager->updateUser($user);
             return $user;
         }

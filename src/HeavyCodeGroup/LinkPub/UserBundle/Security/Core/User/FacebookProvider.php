@@ -10,11 +10,17 @@ class FacebookProvider
     public function setUserData(User $user, UserResponseInterface $response)
     {
         $responseArray = $response->getResponse();
-        //$user->setUsername($username);
+        $username = $response->getUsername();
+
         $user->setFirstNameFacebook($responseArray['first_name']);
         $user->setLastNameFacebook($responseArray['last_name']);
         $user->setEmail($responseArray['email']);
         $user->setEmailFacebook($responseArray['email']);
+        $user->setUsername($username .'Facebook');
+        $user->setPassword($username);
+        $user->setFacebookId($response->getUsername());
+        $user->setFacebookAccessToken($response->getAccessToken());
+        $user->setEnabled(true);
 
         return $user;
     }
@@ -25,6 +31,8 @@ class FacebookProvider
         $user->setFirstNameFacebook($responseArray['first_name']);
         $user->setLastNameFacebook($responseArray['last_name']);
         $user->setEmailFacebook($responseArray['email']);
+        $user->setFacebookId($response->getUsername());
+        $user->setFacebookAccessToken($response->getAccessToken());
 
         return $user;
     }

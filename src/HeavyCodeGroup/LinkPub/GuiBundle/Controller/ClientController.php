@@ -23,10 +23,10 @@ class ClientController extends Controller
         $pagerfanta->setMaxPerPage($this->container->getParameter('sites_per_page'));
         $pagerfanta->setCurrentPage($page);
 
-        return $this->render('LinkPubGuiBundle:Client:sites.html.twig', array(
+        return $this->render('LinkPubGuiBundle:Client:sites.html.twig', [
            'sites' => $pagerfanta->getCurrentPageResults(),
            'pagerfanta' => $pagerfanta
-        ));
+        ]);
     }
 
     public function incomingLinksAction()

@@ -320,4 +320,9 @@ class Page
     {
         return $this->children;
     }
+
+    public function getFullUrl()
+    {
+        return $this->getSite()->getRootUrl() . $this->getUrl();
+    }
 }

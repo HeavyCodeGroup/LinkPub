@@ -1,12 +1,21 @@
 {% extends 'LinkPubGuiBundle::layout.html.twig' %}
+{% block title %}{{ 'my_sites'|trans }}{% endblock %}
 {% block content %}
-<table class="table table-striped">
+<table class="table table-striped margin-top">
+    <tr>
+        <th>{{ 'site_name'|trans }}</th>
+        <th>{{ 'site_category_name'|trans }}</th>
+        <th>{{ 'site_pages'|trans }}</th>
+        <th>{{ 'site_links_in'|trans }}</th>
+        <th>{{ 'site_links_outgoing'|trans }}</th>
+    </tr>
     {% for site in sites %}
     <tr>
         <td>{{ site.siteFields.title }}</td>
+        <td>{{ site.siteCategoryTitle }}</td>
         <td>{{ site.pagesCount }}</td>
-        <td>{{ site.linksCountTracked }}</td>
-        <td>{{ site.linksCountOn }}</td>
+        <td class="text-green">{{ site.linksCountTracked }}</td>
+        <td class="text-red">{{ site.linksCountOn }}</td>
     </tr>
     {% endfor %}
 </table>

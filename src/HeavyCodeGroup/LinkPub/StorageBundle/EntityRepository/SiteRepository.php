@@ -7,6 +7,10 @@ use HeavyCodeGroup\LinkPub\UserBundle\Entity\User;
 
 class SiteRepository extends EntityRepository
 {
+    /**
+     * @param User $user
+     * @return \Doctrine\ORM\QueryBuilder
+     */
     public function findAllByUserQuery(User $user)
     {
         return $this
@@ -27,13 +31,29 @@ class SiteRepository extends EntityRepository
         ;
     }
 
-    public function findOneByIdOrGuid($criterion)
+    /**
+     * @param $criterion
+     * @return \Doctrine\ORM\Query
+     */
+    public function findOneByIdOrGuidQuery($criterion)
     {
         return $this->createQueryBuilder('site')
             ->where('site.id = :criterion')
             ->orWhere('site.guid = :criterion')
             ->setParameter(':criterion', $criterion)
             ->getQuery()
+        ;
+    }
+
+    /**
+     * @param $criterion
+     * @return mixed
+     */
+    public function findOneByIdOrGuid($criterion)
+    {
+
+        return $this
+            ->findOneByIdOrGuid($criterion)
             ->getSingleResult()
         ;
     }

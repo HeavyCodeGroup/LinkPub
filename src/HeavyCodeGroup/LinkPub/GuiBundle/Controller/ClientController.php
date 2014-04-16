@@ -7,16 +7,38 @@ use HeavyCodeGroup\LinkPub\StorageBundle\Entity\Site;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Pagerfanta\Pagerfanta;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Form\FormBuilder;
 use Symfony\Component\HttpFoundation\Request;
 
 class ClientController extends Controller
 {
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function dashboardAction()
     {
         return $this->render('LinkPubGuiBundle:Client:dashboard.html.twig');
     }
 
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function incomingLinksAction()
+    {
+        return $this->render('LinkPubGuiBundle:Client:incomingLinks.html.twig');
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function outgoingLinksAction()
+    {
+        return $this->render('LinkPubGuiBundle:Client:outgoingLinks.html.twig');
+    }
+
+    /**
+     * @param $page
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function sitesAction($page)
     {
         $sitesRepository = $this->getDoctrine()->getRepository('LinkPubStorageBundle:Site');
@@ -33,16 +55,10 @@ class ClientController extends Controller
         ]);
     }
 
-    public function incomingLinksAction()
-    {
-        return $this->render('LinkPubGuiBundle:Client:incomingLinks.html.twig');
-    }
-
-    public function outgoingLinksAction()
-    {
-        return $this->render('LinkPubGuiBundle:Client:outgoingLinks.html.twig');
-    }
-
+    /**
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
     public function addSiteAction(Request $request)
     {
         $form = $this->createForm(new SiteType());
@@ -59,5 +75,17 @@ class ClientController extends Controller
         }
 
         return $this->render('LinkPubGuiBundle:Client:addSite.html.twig', ['form' => $form->createView()]);
+    }
+
+    /**
+     * @param $siteId
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function sitePagesAction($siteId)
+    {
+        $siteRepository = $this->getDoctrine()->getRepository('LinkPubStorageBundle:Site');
+        $site = $siteRepository->findOneByIdOrGuid($siteId);
+
+        return $this->render('LinkPubGuiBundle:Client:sitePages.html.twig');
     }
 }

@@ -2,9 +2,13 @@
 
 namespace HeavyCodeGroup\LinkPub\GuiBundle\Controller;
 
+use HeavyCodeGroup\LinkPub\GuiBundle\Form\Type\SiteType;
+use HeavyCodeGroup\LinkPub\StorageBundle\Entity\Site;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Pagerfanta\Pagerfanta;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\HttpFoundation\Request;
 
 class ClientController extends Controller
 {
@@ -37,5 +41,23 @@ class ClientController extends Controller
     public function outgoingLinksAction()
     {
         return $this->render('LinkPubGuiBundle:Client:outgoingLinks.html.twig');
+    }
+
+    public function addSiteAction(Request $request)
+    {
+        $form = $this->createForm(new SiteType());
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            /** @var Site $site */
+            $site = $form->getData();
+            $site->setOwner($this->getUser());
+            $this->getDoctrine()->getManager()->persist($site);
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirect($this->generateUrl('linkpub_gui_client_sites'));
+        }
+
+        return $this->render('LinkPubGuiBundle:Client:addSite.html.twig', ['form' => $form->createView()]);
     }
 }

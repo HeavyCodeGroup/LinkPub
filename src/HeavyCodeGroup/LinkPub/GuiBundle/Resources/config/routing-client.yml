@@ -13,3 +13,7 @@ linkpub_gui_incoming_links:
 linkpub_gui_outgoing_links:
     path: /outgoing-links
     defaults: { _controller: LinkPubGuiBundle:Client:outgoingLinks }
+
+linkpub_gui_add_site:
+    path: /add-site
+    defaults: { _controller: LinkPubGuiBundle:Client:addSite }

@@ -1,7 +1,10 @@
 {% extends 'LinkPubGuiBundle::layout.html.twig' %}
 {% block title %}{{ 'my_sites'|trans }}{% endblock %}
 {% block content %}
-<table class="table table-striped margin-top">
+<div class="margin-top">
+    <a href="{{ path("linkpub_gui_add_site") }}">{{ 'add_site'|trans }}</a>
+</div>
+<table class="table table-striped">
     <tr>
         <th>{{ 'site_name'|trans }}</th>
         <th>{{ 'site_category_name'|trans }}</th>

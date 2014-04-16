@@ -53,7 +53,7 @@ class SiteRepository extends EntityRepository
     {
 
         return $this
-            ->findOneByIdOrGuid($criterion)
+            ->findOneByIdOrGuidQuery($criterion)
             ->getSingleResult()
         ;
     }

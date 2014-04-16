@@ -17,3 +17,7 @@ linkpub_gui_outgoing_links:
 linkpub_gui_add_site:
     path: /add-site
     defaults: { _controller: LinkPubGuiBundle:Client:addSite }
+
+linkpub_gui_site_pages:
+    path: /site-pages/{siteId}/{page}
+    defaults: { _controller: LinkPubGuiBundle:Client:sitePages, page: 1 }

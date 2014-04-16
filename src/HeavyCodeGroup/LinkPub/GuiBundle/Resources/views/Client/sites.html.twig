@@ -16,7 +16,10 @@
     <tr>
         <td>{{ site.siteFields.title }}</td>
         <td>{{ site.siteCategoryTitle }}</td>
-        <td>{{ site.pagesCount }}</td>
+        <td><a href="{{ path('linkpub_gui_site_pages', {'siteId': site.siteFields.id}) }}">
+                {{ site.pagesCount }}
+            </a>
+        </td>
         <td class="text-green">{{ site.linksCountTracked }}</td>
         <td class="text-red">{{ site.linksCountOn }}</td>
     </tr>

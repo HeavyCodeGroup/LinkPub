@@ -1,7 +1,23 @@
 {% extends 'LinkPubGuiBundle::layout.html.twig' %}
 {% block title %}{{ 'my_sites'|trans }}{% endblock %}
 {% block content %}
+<table class="table table-striped">
+    <tr>
+        <th>{{ 'url'|trans }}</th>
+        <th>{{ 'state'|trans }}</th>
+        <th>{{ 'level'|trans }}</th>
+        <th>{{ 'page_rank'|trans }}</th>
+        <th>{{ 'price'|trans }}</th>
+    </tr>
     {% for page in pages %}
-
+    <tr>
+        <td>{{ page.url }}</td>
+        <td>{{ page.state }}</td>
+        <td>{{ page.level }}</td>
+        <td>{{ page.pageRank }}</td>
+        <td>{{ page.price }}</td>
+    </tr>
     {% endfor %}
+</table>
+    <h4> {{ pagerfanta(pagerfanta) }}</h4>
 {% endblock %}

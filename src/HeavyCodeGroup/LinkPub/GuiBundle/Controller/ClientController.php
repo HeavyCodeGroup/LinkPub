@@ -43,11 +43,7 @@ class ClientController extends Controller
     {
         $sitesRepository = $this->getDoctrine()->getRepository('LinkPubStorageBundle:Site');
         $sitesUser = $sitesRepository->findAllByUserQuery($this->getUser());
-
-        $adapter = new DoctrineORMAdapter($sitesUser);
-        $pagerfanta = new Pagerfanta($adapter);
-        $pagerfanta->setMaxPerPage($this->container->getParameter('sites_per_page'));
-        $pagerfanta->setCurrentPage($page);
+        $pagerfanta = $this->getPagerfanta($sitesUser, $page);
 
         return $this->render('LinkPubGuiBundle:Client:sites.html.twig', [
            'sites' => $pagerfanta->getCurrentPageResults(),
@@ -78,14 +74,32 @@ class ClientController extends Controller
     }
 
     /**
+     * @param $page
      * @param $siteId
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function sitePagesAction($siteId)
+    public function sitePagesAction($siteId, $page)
     {
         $siteRepository = $this->getDoctrine()->getRepository('LinkPubStorageBundle:Site');
         $site = $siteRepository->findOneByIdOrGuid($siteId);
 
-        return $this->render('LinkPubGuiBundle:Client:sitePages.html.twig');
+        $pageRepository = $this->getDoctrine()->getRepository('LinkPubStorageBundle:Page');
+        $pages = $pageRepository->getPagesBySiteQuery($site);
+
+        $pagerfanta = $this->getPagerfanta($pages, $page);
+
+        return $this->render('LinkPubGuiBundle:Client:sitePages.html.twig', [
+            'pages' => $pagerfanta->getCurrentPageResults(),
+            'pagerfanta' => $pagerfanta
+        ]);
+    }
+
+    private function getPagerfanta($query, $page)
+    {
+        $adapter = new DoctrineORMAdapter($query);
+        $pagerfanta = new Pagerfanta($adapter);
+        $pagerfanta->setMaxPerPage($this->container->getParameter('per_page'));
+
+        return $pagerfanta->setCurrentPage($page);
     }
 }

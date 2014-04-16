@@ -70,6 +70,7 @@ class SiteIndexCommand extends BaseCommand
     private function scanSite(Site $site)
     {
         $this->setRootPage($site);
+        $site->setDateLastIndex(new \DateTime());
 
         $indexedPagesCurrentSession = [ ['link' => $site->getRootUrl(), 'parent' => false] ];
         $queueLength = 1;

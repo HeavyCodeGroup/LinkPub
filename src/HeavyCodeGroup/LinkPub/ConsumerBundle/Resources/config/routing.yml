@@ -1,5 +1,5 @@
 linkpub_consumer_download:
-    path: "/consumer/{site}/download"
+    path: "/{site}/download"
     defaults:
         _controller: "LinkPubConsumerBundle:Default:download"
     requirements:

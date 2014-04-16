@@ -92,7 +92,7 @@ class SiteIndexCommand extends BaseCommand
                     }
                 }
 
-                $pageInIndex = $this->isInIndex($indexedPagesCurrentSession[$i]['link'], $site);
+                $pageInIndex = $this->getFromIndex($indexedPagesCurrentSession[$i]['link'], $site);
 
                 if (!$pageInIndex) {
                     $path = $this->getPath($indexedPagesCurrentSession[$i]['link']);
@@ -118,16 +118,18 @@ class SiteIndexCommand extends BaseCommand
 
                     }
                 } else {
-                    if ($indexedPagesCurrentSession[$i]['parent']) {
-                        $pageInIndex->addParent(
-                            $this->findPageByUrl(
-                                $this->getPath($indexedPagesCurrentSession[$i]['parent']),
-                                $site
-                            )
-                        );
-                    }
+                    $this->addParent($pageInIndex, $site, $indexedPagesCurrentSession[$i]['parent']);
                 }
             }
+        }
+    }
+
+    private function addParent(Page $page, $site, $parentUrl)
+    {
+        if ($parentUrl && !$this->isParent($page, $this->findPageByUrl($parentUrl, $site))) {
+            $page->addParent(
+                $this->findPageByUrl($parentUrl, $site)
+            );
         }
     }
 
@@ -197,18 +199,13 @@ class SiteIndexCommand extends BaseCommand
      * @param Site $site
      * @return bool|Page
      */
-    private function isInIndex($url, Site $site)
+    private function getFromIndex($url, Site $site)
     {
-        if (isset($parcedUrl['path'])) {
-            foreach ($site->getPages() as $page) {
-                if ($page->getUrl() == $this->getPath($url)) {
+        foreach ($site->getPages() as $page) {
+            if ($page->getUrl() == $this->getPath($url)) {
 
-                    return $page;
-                }
+                return $page;
             }
-        } else {
-
-            return $site->getRootPage();
         }
 
         return false;
@@ -230,6 +227,20 @@ class SiteIndexCommand extends BaseCommand
         return false;
     }
 
+    private function isParent(Page $page, Page $parentPage)
+    {
+        if (false == $parentPage) {
+            return false;
+        }
+
+        foreach ($page->getParents() as $parent) {
+            if ($parent == $parentPage) {
+                return true;
+            }
+        }
+
+        return false;
+    }
     /**
      * @param array $links
      * @param $host

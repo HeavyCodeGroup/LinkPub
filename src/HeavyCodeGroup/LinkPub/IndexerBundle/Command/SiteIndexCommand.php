@@ -87,7 +87,10 @@ class SiteIndexCommand extends BaseCommand
 
                 foreach ($linksOnPage as $linkOnPage) {
                     if (!$this->isInQueue($linkOnPage, $indexedPagesCurrentSession)) {
-                        $indexedPagesCurrentSession[] = ['link' => $linkOnPage, 'parent' => $indexedPagesCurrentSession[$i]['link']];
+                        $indexedPagesCurrentSession[] = [
+                            'link' => $linkOnPage,
+                            'parent' => $indexedPagesCurrentSession[$i]['link']
+                        ];
                         $queueLength++;
                     }
                 }
@@ -95,32 +98,45 @@ class SiteIndexCommand extends BaseCommand
                 $pageInIndex = $this->getFromIndex($indexedPagesCurrentSession[$i]['link'], $site);
 
                 if (!$pageInIndex) {
-                    $path = $this->getPath($indexedPagesCurrentSession[$i]['link']);
-                    if ($path) {
-                        $parent = $this->findPageByUrl($indexedPagesCurrentSession[$i]['parent'], $site);
-                        $page = new Page();
-                        $page
-                            ->setSite($site)
-                            ->setUrl($path)
-                            ->setState(PageStatusType::STATUS_DISABLED)
-                        //TODO: set real parameters, calculate in dependency of system work
-                            ->setCapacity(3)
-                            ->setPrice(5)
-                        ;
-
-                        if ($parent) {
-                            $page->addParent($parent);
-                        }
-
-                        $this->getEntityManager()->persist($page);
-                        $this->getEntityManager()->flush();
-                        $this->output->writeln("Added page {$indexedPagesCurrentSession[$i]['link']} to index");
-
-                    }
+                    $this->addPage(
+                        $indexedPagesCurrentSession[$i]['link'],
+                        $indexedPagesCurrentSession[$i]['parent'],
+                        $site
+                    );
                 } else {
-                    $this->addParent($pageInIndex, $site, $indexedPagesCurrentSession[$i]['parent']);
+                    $this->addParent(
+                        $pageInIndex,
+                        $site,
+                        $indexedPagesCurrentSession[$i]['parent']
+                    );
                 }
             }
+        }
+    }
+
+    private function addPage($pageUrl, $parentUrl, Site $site)
+    {
+        $path = $this->getPath($pageUrl);
+        if ($path) {
+            $parent = $this->findPageByUrl($parentUrl, $site);
+            $page = new Page();
+            $page
+                ->setSite($site)
+                ->setUrl($path)
+                ->setState(PageStatusType::STATUS_DISABLED)
+                //TODO: set real parameters, calculate in dependency of system work
+                ->setCapacity(3)
+                ->setPrice(5)
+            ;
+
+            if ($parent) {
+                $page->addParent($parent);
+            }
+
+            $this->getEntityManager()->persist($page);
+            $this->getEntityManager()->flush();
+            $this->output->writeln("Added page $pageUrl to index");
+
         }
     }
 

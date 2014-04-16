@@ -21,3 +21,7 @@ linkpub_gui_add_site:
 linkpub_gui_site_pages:
     path: /site-pages/{siteId}/{page}
     defaults: { _controller: LinkPubGuiBundle:Client:sitePages, page: 1 }
+
+linkpub_gui_site_info:
+    path: /site-info/{siteId}
+    defaults: { _controller: LinkPubGuiBundle:Client:siteInfo }

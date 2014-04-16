@@ -4,6 +4,12 @@ linkpub:
         sites: Sites
         incoming_links: Incoming Links
         outgoing_links: Outgoing Links
+        site_info:
+            title: Title
+            tci: Yandex TCI
+            data_last_index: Last indexed
+            consumers: Consumers
+
 
 my_sites: My sites
 site_name: Name
@@ -17,3 +23,4 @@ state: State
 level: Level
 page_rank: Page Rank
 price: Price
+pages: Pages

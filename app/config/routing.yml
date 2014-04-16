@@ -6,6 +6,10 @@ linkpub_link_pub_gui_guest:
     resource: "@LinkPubGuiBundle/Resources/config/routing-guest.yml"
     prefix:   /
 
+linkpub_link_pub_consumer:
+    resource: "@LinkPubConsumerBundle/Resources/config/routing.yml"
+    prefix:  /consumer
+
 fos_user_security:
     resource: "@FOSUserBundle/Resources/config/routing/security.xml"
 
@@ -24,3 +28,9 @@ fos_user_resetting:
 fos_user_change_password:
     resource: "@FOSUserBundle/Resources/config/routing/change_password.xml"
     prefix: /profile
+
+fos_user_change_password:
+    resource: "@FOSUserBundle/Resources/config/routing/change_password.xml"
+    prefix: /profile
+
+

@@ -47,7 +47,7 @@ class ClientController extends Controller
 
         return $this->render('LinkPubGuiBundle:Client:sites.html.twig', [
            'sites' => $pagerfanta->getCurrentPageResults(),
-           'pagerfanta' => $pagerfanta
+           'pagerfanta' => $pagerfanta,
         ]);
     }
 
@@ -70,7 +70,7 @@ class ClientController extends Controller
             return $this->redirect($this->generateUrl('linkpub_gui_client_sites'));
         }
 
-        return $this->render('LinkPubGuiBundle:Client:addSite.html.twig', ['form' => $form->createView()]);
+        return $this->render('LinkPubGuiBundle:Client:addSite.html.twig', ['form' => $form->createView(),]);
     }
 
     /**
@@ -80,8 +80,7 @@ class ClientController extends Controller
      */
     public function sitePagesAction($siteId, $page)
     {
-        $siteRepository = $this->getDoctrine()->getRepository('LinkPubStorageBundle:Site');
-        $site = $siteRepository->findOneByIdOrGuid($siteId);
+        $site = $this->getSite($siteId);
 
         $pageRepository = $this->getDoctrine()->getRepository('LinkPubStorageBundle:Page');
         $pages = $pageRepository->getPagesBySiteQuery($site);
@@ -90,7 +89,18 @@ class ClientController extends Controller
 
         return $this->render('LinkPubGuiBundle:Client:sitePages.html.twig', [
             'pages' => $pagerfanta->getCurrentPageResults(),
-            'pagerfanta' => $pagerfanta
+            'pagerfanta' => $pagerfanta,
+        ]);
+    }
+
+    public function siteInfoAction($siteId)
+    {
+        $consumer = $this->get('link_pub_consumer.builder');
+
+        return $this->render('LinkPubGuiBundle:Client:siteInfo.html.twig', [
+            'site' => $this->getSite($siteId),
+            'consumerImplementationNames' => $consumer->getAvailableImplementationNames(),
+            'consumerFormats' => $consumer->getAvailableFormats(),
         ]);
     }
 
@@ -101,5 +111,12 @@ class ClientController extends Controller
         $pagerfanta->setMaxPerPage($this->container->getParameter('per_page'));
 
         return $pagerfanta->setCurrentPage($page);
+    }
+
+    private function getSite($siteId)
+    {
+        $siteRepository = $this->getDoctrine()->getRepository('LinkPubStorageBundle:Site');
+
+        return $siteRepository->findOneByIdOrGuid($siteId);
     }
 }

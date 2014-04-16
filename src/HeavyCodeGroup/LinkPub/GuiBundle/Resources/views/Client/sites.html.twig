@@ -14,7 +14,7 @@
     </tr>
     {% for site in sites %}
     <tr>
-        <td>{{ site.siteFields.title }}</td>
+        <td><a href="{{ path('linkpub_gui_site_info', {'siteId': site.siteFields.id}) }}">{{ site.siteFields.title }}</a></td>
         <td>{{ site.siteCategoryTitle }}</td>
         <td><a href="{{ path('linkpub_gui_site_pages', {'siteId': site.siteFields.id}) }}">
                 {{ site.pagesCount }}

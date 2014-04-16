@@ -1,0 +1,32 @@
+{% extends 'LinkPubGuiBundle::layout.html.twig' %}
+{% block title %}{{ 'my_sites'|trans }}{% endblock %}
+{% block content %}
+    <table class="table table-striped">
+        <tr>
+            <td>{{ 'linkpub.gui.site_info.title'|trans }}</td>
+            <td>{{ site.title }}</td>
+        </tr>
+        <tr>
+            <td>{{ 'url'|trans }}</td>
+            <td>{{ site.rootUrl }}</td>
+        </tr>
+        <tr>
+            <td>{{ 'linkpub.gui.site_info.tci'|trans }}</td>
+            <td>{{ site.tci }}</td>
+        </tr>
+        <tr>
+            <td>{{ 'linkpub.gui.site_info.data_last_index'|trans }}</td>
+            <td>{{ site.dateLastIndex|date }}</td>
+        </tr>
+        <tr>
+            <td>{{ 'linkpub.gui.site_info.consumers'|trans }}</td>
+            <td>
+                {% for implementation in consumerImplementationNames %}
+                    {% for format in consumerFormats %}
+                        <a href="{{ path('linkpub_consumer_download', {'site': site.id, 'impl': implementation, 'format': format}) }}">{{implementation ~ '.'~ format }}</a>
+                    {% endfor %}
+                {% endfor %}
+            </td>
+        </tr>
+    </table>
+{% endblock %}

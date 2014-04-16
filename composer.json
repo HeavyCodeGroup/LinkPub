@@ -43,7 +43,8 @@
         "doctrine/doctrine-fixtures-bundle": "v2.2.0",
         "rhumsaa/uuid": "2.7.1",
         "fabpot/goutte": "v1.0.5",
-        "white-october/pagerfanta-bundle": "dev-master"
+        "white-october/pagerfanta-bundle": "dev-master",
+        "guzzlehttp/guzzle": "4.0.0"
     },
     "scripts": {
         "post-install-cmd": [

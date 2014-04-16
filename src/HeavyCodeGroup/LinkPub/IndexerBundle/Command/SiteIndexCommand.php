@@ -2,7 +2,8 @@
 
 namespace HeavyCodeGroup\LinkPub\IndexerBundle\Command;
 
-use Doctrine\Common\Collections\ArrayCollection;
+use Guzzle\Common\Exception\GuzzleException;
+use GuzzleHttp\Message\Response;
 use HeavyCodeGroup\LinkPub\BaseBundle\Command\BaseCommand;
 use HeavyCodeGroup\LinkPub\IndexerBundle\Exception\SiteNotFoundException;
 use HeavyCodeGroup\LinkPub\StorageBundle\Doctrine\DBAL\PageStatusType;
@@ -12,17 +13,12 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DomCrawler\Crawler;
-use Guzzle\Http\Client;
+use GuzzleHttp\Client;
 
 class SiteIndexCommand extends BaseCommand
 {
     /** @var Client */
     protected $client;
-
-    public function __construct()
-    {
-        $this->client = new Client();
-    }
 
     /**
      * {@inheritDoc}
@@ -33,6 +29,11 @@ class SiteIndexCommand extends BaseCommand
             ->setName('linkpub:site:index')
             ->addArgument('url', InputArgument::REQUIRED)
         ;
+    }
+
+    protected function initialize(InputInterface $input, OutputInterface $output)
+    {
+        $this->client = new Client();
     }
 
     /**
@@ -132,15 +133,13 @@ class SiteIndexCommand extends BaseCommand
 
     private function setRootPage(Site $site)
     {
-      //  if (!$site->getRootPage()) {
-
-            $loadedPage = $this->loadUrl($site->getRootUrl());
-
+       if (!$site->getRootPage()) {
+            $loadedPage = $this->sendGetRequest($site->getRootUrl());
             $page = new Page();
             $page
                 ->setSite($site)
-                ->setUrl($this->getPath($loadedPage->getUrl()))
-                ->setState(PageStatusType::STATUS_DISABLED)
+                ->setUrl($this->getPath($loadedPage->getEffectiveUrl()))
+                ->setState(PageStatusType ::STATUS_DISABLED)
                 //TODO: set real parameters, calculate in dependency of system work
                 ->setCapacity(3)
                 ->setPrice(5)
@@ -148,8 +147,7 @@ class SiteIndexCommand extends BaseCommand
             $site->setRootPage($page);
             $this->getEntityManager()->persist($page);
             $this->getEntityManager()->flush();
-
-     //   }
+        }
     }
 
     private function getPath($url)
@@ -204,10 +202,12 @@ class SiteIndexCommand extends BaseCommand
         if (isset($parcedUrl['path'])) {
             foreach ($site->getPages() as $page) {
                 if ($page->getUrl() == $this->getPath($url)) {
+
                     return $page;
                 }
             }
         } else {
+
             return $site->getRootPage();
         }
 
@@ -250,14 +250,13 @@ class SiteIndexCommand extends BaseCommand
 
     /**
      * @param $url
-     * @return Client|false
+     * @return Response|false
      */
-    private function loadUrl($url)
+    private function sendGetRequest($url)
     {
         try {
-            $this->client->load('GET', $url);
 
-            return $this->client;
+            return $this->client->get($url);
         } catch (\Exception $e) {
             $this->output->writeln("<error>Error while loading $url</error>");
 
@@ -271,7 +270,9 @@ class SiteIndexCommand extends BaseCommand
      */
     private function getAllLinks($url)
     {
-        $crawlerPage = $this->loadUrl($url)->get($url);
+        $response = $this->sendGetRequest($url);
+        $body = $response->getBody()->__toString();
+        $crawlerPage = new Crawler($body);
 
         if (false !== $crawlerPage) {
             return $crawlerPage->filter('a')->each(function(Crawler $node) {

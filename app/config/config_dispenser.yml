@@ -1,0 +1,23 @@
+imports:
+    - { resource: parameters.yml }
+
+framework_mini:
+    secret:               "%secret%"
+    default_locale:       "%locale%"
+    trusted_proxies:      ~
+    http_method_override: true
+
+monolog:
+    handlers:
+        main:
+            type:         fingers_crossed
+            action_level: error
+            handler:      nested
+        nested:
+            type:  stream
+            path:  "%kernel.logs_dir%/%kernel.environment%.log"
+            level: debug
+
+link_pub_dispenser:
+    exception_listener: true
+    router_listener: true

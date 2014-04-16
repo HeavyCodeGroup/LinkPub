@@ -26,4 +26,15 @@ class SiteRepository extends EntityRepository
             ->setParameter(':owner', $user)
         ;
     }
+
+    public function findOneByIdOrGuid($criterion)
+    {
+        return $this->createQueryBuilder('site')
+            ->where('site.id = :criterion')
+            ->orWhere('site.guid = :criterion')
+            ->setParameter(':criterion', $criterion)
+            ->getQuery()
+            ->getSingleResult()
+        ;
+    }
 }

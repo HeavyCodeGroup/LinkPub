@@ -50,6 +50,9 @@ class ClientController extends BaseController
         ]);
     }
 
+    /**
+     * @param $siteId
+     */
     public function linksAction($siteId)
     {
         $site = $this->getSite($siteId);
@@ -98,6 +101,10 @@ class ClientController extends BaseController
         ]);
     }
 
+    /**
+     * @param $siteId
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function siteInfoAction($siteId)
     {
         $consumer = $this->get('link_pub_consumer.builder');
@@ -109,6 +116,11 @@ class ClientController extends BaseController
         ]);
     }
 
+    /**
+     * @param $siteId
+     * @return mixed
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     */
     private function getSite($siteId)
     {
         $siteRepository = $this->getDoctrine()->getRepository('LinkPubStorageBundle:Site');

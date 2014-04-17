@@ -2,15 +2,13 @@
 
 namespace HeavyCodeGroup\LinkPub\GuiBundle\Controller;
 
+use HeavyCodeGroup\LinkPub\BaseBundle\Controller\BaseController;
 use HeavyCodeGroup\LinkPub\GuiBundle\Form\Type\SiteType;
 use HeavyCodeGroup\LinkPub\StorageBundle\Entity\Site;
-use Pagerfanta\Adapter\DoctrineORMAdapter;
-use Pagerfanta\Pagerfanta;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class ClientController extends Controller
+class ClientController extends BaseController
 {
     /**
      * @return \Symfony\Component\HttpFoundation\Response
@@ -109,15 +107,6 @@ class ClientController extends Controller
             'consumerImplementationNames' => $consumer->getAvailableImplementationNames(),
             'consumerFormats' => $consumer->getAvailableFormats(),
         ]);
-    }
-
-    private function getPagerfanta($query, $page)
-    {
-        $adapter = new DoctrineORMAdapter($query);
-        $pagerfanta = new Pagerfanta($adapter);
-        $pagerfanta->setMaxPerPage($this->container->getParameter('per_page'));
-
-        return $pagerfanta->setCurrentPage($page);
     }
 
     private function getSite($siteId)

@@ -19,22 +19,6 @@ class ClientController extends BaseController
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function incomingLinksAction()
-    {
-        return $this->render('LinkPubGuiBundle:Client:incomingLinks.html.twig');
-    }
-
-    /**
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function outgoingLinksAction()
-    {
-        return $this->render('LinkPubGuiBundle:Client:outgoingLinks.html.twig');
-    }
-
-    /**
      * @param $page
      * @return \Symfony\Component\HttpFoundation\Response
      */
@@ -48,14 +32,6 @@ class ClientController extends BaseController
            'sites' => $pagerfanta->getCurrentPageResults(),
            'pagerfanta' => $pagerfanta,
         ]);
-    }
-
-    /**
-     * @param $siteId
-     */
-    public function linksAction($siteId)
-    {
-        $site = $this->getSite($siteId);
     }
 
     /**
@@ -116,6 +92,35 @@ class ClientController extends BaseController
         ]);
     }
 
+    public function siteInComingLinksAction($siteId, $page)
+    {
+        $site = $this->getSite($siteId);
+        $pageRepository = $this->getDoctrine()->getRepository('LinkPubStorageBundle:Link');
+        $links = $pageRepository->getInComingBySiteQuery($site);
+
+        return $this->renderLinks($links, $page);
+    }
+
+    public function siteOutGoingLinksAction($siteId, $page)
+    {
+        $site = $this->getSite($siteId);
+        $pageRepository = $this->getDoctrine()->getRepository('LinkPubStorageBundle:Link');
+        $links = $pageRepository->getOutGoingBySiteQuery($site);
+
+        return $this->renderLinks($links, $page);
+    }
+
+    public function inComingLinksAction($page)
+    {
+
+    }
+
+    public function outGoingLinksAction($page)
+    {
+        return $this->render('LinkPubGuiBundle:Client:links.html.twig');
+    }
+
+
     /**
      * @param $siteId
      * @return mixed
@@ -131,5 +136,15 @@ class ClientController extends BaseController
         }
 
         return $site;
+    }
+
+    private function renderLinks($links, $page)
+    {
+        $pagerfanta = $this->getPagerfanta($links, $page);
+
+        return $this->render('LinkPubGuiBundle:Client:links.html.twig', [
+            'links' => $pagerfanta->getCurrentPageResults(),
+            'pagerfanta' => $pagerfanta,
+        ]);
     }
 }

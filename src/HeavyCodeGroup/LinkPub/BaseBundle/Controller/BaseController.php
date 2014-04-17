@@ -8,6 +8,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class BaseController extends Controller
 {
+    /**
+     * @param $query
+     * @param $page
+     * @return Pagerfanta
+     */
     protected function getPagerfanta($query, $page)
     {
         $adapter = new DoctrineORMAdapter($query);

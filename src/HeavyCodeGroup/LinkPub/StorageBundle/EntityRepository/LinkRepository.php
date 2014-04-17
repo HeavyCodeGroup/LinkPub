@@ -14,7 +14,7 @@ class LinkRepository extends EntityRepository
     public function getInComingBySiteQuery(Site $site)
     {
         return $this->createQueryBuilder('link')
-            ->innerJoin('link.trackingPage', 'page')
+            ->innerJoin('link.trackPage', 'page')
             ->where('page.site = :site')
             ->setParameter(':site', $site)
             ->getQuery()
@@ -32,6 +32,6 @@ class LinkRepository extends EntityRepository
             ->where('page.site = :site')
             ->setParameter(':site', $site)
             ->getQuery()
-            ;
+        ;
     }
 }

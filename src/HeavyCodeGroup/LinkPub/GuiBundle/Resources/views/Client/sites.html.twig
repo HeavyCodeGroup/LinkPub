@@ -20,8 +20,12 @@
                 {{ site.pagesCount }}
             </a>
         </td>
-        <td class="text-green">{{ site.linksCountOutgoing }}</td>
-        <td class="text-red">{{ site.linksCountIncoming }}</td>
+        <td>
+            <a class="text-green" href="{{ path('linkpub_gui_site_incoming_links', {'siteId': site.siteFields.id}) }}">{{ site.linksCountOutgoing }}</a>
+        </td>
+        <td>
+            <a class="text-red" href="{{ path('linkpub_gui_site_outgoing_links', {'siteId': site.siteFields.id}) }}">{{ site.linksCountIncoming }}</a>
+        </td>
     </tr>
     {% endfor %}
 </table>

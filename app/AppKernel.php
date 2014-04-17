@@ -26,6 +26,7 @@ class AppKernel extends Kernel
             new HeavyCodeGroup\LinkPub\UserBundle\LinkPubUserBundle(),
             new HWI\Bundle\OAuthBundle\HWIOAuthBundle(),
             new HeavyCodeGroup\LinkPub\IndexerBundle\LinkPubIndexerBundle(),
+            new HeavyCodeGroup\LinkPub\ConsumerBundle\LinkPubConsumerBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

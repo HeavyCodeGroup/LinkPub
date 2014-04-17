@@ -1,4 +1,26 @@
-linkpub.gui.dashboard: Dashboard
-linkpub.gui.sites: Sites
-linkpub.gui.incoming_links: Incoming Links
-linkpub.gui.outgoing_links: Outgoing Links
+linkpub:
+    gui:
+        dashboard: Dashboard
+        sites: Sites
+        incoming_links: Incoming Links
+        outgoing_links: Outgoing Links
+        site_info:
+            title: Title
+            tci: Yandex TCI
+            data_last_index: Last indexed
+            consumers: Consumers
+
+
+my_sites: My sites
+site_name: Name
+site_pages: Pages
+site_links_in: Links Buy
+site_links_outgoing: Links Sell
+site_category_name: Category
+add_site: Add site
+url: Url
+state: State
+level: Level
+page_rank: Page Rank
+price: Price
+pages: Pages

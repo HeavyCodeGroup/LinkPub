@@ -27,4 +27,12 @@ class BaseCommand extends ContainerAwareCommand
         $this->input = $input;
         $this->output = $output;
     }
+
+    /**
+     * @return \Doctrine\ORM\EntityManager
+     */
+    protected function getEntityManager()
+    {
+        return $this->getContainer()->get('doctrine.orm.entity_manager');
+    }
 }

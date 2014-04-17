@@ -1,0 +1,15 @@
+{% extends "LinkPubUserBundle::layout.html.twig" %}
+{% block body %}
+    <div>
+    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+    <a href="{{ path('fos_user_security_logout') }}">
+    {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+    </a>
+    {% else %}
+    <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
+    {% endif %}
+    </div>
+    <a href="{{ path('hwi_oauth_service_redirect', {'service': 'vkontakte' }) }}" alt="Sign in with vkontakte">Sign in with vkontakte</a>
+    <br>
+    <a href="{{ path('hwi_oauth_service_redirect', {'service': 'facebook' }) }}" alt="Sign in with Facebook">Sign in with Facebook</a>
+{% endblock body %}

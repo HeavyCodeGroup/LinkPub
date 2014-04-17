@@ -44,7 +44,8 @@
         "rhumsaa/uuid": "2.7.1",
         "hwi/oauth-bundle": "0.4.*@dev",
         "fabpot/goutte": "v1.0.5",
-        "white-october/pagerfanta-bundle": "dev-master"
+        "white-october/pagerfanta-bundle": "dev-master",
+        "guzzlehttp/guzzle": "4.0.0"
     },
     "scripts": {
         "post-install-cmd": [

@@ -26,7 +26,7 @@ class PageListener implements EventSubscriber
             // Force update
             $em = $event->getEntityManager();
             $uow = $em->getUnitOfWork();
-            $meta = $em->getClassMetadata($entity);
+            $meta = $em->getClassMetadata('LinkPubStorageBundle:Page');
             $uow->recomputeSingleEntityChangeSet($meta, $entity);
         }
     }

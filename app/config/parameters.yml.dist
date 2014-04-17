@@ -11,16 +11,16 @@ parameters:
     mailer_user:       ~
     mailer_password:   ~
 
+    facebook_app_id: 428625093906622
+    facebook_app_secret: 4ee26d33df281e8bcd7e0b38c8adcabe
+    vkontakte_app_id: 4234082
+    vkontakte_app_secret: LUXi1Z3Cy4E2NnuTVlma
+
     locale:            en
     secret:            ThisTokenIsNotSoSecretChangeIt
     node:              /usr/bin/node
     node_modules:      /usr/lib/node_modules
-    sites_per_page:    20
-
-    facebook_app_id:   428625093906622
-    facebook_app_secret:   4ee26d33df281e8bcd7e0b38c8adcabe
-
-    vkontakte_app_id:  4234082
-    vkontakte_app_secret:  LUXi1Z3Cy4E2NnuTVlma
-
+    per_page:          20
+    dispenser_hosts:
+        - dispenser.linkpub.local
 

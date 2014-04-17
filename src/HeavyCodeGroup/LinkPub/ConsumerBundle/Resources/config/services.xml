@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <parameters>
+        <parameter key="link_pub_consumer.installer.path">%kernel.root_dir%/Resources/consumers</parameter>
+        <parameter key="link_pub_consumer.installer.tmp">%kernel.root_dir%/tmp</parameter>
+        <parameter key="link_pub_consumer.builder.path">%kernel.root_dir%/../web/consumers</parameter>
+        <parameter key="link_pub_consumer.builder.tmp">%kernel.root_dir%/tmp</parameter>
+    </parameters>
+    <services>
+        <service id="link_pub_consumer.installer" class="HeavyCodeGroup\LinkPub\ConsumerBundle\Tool\InstallerTool">
+            <argument type="service" id="service_container"/>
+            <argument type="service" id="filesystem"/>
+        </service>
+        <service id="link_pub_consumer.installer.php" class="HeavyCodeGroup\LinkPub\ConsumerBundle\Tool\Installer\PhpInstaller">
+            <tag name="link_pub_consumer.installer" implementation="php"/>
+            <call method="setFilesystem">
+                <argument type="service" id="filesystem"/>
+            </call>
+            <call method="setEntityManager">
+                <argument type="service" id="doctrine.orm.entity_manager"/>
+            </call>
+            <call method="setInstallDirectory">
+                <argument>%link_pub_consumer.installer.path%</argument>
+            </call>
+        </service>
+        <service id="link_pub_consumer.builder" class="HeavyCodeGroup\LinkPub\ConsumerBundle\Tool\BuilderTool">
+            <argument type="service" id="service_container"/>
+            <argument type="service" id="filesystem"/>
+            <call method="setEntityManager">
+                <argument type="service" id="doctrine.orm.entity_manager"/>
+            </call>
+        </service>
+        <service id="link_pub_consumer.builder.php" class="HeavyCodeGroup\LinkPub\ConsumerBundle\Tool\Builder\PhpBuilder">
+            <tag name="link_pub_consumer.builder" implementation="php"/>
+            <argument type="service" id="filesystem"/>
+            <argument>%link_pub_consumer.installer.path%</argument>
+            <argument>%link_pub_consumer.builder.tmp%</argument>
+        </service>
+        <service id="link_pub_consumer.packager.zip" class="HeavyCodeGroup\LinkPub\ConsumerBundle\Tool\Packager\ZipPackager">
+            <tag name="link_pub_consumer.packager" format="zip"/>
+            <argument type="service" id="filesystem"/>
+            <argument>%link_pub_consumer.builder.path%</argument>
+        </service>
+        <service id="link_pub_consumer.packager.tar" class="HeavyCodeGroup\LinkPub\ConsumerBundle\Tool\Packager\TarPackager">
+            <argument type="service" id="filesystem"/>
+            <argument>%link_pub_consumer.builder.path%</argument>
+        </service>
+        <service id="link_pub_consumer.packager.tar.gz" class="HeavyCodeGroup\LinkPub\ConsumerBundle\Tool\Packager\TarGzPackager">
+            <tag name="link_pub_consumer.packager" format="tar.gz"/>
+            <argument type="service" id="filesystem"/>
+            <argument type="service" id="link_pub_consumer.packager.tar"/>
+        </service>
+        <service id="link_pub_consumer.packager.tar.bz2" class="HeavyCodeGroup\LinkPub\ConsumerBundle\Tool\Packager\TarBz2Packager">
+            <tag name="link_pub_consumer.packager" format="tar.bz2"/>
+            <argument type="service" id="filesystem"/>
+            <argument type="service" id="link_pub_consumer.packager.tar"/>
+        </service>
+    </services>
+</container>

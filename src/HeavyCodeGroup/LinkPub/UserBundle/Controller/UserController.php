@@ -8,9 +8,9 @@ use Symfony\Component\HttpFoundation\Request;
 
 class UserController extends Controller
 {
-    public function homepageAction()
+    public function signInAction()
     {
-        return $this->render('@LinkPubUser/User/homepage.html.twig');
+        return $this->render('@LinkPubUser/User/signIn.html.twig');
     }
 
 }

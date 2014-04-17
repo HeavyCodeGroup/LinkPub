@@ -10,6 +10,10 @@ link_pub_link_pub_user:
     resource: "@LinkPubUserBundle/Resources/config/routing.yml"
     prefix:   /
 
+linkpub_link_pub_consumer:
+    resource: "@LinkPubConsumerBundle/Resources/config/routing.yml"
+    prefix:  /consumer
+    
 #FosUserBundle Routes
 fos_user_security:
     resource: "@FOSUserBundle/Resources/config/routing/security.xml"

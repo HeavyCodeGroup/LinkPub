@@ -14,6 +14,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DomCrawler\Crawler;
 use GuzzleHttp\Client;
+use Symfony\Component\DomCrawler\Link;
 
 class SiteIndexCommand extends BaseCommand
 {
@@ -300,7 +301,7 @@ class SiteIndexCommand extends BaseCommand
     {
         $response = $this->sendGetRequest($url);
         $body = $response->getBody()->__toString();
-        $crawlerPage = new Crawler($body);
+        $crawlerPage = new Crawler($body, $url);
 
         if (false !== $crawlerPage) {
             return $crawlerPage->filter('a')->each(function(Crawler $node) {

@@ -70,6 +70,7 @@ class ClientController extends Controller
         if ($form->isValid()) {
             /** @var Site $site */
             $site = $form->getData();
+            $site->setRootUrl(rtrim($site->getRootUrl(), '/'));
             $site->setOwner($this->getUser());
             $this->getDoctrine()->getManager()->persist($site);
             $this->getDoctrine()->getManager()->flush();

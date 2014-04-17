@@ -30,6 +30,10 @@ class SiteIndexCommand extends BaseCommand
         ;
     }
 
+    /**
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     */
     protected function initialize(InputInterface $input, OutputInterface $output)
     {
         $this->client = new Client();
@@ -114,6 +118,11 @@ class SiteIndexCommand extends BaseCommand
         }
     }
 
+    /**
+     * @param $pageUrl
+     * @param $parentUrl
+     * @param Site $site
+     */
     private function addPage($pageUrl, $parentUrl, Site $site)
     {
         $path = $this->getPath($pageUrl);
@@ -140,6 +149,11 @@ class SiteIndexCommand extends BaseCommand
         }
     }
 
+    /**
+     * @param Page $page
+     * @param $site
+     * @param $parentUrl
+     */
     private function addParent(Page $page, $site, $parentUrl)
     {
         if ($parentUrl && !$this->isParent($page, $this->findPageByUrl($parentUrl, $site))) {
@@ -149,6 +163,9 @@ class SiteIndexCommand extends BaseCommand
         }
     }
 
+    /**
+     * @param Site $site
+     */
     private function setRootPage(Site $site)
     {
        if (!$site->getRootPage()) {
@@ -168,6 +185,10 @@ class SiteIndexCommand extends BaseCommand
         }
     }
 
+    /**
+     * @param $url
+     * @return string
+     */
     private function getPath($url)
     {
         $parsedUrl = parse_url($url);
@@ -181,6 +202,10 @@ class SiteIndexCommand extends BaseCommand
         }
     }
 
+    /**
+     * @param $url
+     * @return bool|string
+     */
     private function getHostName($url)
     {
         $parcedUrl = parse_url($url);
@@ -243,6 +268,11 @@ class SiteIndexCommand extends BaseCommand
         return false;
     }
 
+    /**
+     * @param Page $page
+     * @param Page $parentPage
+     * @return bool
+     */
     private function isParent(Page $page, Page $parentPage)
     {
         if (false == $parentPage) {

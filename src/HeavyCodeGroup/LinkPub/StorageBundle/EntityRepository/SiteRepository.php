@@ -18,8 +18,8 @@ class SiteRepository extends EntityRepository
             ->select('site as siteFields',
                 'category.title as siteCategoryTitle',
                 'count(DISTINCT pages.id) as pagesCount',
-                'count(linksOn.id) as linksCountOn',
-                'count(linksTracked.id) as linksCountTracked'
+                'count(linksOn.id) as linksCountOutgoing',
+                'count(linksTracked.id) as linksCountIncoming'
             )
             ->leftJoin('site.pages', 'pages')
             ->leftJoin('pages.linksOn', 'linksOn')

@@ -2,17 +2,10 @@ linkpub_gui_client_dashboard:
     path: /dashboard
     defaults: { _controller: LinkPubGuiBundle:Client:dashboard }
 
+
 linkpub_gui_client_sites:
     path: /sites/{page}
     defaults: { _controller: LinkPubGuiBundle:Client:sites, page: 1 }
-
-linkpub_gui_incoming_links:
-    path: /incoming-links
-    defaults: { _controller: LinkPubGuiBundle:Client:incomingLinks}
-
-linkpub_gui_outgoing_links:
-    path: /outgoing-links
-    defaults: { _controller: LinkPubGuiBundle:Client:outgoingLinks }
 
 linkpub_gui_add_site:
     path: /add-site
@@ -25,3 +18,20 @@ linkpub_gui_site_pages:
 linkpub_gui_site_info:
     path: /site-info/{siteId}
     defaults: { _controller: LinkPubGuiBundle:Client:siteInfo }
+
+linkpub_gui_site_incoming_links:
+    path: /site-incoming-links/{siteId}/{page}
+    defaults: { _controller: LinkPubGuiBundle:Client:siteInComingLinks, page: 1 }
+
+linkpub_gui_site_outgoing_links:
+    path: /site-outgoing-links/{siteId}/{page}
+    defaults: { _controller: LinkPubGuiBundle:Client:siteOutGoingLinks, page: 1 }
+
+
+linkpub_gui_incoming_links:
+    path: /incoming-links/{page}
+    defaults: { _controller: LinkPubGuiBundle:Client:inComingLinks, page: 1 }
+
+linkpub_gui_outgoing_links:
+    path: /outgoing-links/{page}
+    defaults: { _controller: LinkPubGuiBundle:Client:outGoingLinks, page: 1 }

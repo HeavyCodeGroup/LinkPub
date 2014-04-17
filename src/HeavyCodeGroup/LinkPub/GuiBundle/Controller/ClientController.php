@@ -2,15 +2,13 @@
 
 namespace HeavyCodeGroup\LinkPub\GuiBundle\Controller;
 
+use HeavyCodeGroup\LinkPub\BaseBundle\Controller\BaseController;
 use HeavyCodeGroup\LinkPub\GuiBundle\Form\Type\SiteType;
 use HeavyCodeGroup\LinkPub\StorageBundle\Entity\Site;
-use Pagerfanta\Adapter\DoctrineORMAdapter;
-use Pagerfanta\Pagerfanta;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class ClientController extends Controller
+class ClientController extends BaseController
 {
     /**
      * @return \Symfony\Component\HttpFoundation\Response
@@ -18,22 +16,6 @@ class ClientController extends Controller
     public function dashboardAction()
     {
         return $this->render('LinkPubGuiBundle:Client:dashboard.html.twig');
-    }
-
-    /**
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function incomingLinksAction()
-    {
-        return $this->render('LinkPubGuiBundle:Client:incomingLinks.html.twig');
-    }
-
-    /**
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function outgoingLinksAction()
-    {
-        return $this->render('LinkPubGuiBundle:Client:outgoingLinks.html.twig');
     }
 
     /**
@@ -50,11 +32,6 @@ class ClientController extends Controller
            'sites' => $pagerfanta->getCurrentPageResults(),
            'pagerfanta' => $pagerfanta,
         ]);
-    }
-
-    public function linksAction($siteId)
-    {
-        $site = $this->getSite($siteId);
     }
 
     /**
@@ -100,6 +77,10 @@ class ClientController extends Controller
         ]);
     }
 
+    /**
+     * @param $siteId
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function siteInfoAction($siteId)
     {
         $consumer = $this->get('link_pub_consumer.builder');
@@ -111,15 +92,40 @@ class ClientController extends Controller
         ]);
     }
 
-    private function getPagerfanta($query, $page)
+    public function siteInComingLinksAction($siteId, $page)
     {
-        $adapter = new DoctrineORMAdapter($query);
-        $pagerfanta = new Pagerfanta($adapter);
-        $pagerfanta->setMaxPerPage($this->container->getParameter('per_page'));
+        $site = $this->getSite($siteId);
+        $pageRepository = $this->getDoctrine()->getRepository('LinkPubStorageBundle:Link');
+        $links = $pageRepository->getInComingBySiteQuery($site);
 
-        return $pagerfanta->setCurrentPage($page);
+        return $this->renderLinks($links, $page);
     }
 
+    public function siteOutGoingLinksAction($siteId, $page)
+    {
+        $site = $this->getSite($siteId);
+        $pageRepository = $this->getDoctrine()->getRepository('LinkPubStorageBundle:Link');
+        $links = $pageRepository->getOutGoingBySiteQuery($site);
+
+        return $this->renderLinks($links, $page);
+    }
+
+    public function inComingLinksAction($page)
+    {
+
+    }
+
+    public function outGoingLinksAction($page)
+    {
+        return $this->render('LinkPubGuiBundle:Client:links.html.twig');
+    }
+
+
+    /**
+     * @param $siteId
+     * @return mixed
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     */
     private function getSite($siteId)
     {
         $siteRepository = $this->getDoctrine()->getRepository('LinkPubStorageBundle:Site');
@@ -130,5 +136,15 @@ class ClientController extends Controller
         }
 
         return $site;
+    }
+
+    private function renderLinks($links, $page)
+    {
+        $pagerfanta = $this->getPagerfanta($links, $page);
+
+        return $this->render('LinkPubGuiBundle:Client:links.html.twig', [
+            'links' => $pagerfanta->getCurrentPageResults(),
+            'pagerfanta' => $pagerfanta,
+        ]);
     }
 }

@@ -2,9 +2,9 @@
 
 namespace HeavyCodeGroup\LinkPub\GuiBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use HeavyCodeGroup\LinkPub\BaseBundle\Controller\BaseController;
 
-class GuestController extends Controller
+class GuestController extends BaseController
 {
    public function indexAction()
    {

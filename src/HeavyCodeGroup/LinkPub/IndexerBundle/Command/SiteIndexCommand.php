@@ -2,7 +2,6 @@
 
 namespace HeavyCodeGroup\LinkPub\IndexerBundle\Command;
 
-use Guzzle\Common\Exception\GuzzleException;
 use GuzzleHttp\Message\Response;
 use HeavyCodeGroup\LinkPub\BaseBundle\Command\BaseCommand;
 use HeavyCodeGroup\LinkPub\IndexerBundle\Exception\SiteNotFoundException;
@@ -14,7 +13,6 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DomCrawler\Crawler;
 use GuzzleHttp\Client;
-use Symfony\Component\DomCrawler\Link;
 
 class SiteIndexCommand extends BaseCommand
 {

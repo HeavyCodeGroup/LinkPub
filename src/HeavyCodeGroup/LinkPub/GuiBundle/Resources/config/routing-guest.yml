@@ -1,0 +1,3 @@
+linkpub_gui_guest_index:
+    path: /
+    defaults: { _controller: LinkPubGuiBundle:Guest:index }

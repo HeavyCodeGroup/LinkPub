@@ -55,7 +55,6 @@ class ClientController extends Controller
     public function linksAction($siteId)
     {
         $site = $this->getSite($siteId);
-
     }
 
     /**

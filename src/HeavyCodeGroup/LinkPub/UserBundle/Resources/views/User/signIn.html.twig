@@ -1,5 +1,5 @@
 {% extends "LinkPubUserBundle::layout.html.twig" %}
-{% block body %}
+{% block fos_user_content %}
     <div>
     {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
         <a href="{{ path('fos_user_security_logout') }}"> {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}</a>
@@ -17,4 +17,4 @@
     {% endif %}
     </div>
 
-{% endblock body %}
+{% endblock fos_user_content %}

@@ -1,5 +1,4 @@
 {% extends "FOSUserBundle::layout.html.twig" %}
-{% block body %}
 {% block fos_user_content %}
     {% if error %}
         <div>{{ error|trans }}</div>
@@ -19,4 +18,4 @@
         <button class="btn btn-lg btn-primary btn-block" type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans }}">Sign in</button>
     </form>
 {% endblock fos_user_content %}
-{% endblock %}
+

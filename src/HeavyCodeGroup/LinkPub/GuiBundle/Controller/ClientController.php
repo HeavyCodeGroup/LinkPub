@@ -8,6 +8,7 @@ use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Pagerfanta\Pagerfanta;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ClientController extends Controller
 {
@@ -49,6 +50,12 @@ class ClientController extends Controller
            'sites' => $pagerfanta->getCurrentPageResults(),
            'pagerfanta' => $pagerfanta,
         ]);
+    }
+
+    public function linksAction($siteId)
+    {
+        $site = $this->getSite($siteId);
+
     }
 
     /**
@@ -116,7 +123,12 @@ class ClientController extends Controller
     private function getSite($siteId)
     {
         $siteRepository = $this->getDoctrine()->getRepository('LinkPubStorageBundle:Site');
+        $site = $siteRepository->findOneByIdOrGuid($siteId);
 
-        return $siteRepository->findOneByIdOrGuid($siteId);
+        if (!$site) {
+            throw new NotFoundHttpException("Site with id $siteId not found");
+        }
+
+        return $site;
     }
 }

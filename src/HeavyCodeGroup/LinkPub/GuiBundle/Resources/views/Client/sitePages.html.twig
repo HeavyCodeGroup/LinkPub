@@ -1,7 +1,8 @@
 {% extends 'LinkPubGuiBundle::layout.html.twig' %}
 {% block title %}{{ 'pages'|trans }} {% endblock %}
 {% block content %}
-<table class="table table-striped">
+    {% if pages|length > 0 %}
+<table class="table margin-top  table-striped">
     <tr>
         <th>{{ 'url'|trans }}</th>
         <th>{{ 'state'|trans }}</th>
@@ -9,7 +10,7 @@
         <th>{{ 'page_rank'|trans }}</th>
         <th>{{ 'price'|trans }}</th>
     </tr>
-    {% for page in pages %}
+        {% for page in pages %}
     <tr>
         <td>{{ page.url }}</td>
         <td>{{ page.state }}</td>
@@ -17,7 +18,12 @@
         <td>{{ page.pageRank }}</td>
         <td>{{ page.price }}</td>
     </tr>
-    {% endfor %}
+        {% endfor %}
 </table>
-    <h4> {{ pagerfanta(pagerfanta) }}</h4>
+<h4> {{ pagerfanta(pagerfanta) }}</h4>
+    {% else %}
+<div class="margin-top">
+    Indexed pages for your site not found
+</div>
+    {% endif %}
 {% endblock %}

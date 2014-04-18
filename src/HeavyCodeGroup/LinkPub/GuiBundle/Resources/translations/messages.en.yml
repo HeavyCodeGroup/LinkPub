@@ -15,6 +15,15 @@ linkpub:
             pr: Google PageRank
         partner_search_found:
             page_links_on: Links On
+        links:
+            page: Page
+            reference: Reference
+            title: Title
+            description: Description
+            date_start: Date Start
+            date_end: Date End
+            price: Price
+            state: State
 
 my_sites: My sites
 site_name: Name

@@ -1,3 +1,12 @@
 {% extends 'LinkPubGuiBundle::layout.html.twig' %}
 {% block title %}{{ 'links'|trans }}{% endblock %}
 {% block content %}
+<div class="margin-top">
+    {% if siteId is defined %}
+    <a href="{{ path('linkpub_gui_search_partners', {'siteId': siteId}) }}">Add link</a>
+    {% endif %}
+    {% for link in links %}
+
+    {% endfor %}
+</div>
+{% endblock %}

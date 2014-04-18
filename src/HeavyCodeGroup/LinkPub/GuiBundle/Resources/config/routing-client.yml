@@ -19,6 +19,11 @@ linkpub_gui_site_info:
     path: /site-info/{siteId}
     defaults: { _controller: LinkPubGuiBundle:Client:siteInfo }
 
+
+linkpub_gui_search_partners:
+    path: /site-search-partners/{siteId}/{page}
+    defaults: { _controller: LinkPubGuiBundle:Client:searchPartners, page: 1 }
+
 linkpub_gui_site_incoming_links:
     path: /site-incoming-links/{siteId}/{page}
     defaults: { _controller: LinkPubGuiBundle:Client:siteInComingLinks, page: 1 }
@@ -26,6 +31,10 @@ linkpub_gui_site_incoming_links:
 linkpub_gui_site_outgoing_links:
     path: /site-outgoing-links/{siteId}/{page}
     defaults: { _controller: LinkPubGuiBundle:Client:siteOutGoingLinks, page: 1 }
+
+linkpub_gui_add_incoming_link:
+    path: /add-incoming-links/{siteId}
+    defaults: { _controller: LinkPubGuiBundle:Client:addIncomingLink }
 
 
 linkpub_gui_incoming_links:
@@ -35,3 +44,4 @@ linkpub_gui_incoming_links:
 linkpub_gui_outgoing_links:
     path: /outgoing-links/{page}
     defaults: { _controller: LinkPubGuiBundle:Client:outGoingLinks, page: 1 }
+

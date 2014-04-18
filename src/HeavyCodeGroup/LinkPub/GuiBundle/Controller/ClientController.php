@@ -3,6 +3,7 @@
 namespace HeavyCodeGroup\LinkPub\GuiBundle\Controller;
 
 use HeavyCodeGroup\LinkPub\BaseBundle\Controller\BaseController;
+use HeavyCodeGroup\LinkPub\GuiBundle\Form\Type\SearchPartnersType;
 use HeavyCodeGroup\LinkPub\GuiBundle\Form\Type\SiteType;
 use HeavyCodeGroup\LinkPub\StorageBundle\Entity\Site;
 use Symfony\Component\HttpFoundation\Request;
@@ -54,7 +55,7 @@ class ClientController extends BaseController
             return $this->redirect($this->generateUrl('linkpub_gui_client_sites'));
         }
 
-        return $this->render('LinkPubGuiBundle:Client:addSite.html.twig', ['form' => $form->createView(),]);
+        return $this->render('LinkPubGuiBundle:Client:addSite.html.twig', ['form' => $form->createView()]);
     }
 
     /**
@@ -92,13 +93,32 @@ class ClientController extends BaseController
         ]);
     }
 
+    public function searchPartnersAction($siteId, $page, Request $request)
+    {
+        $site = $this->getSite($siteId);
+
+        $form = $this->createForm(new SearchPartnersType());
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            /** @var Site $site */
+            $criteria = $form->getData();
+
+            return $this->redirect($this->generateUrl('linkpub_gui_client_sites'));
+        }
+
+        return $this->render('LinkPubGuiBundle:Client:searchPartners.html.twig', [
+            'form' => $form->createView()
+        ]);
+    }
+
     public function siteInComingLinksAction($siteId, $page)
     {
         $site = $this->getSite($siteId);
         $pageRepository = $this->getDoctrine()->getRepository('LinkPubStorageBundle:Link');
         $links = $pageRepository->getInComingBySiteQuery($site);
 
-        return $this->renderLinks($links, $page);
+        return $this->renderLinks($links, $page, $siteId);
     }
 
     public function siteOutGoingLinksAction($siteId, $page)
@@ -120,6 +140,12 @@ class ClientController extends BaseController
         return $this->render('LinkPubGuiBundle:Client:links.html.twig');
     }
 
+    public function addIncomingLinkAction($siteId)
+    {
+        $site = $this->getSite($siteId);
+
+        return $this->render('LinkPubGuiBundle:Client:addIncomingLink.html.twig');
+    }
 
     /**
      * @param $siteId
@@ -138,13 +164,14 @@ class ClientController extends BaseController
         return $site;
     }
 
-    private function renderLinks($links, $page)
+    private function renderLinks($links, $page, $siteId = null)
     {
         $pagerfanta = $this->getPagerfanta($links, $page);
 
         return $this->render('LinkPubGuiBundle:Client:links.html.twig', [
             'links' => $pagerfanta->getCurrentPageResults(),
             'pagerfanta' => $pagerfanta,
+            'siteId' => $siteId,
         ]);
     }
 }

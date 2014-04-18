@@ -1,0 +1,10 @@
+{% extends 'LinkPubGuiBundle::layout.html.twig' %}
+{% block title %}{{ 'found_pages'|trans }}{% endblock %}
+{% block content %}
+    {% for page in pages %}
+    {% else %}
+        <div class="margin-top">
+            Nothing found by your criteria =(
+        </div>
+    {% endfor %}
+{% endblock %}

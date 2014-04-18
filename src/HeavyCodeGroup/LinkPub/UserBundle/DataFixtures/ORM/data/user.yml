@@ -1,0 +1,36 @@
+-
+    username: "admin"
+    email: "admin@mail.net"
+    plainPassword: "admin"
+    enabled: "true"
+    superAdmin: "true"
+    reference: "user_admin"
+-
+    username: "user1"
+    email: "user1@mail.net"
+    plainPassword: "user1"
+    enabled: "true"
+    superAdmin: "false"
+    reference: "user_user1"
+-
+    username: "vadim"
+    email: "vadim_2991@ukr.net"
+    plainPassword: "123"
+    enabled: "true"
+    superAdmin: "false"
+    reference: "user_vadim"
+-
+    username: "user2"
+    email: "user2@gmail.com"
+    plainPassword: "user2"
+    enabled: "true"
+    superAdmin: "false"
+    reference: "user_user2"
+-
+    username: "user3"
+    email: "user3@rambler.ru"
+    plainPassword: "user3"
+    enabled: "true"
+    superAdmin: "false"
+    reference: "user_user3"
+

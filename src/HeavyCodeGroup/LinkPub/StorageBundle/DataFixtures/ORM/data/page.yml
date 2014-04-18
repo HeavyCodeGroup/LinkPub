@@ -1,0 +1,65 @@
+-
+    url: "/gallery"
+    level: 1
+    price: 5
+    state: "disabled"
+    capacity: 3
+    page_rank: 2
+    referenceSite: "physmath"
+
+-
+    url: "/akit"
+    level: 1
+    price: 7
+    state: "disabled"
+    capacity: 3
+    page_rank: 0
+    referenceSite: "physmath"
+-
+    url: "/appmath"
+    level: 1
+    price: 5
+    state: "active"
+    capacity: 3
+    page_rank: 2
+    referenceSite: "blog"
+-
+    url: "/seminar"
+    level: 1
+    price: 3
+    state: "disabled"
+    capacity: 3
+    page_rank: 1
+    referenceSite: "blog"
+-
+    url: "/about"
+    level: 1
+    price: 15
+    state: "active"
+    capacity: 3
+    page_rank: 1
+    referenceSite: "www.all"
+-
+    url: "/student-life"
+    level: 1
+    price: 15
+    state: "disabled"
+    capacity: 3
+    page_rank: 1
+    referenceSite: "www.allprog"
+-
+    url: "/bla-bla"
+    level: 1
+    price: 1
+    state: "active"
+    capacity: 3
+    page_rank: 1
+    referenceSite: "www.rozetka"
+-
+    url: "/student-bla"
+    level: 1
+    price: 18
+    state: "disabled"
+    capacity: 3
+    page_rank: 0
+    referenceSite: "www.blog"

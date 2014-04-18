@@ -2,16 +2,37 @@
     category: 6_1
     title: "Всё о программировании"
     url: "http://allprog.local"
+    reference: "user_user1"
+    referenceSite: "www.allprog"
 -
     category: 6_3
     title: "Всё об Интернете"
     url: "http://allinet.local"
+    reference: "user_vadim"
+    referenceSite: "www.all"
 -
     category: 4
     title: "Розетка"
     url: "http://rozetka.local"
+    reference: "user_vadim"
+    referenceSite: "www.rozetka"
 -
     category: 4
     title: "Physmath"
     url: "http://www.physmath.cdu.edu.ua"
+    reference: "user_user1"
+    referenceSite: "physmath"
+-
+    category: 5
+    title: "blog"
+    url: "http://blog.local"
+    reference: "user_user2"
+    referenceSite: "blog"
+-
+    category: 6_4
+    title: "userblog"
+    url: "http://www.blog.local"
+    reference: "user_user1"
+    referenceSite: "www.blog"
+
 

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 curl -sS https://getcomposer.org/installer | php
-composer.phar install
+./composer.phar install
 app/console doctrine:database:create "$@"
 app/console doctrine:schema:create "$@"
 app/console doctrine:schema:update --force "$@"

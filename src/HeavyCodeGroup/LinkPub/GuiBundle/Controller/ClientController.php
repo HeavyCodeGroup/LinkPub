@@ -134,8 +134,8 @@ class ClientController extends BaseController
     public function siteInComingLinksAction($siteId, $page)
     {
         $site = $this->getSite($siteId);
-        $pageRepository = $this->getDoctrine()->getRepository('LinkPubStorageBundle:Link');
-        $links = $pageRepository->getInComingBySiteQuery($site);
+        $linksRepository = $this->getDoctrine()->getRepository('LinkPubStorageBundle:Link');
+        $links = $linksRepository->getInComingBySiteQuery($site);
 
         return $this->renderLinks($links, $page, $siteId);
     }
@@ -156,10 +156,15 @@ class ClientController extends BaseController
 
     /**
      * @param $page
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function inComingLinksAction($page)
     {
+        $user = $this->getUser();
+        $linksRepository = $this->getDoctrine()->getRepository('LinkPubStorageBundle:Link');
+        $links = $linksRepository->getInComingByUserQuery($user);
 
+        return $this->renderLinks($links, $page);
     }
 
     /**
@@ -168,7 +173,11 @@ class ClientController extends BaseController
      */
     public function outGoingLinksAction($page)
     {
-        return $this->render('LinkPubGuiBundle:Client:links.html.twig');
+        $user = $this->getUser();
+        $linksRepository = $this->getDoctrine()->getRepository('LinkPubStorageBundle:Link');
+        $links = $linksRepository->getOutGoingByUserQuery($user);
+
+        return $this->renderLinks($links, $page);
     }
 
     /**

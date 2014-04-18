@@ -2,11 +2,36 @@
 {% block title %}{{ 'links'|trans }}{% endblock %}
 {% block content %}
 <div class="margin-top">
-    {% if siteId is defined %}
+    {% if siteId is defined and siteId is not null %}
     <a href="{{ path('linkpub_gui_search_partners', {'siteId': siteId}) }}">Add link</a>
     {% endif %}
-    {% for link in links %}
-
-    {% endfor %}
+    {% if links|length > 0 %}
+    <table class="table margin-top table-striped">
+        <tr>
+            <th>{{ 'linkpub.gui.links.page'|trans }}</th>
+            <th>{{ 'linkpub.gui.links.reference'|trans }}</th>
+            <th>{{ 'linkpub.gui.links.title'|trans }}</th>
+            <th>{{ 'linkpub.gui.links.description'|trans }}</th>
+            <th>{{ 'linkpub.gui.links.date_start'|trans }}</th>
+            <th>{{ 'linkpub.gui.links.date_end'|trans }}</th>
+            <th>{{ 'linkpub.gui.links.price'|trans }}</th>
+            <th>{{ 'linkpub.gui.links.state'|trans }}</th>
+        </tr>
+        {% for link in links %}
+            <tr>
+                <td>{{ link.page.site.rootUrl ~ link.page.url }}</td>
+                <td>{{ link.trackPage.site.rootUrl ~ link.trackPage.url }}</td>
+                <td>{{ link.title }}</td>
+                <td>{{ link.description }}</td>
+                <td>{{ link.dateStart|date }}</td>
+                <td>{{ link.dateEnd|date }}</td>
+                <td>{{ link.price }}</td>
+                <td>{{ link.state }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+    {% else %}
+        <div>Nothing found =(</div>
+    {% endif %}
 </div>
 {% endblock %}

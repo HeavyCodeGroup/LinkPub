@@ -5,21 +5,21 @@
     {#{{ form_start(form) }}#}
         {{ form_errors(form) }}
         {{ form_label(form.username) }}
-    <br>
+          <br>
         {{ form_widget(form.username) }}
-    <br>
+          <br>
         {{ form_label(form.email) }}
-    <br>
+          <br>
         {{ form_widget(form.email) }}
-    <br>
-    {{ form_label (form.plainPassword.first) }}
-    <br>
-    {{ form_widget (form.plainPassword.first) }}
-    <br>
-    {{ form_label (form.plainPassword.second) }}
-    <br>
-    {{ form_widget (form.plainPassword.second) }}
-    <br>
+          <br>
+        {{ form_label (form.plainPassword.first) }}
+          <br>
+        {{ form_widget (form.plainPassword.first) }}
+          <br>
+        {{ form_label (form.plainPassword.second) }}
+          <br>
+        {{ form_widget (form.plainPassword.second) }}
+          <br>
         <input type="submit" value="{{ 'Registration'|trans }}" />
 
     </div>

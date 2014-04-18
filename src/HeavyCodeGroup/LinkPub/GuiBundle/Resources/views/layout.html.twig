@@ -12,7 +12,9 @@
     <div class="container">
         {% block  header %}
             <header>
-
+                <div class="container">
+                    {% include 'LinkPubGuiBundle:Guest:header.html.twig' %}
+                </div>
             </header>
 
             {% set mainMenu = knp_menu_get('LinkPubGuiBundle:MenuBuilder:mainMenu', [], {'class': 'nav nav-tabs client-menu'}) %}

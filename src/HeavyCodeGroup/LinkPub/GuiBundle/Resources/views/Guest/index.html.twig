@@ -1,0 +1,22 @@
+{% extends 'LinkPubGuiBundle::layout.html.twig' %}
+
+{% block body %}
+    {% block header %}
+        <div class="container">
+        <header>
+                {% include 'LinkPubGuiBundle:Guest:header.html.twig' %}
+        </header>
+        </div>
+    {% endblock header%}
+
+    {% block content %}
+        <div class="container">
+            {% for about_link_pub in about %}
+
+            <h1>{{ about_link_pub.title }}</h1>
+            <p>{{ about_link_pub.body }}
+
+            {% endfor %}
+        </div>
+    {% endblock content %}
+{% endblock body %}

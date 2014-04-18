@@ -23,7 +23,7 @@ class LoadPage extends AbstractFixture implements OrderedFixtureInterface
         foreach ($data as $pageData) {
             $page = new Page();
             $page->setUrl($pageData['url']);
-            $page->setLevel('1');
+            $page->setLevel($pageData['level']);
             $page->setPrice($pageData['price']);
             $page->setCapacity($pageData['capacity']);
             $page->setPageRank($pageData['page_rank']);
@@ -32,10 +32,9 @@ class LoadPage extends AbstractFixture implements OrderedFixtureInterface
             $page->setSite($this->getReference($pageData['referenceSite']));
             $manager->persist($page);
 
-//            $this->setReference($pageData['reference'], $page);
             $manager->flush();
         }
-        $manager->flush();
+
     }
     /**
      * Get the order of this fixture

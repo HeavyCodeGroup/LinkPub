@@ -5,5 +5,5 @@ curl -sS https://getcomposer.org/installer | php
 app/console doctrine:database:create "$@"
 app/console doctrine:schema:create "$@"
 app/console doctrine:schema:update --force "$@"
-./assets.sh "$@"
+bin/assets.sh "$@"
 app/console doctrine:fixtures:load "$@" --no-interaction

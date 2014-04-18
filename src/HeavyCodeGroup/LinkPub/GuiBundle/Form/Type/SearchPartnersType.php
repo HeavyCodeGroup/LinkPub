@@ -19,6 +19,33 @@ class SearchPartnersType extends AbstractType
                 'empty_value'   => ' ',
                 'required' => true
             ])
+            ->add('tci_min', 'integer', [
+                'label' => 'linkpub.gui.partner_search.tci_min',
+                'data'  => 0,
+                'empty_data'  => 0,
+            ])
+            ->add('tci_max', 'integer', [
+                'label' => 'linkpub.gui.partner_search.tci_max',
+                'data'  => 20,
+                'empty_data'  => 20,
+            ])
+            ->add('pr', 'integer', [
+                'label' => 'linkpub.gui.partner_search.pr',
+                'data'  => 1,
+                'empty_data'  => 1,
+            ])
+            ->add('price', 'integer', [
+                'precision' => 2,
+                'label' => 'price',
+                'data'  => 1,
+                'empty_data'  => 1,
+            ])
+            ->add('level', 'integer', [
+                'label' => 'level',
+                'data'  => 0,
+                'empty_data'  => 0,
+            ])
+            ->add('submit', 'submit')
         ;
     }
 

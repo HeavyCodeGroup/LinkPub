@@ -8,7 +8,7 @@
 /build/
 /vendor/
 /bin/*
-!bin/install.sh
+!bin/dev-install.sh
 !bin/assets.sh
 /composer.phar
 /.idea/

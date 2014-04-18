@@ -5,6 +5,7 @@ namespace HeavyCodeGroup\LinkPub\GuiBundle\Controller;
 use HeavyCodeGroup\LinkPub\BaseBundle\Controller\BaseController;
 use HeavyCodeGroup\LinkPub\GuiBundle\Form\Type\SearchPartnersType;
 use HeavyCodeGroup\LinkPub\GuiBundle\Form\Type\SiteType;
+use HeavyCodeGroup\LinkPub\StorageBundle\Doctrine\DBAL\PageStatusType;
 use HeavyCodeGroup\LinkPub\StorageBundle\Entity\Site;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -102,6 +103,7 @@ class ClientController extends BaseController
 
         if ($form->isValid()) {
             $criteria = $form->getData();
+            $criteria['state'] = PageStatusType::STATUS_ACTIVE;
             $criteria['user'] = $this->getUser();
 
             $pagesRepository = $this->getDoctrine()->getRepository('LinkPubStorageBundle:Page');

@@ -1,10 +1,39 @@
 {% extends 'LinkPubGuiBundle::layout.html.twig' %}
 {% block title %}{{ 'found_pages'|trans }}{% endblock %}
 {% block content %}
+{% if pages|length > 0 %}
+<table class="table margin-top table-striped">
+    <tr>
+        <th>{{ 'url'|trans }}</th>
+        <th>{{ 'level'|trans }}</th>
+        <th>{{ 'page_rank'|trans }}</th>
+        <th>{{ 'price'|trans }}</th>
+        <th>{{ 'linkpub.gui.partner_search_found.page_links_on'|trans }}</th>
+    </tr>
+    {% set siteId = 0 %}
     {% for page in pages %}
-    {% else %}
-        <div class="margin-top">
-            Nothing found by your criteria =(
-        </div>
+        {% if page.site.id != siteId %}
+            {% set siteId = page.site.id %}
+            <tr>
+                <td colspan="5">
+                    <div class="site-new">
+                        {{ page.site.title }}({{ 'linkpub.gui.site_info.tci'|trans  }}: {{ page.site.tci }})
+                    </div>
+                </td>
+            </tr>
+        {% endif %}
+        <tr>
+            <td class="margin-left">{{ page.url }}</td>
+            <td class="margin-left">{{ page.level }}</td>
+            <td class="margin-left">{{ page.pageRank }}</td>
+            <td class="margin-left">{{ page.price }}</td>
+            <td class="margin-left">{{ page.linksOn|length }}</td>
+        </tr>
     {% endfor %}
+</table>
+{% else %}
+    <div class="margin-top">
+        Nothing found by your criteria =(
+    </div>
+{% endif %}
 {% endblock %}

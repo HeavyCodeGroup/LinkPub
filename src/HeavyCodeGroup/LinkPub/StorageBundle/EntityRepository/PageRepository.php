@@ -32,6 +32,8 @@ class PageRepository extends EntityRepository
             ->andWhere('page.price = :price')
             ->andWhere('page.level = :level')
             ->andWhere('site.owner != :user')
+            ->andWhere('page.state = :state')
+            ->orderBy('page.site')
             ->setParameters($criteria)
             ->getQuery()
         ;

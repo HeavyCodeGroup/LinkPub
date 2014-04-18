@@ -1,0 +1,26 @@
+
+<div class="navbar-header">
+
+    <a class="navbar-brand" href="{{ path('linkpub_gui_guest_index' )}}">LinkPub</a>
+</div>
+<div class="collapse navbar-collapse">
+    <ul class="nav navbar-nav">
+        <li class="active"><a href="{{ path('linkpub_gui_guest_index' )}}">Home</a></li>
+        {% if is_granted('ROLE_USER') %}
+        <li><a href="{{ path('linkpub_gui_client_dashboard') }}"> Dashboard</a></li>
+        {% endif %}
+
+    </ul>
+        <ul class="nav nav-pills pull-right">
+        {% if is_granted('ROLE_USER') %}
+            <li><a href="{{ path('fos_user_security_logout') }}"> {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}</a></li>
+            <li><a href="{{ path('hwi_oauth_service_redirect', {'service': 'vkontakte' }) }}" >Add vkontakte</a></li>
+            <li><a href="{{ path('hwi_oauth_service_redirect', {'service': 'facebook' }) }}" >Add Facebook</a></li>
+        {% else %}
+            <li> <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a></li>
+            <li><a href="{{ path('hwi_oauth_service_redirect', {'service': 'vkontakte' }) }}" >Login vkontakte</a></li>
+            <li><a href="{{ path('hwi_oauth_service_redirect', {'service': 'facebook' }) }}" >Login Facebook</a></li>
+        {% endif %}
+    </ul>
+</div><!--/.nav-collapse -->
+

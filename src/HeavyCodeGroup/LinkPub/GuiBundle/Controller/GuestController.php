@@ -8,7 +8,10 @@ class GuestController extends Controller
 {
    public function indexAction()
    {
+       $about = $this->getDoctrine()
+           ->getRepository('LinkPubGuiBundle:About')
+           ->findAll();
 
-       return $this->render('LinkPubGuiBundle:Guest:index.html.twig');
+       return $this->render('LinkPubGuiBundle:Guest:index.html.twig', array( 'about' => $about));
    }
 }

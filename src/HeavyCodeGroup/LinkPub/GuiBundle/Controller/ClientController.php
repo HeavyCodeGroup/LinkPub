@@ -5,6 +5,7 @@ namespace HeavyCodeGroup\LinkPub\GuiBundle\Controller;
 use HeavyCodeGroup\LinkPub\BaseBundle\Controller\BaseController;
 use HeavyCodeGroup\LinkPub\GuiBundle\Form\Type\SearchPartnersType;
 use HeavyCodeGroup\LinkPub\GuiBundle\Form\Type\SiteType;
+use HeavyCodeGroup\LinkPub\StorageBundle\Doctrine\DBAL\PageStatusType;
 use HeavyCodeGroup\LinkPub\StorageBundle\Entity\Site;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -101,15 +102,22 @@ class ClientController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            /** @var Site $site */
             $criteria = $form->getData();
+            $criteria['state'] = PageStatusType::STATUS_ACTIVE;
+            $criteria['user'] = $this->getUser();
 
-            return $this->redirect($this->generateUrl('linkpub_gui_client_sites'));
+            $pagesRepository = $this->getDoctrine()->getRepository('LinkPubStorageBundle:Page');
+            $pagesQuery = $pagesRepository->getPagesByCriteriaQuery($criteria);
+            $pagerfanta = $this->getPagerfanta($pagesQuery, $page);
+
+            return $this->render('LinkPubGuiBundle:Client:searchPartnersFoundPages.html.twig', [
+                'pages' => $pagerfanta->getCurrentPageResults(),
+                'pagerfanta' => $pagerfanta,
+            ]);
+
         }
 
-        return $this->render('LinkPubGuiBundle:Client:searchPartners.html.twig', [
-            'form' => $form->createView()
-        ]);
+        return $this->render('LinkPubGuiBundle:Client:searchPartners.html.twig', ['form' => $form->createView()]);
     }
 
     public function siteInComingLinksAction($siteId, $page)

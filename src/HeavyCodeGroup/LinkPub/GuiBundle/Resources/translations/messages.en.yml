@@ -13,7 +13,8 @@ linkpub:
             tci_min: Min Tci
             tci_max: Max Tci
             pr: Google PageRank
-
+        partner_search_found:
+            page_links_on: Links On
 
 my_sites: My sites
 site_name: Name
@@ -29,3 +30,5 @@ page_rank: Page Rank
 price: Price
 pages: Pages
 links: Links
+found_pages: Found pages
+search_pages: Search pages

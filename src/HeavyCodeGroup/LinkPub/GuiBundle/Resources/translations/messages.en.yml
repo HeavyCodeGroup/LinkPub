@@ -9,6 +9,10 @@ linkpub:
             tci: Yandex TCI
             data_last_index: Last indexed
             consumers: Consumers
+        partner_search:
+            tci_min: Min Tci
+            tci_max: Max Tci
+            pr: Google PageRank
 
 
 my_sites: My sites

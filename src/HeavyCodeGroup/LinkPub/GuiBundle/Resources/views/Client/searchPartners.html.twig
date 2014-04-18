@@ -1,0 +1,11 @@
+{% extends 'LinkPubGuiBundle::layout.html.twig' %}
+{% block title %}{{ 'add_site'|trans }}{% endblock %}
+{% block content %}
+<div class="site-add-form">
+    {{ form_start(form) }}
+    <div class="one-third">{{ form_row(form.tci_min) }}</div>
+    <div class="one-third">{{ form_row(form.tci_max) }}</div>
+    <div class="one-third">{{ form_row(form.pr) }}</div>
+    {{ form_rest(form) }}
+</div>
+{% endblock %}

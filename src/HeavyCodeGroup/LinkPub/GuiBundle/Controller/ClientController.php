@@ -94,6 +94,12 @@ class ClientController extends BaseController
         ]);
     }
 
+    /**
+     * @param $siteId
+     * @param $page
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function searchPartnersAction($siteId, $page, Request $request)
     {
         $site = $this->getSite($siteId);
@@ -120,6 +126,11 @@ class ClientController extends BaseController
         return $this->render('LinkPubGuiBundle:Client:searchPartners.html.twig', ['form' => $form->createView()]);
     }
 
+    /**
+     * @param $siteId
+     * @param $page
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function siteInComingLinksAction($siteId, $page)
     {
         $site = $this->getSite($siteId);
@@ -129,6 +140,11 @@ class ClientController extends BaseController
         return $this->renderLinks($links, $page, $siteId);
     }
 
+    /**
+     * @param $siteId
+     * @param $page
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function siteOutGoingLinksAction($siteId, $page)
     {
         $site = $this->getSite($siteId);
@@ -138,16 +154,27 @@ class ClientController extends BaseController
         return $this->renderLinks($links, $page);
     }
 
+    /**
+     * @param $page
+     */
     public function inComingLinksAction($page)
     {
 
     }
 
+    /**
+     * @param $page
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function outGoingLinksAction($page)
     {
         return $this->render('LinkPubGuiBundle:Client:links.html.twig');
     }
 
+    /**
+     * @param $siteId
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function addIncomingLinkAction($siteId)
     {
         $site = $this->getSite($siteId);
@@ -172,6 +199,12 @@ class ClientController extends BaseController
         return $site;
     }
 
+    /**
+     * @param $links
+     * @param $page
+     * @param null $siteId
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     private function renderLinks($links, $page, $siteId = null)
     {
         $pagerfanta = $this->getPagerfanta($links, $page);
